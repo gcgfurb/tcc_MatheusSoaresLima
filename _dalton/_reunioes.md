@@ -66,4 +66,8 @@ Implementação - Tela de criação de tema
 - Iniciado a implementação para adicionar atividades ao objetivo  
 - Iniciado a criação da store para gerenciar o estado da tela de objetivos  
 
-## XXX-XX-XX
+## 2022-04-12
+
+Mostrou que já fez algumas torinas de interface.  
+E mais alguns trechos de código.  
+Confirmou que pode vir na próxima semana para a "grande reunião".  
