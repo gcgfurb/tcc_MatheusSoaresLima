@@ -30,3 +30,40 @@ Para trabalhos correlatos:
 Revisão Bibliográfica:
 [2013-Santaella-DesafiosDaUbiquidade](DefesaPreProjeto\2013-Santaella-DesafiosDaUbiquidade.pdf "2013-Santaella-DesafiosDaUbiquidade")  
 [2013-Santaella-DesafiosDaUbiquidade](DefesaPreProjeto\2014-Santaella-AprendizagemUbíquaNaEducação.pdf "2013-Santaella-DesafiosDaUbiquidade")  
+
+# 2022-04-11
+
+Relatório Quinzenal TCC2
+
+Estruturação do backend  
+
+- Criação de app no Back4App  
+- Configuração do Parse server no projeto  
+
+Estruturação do projeto  
+
+- Setup do service locator (Provider)  
+- Setup do service locator global(GetIt)  
+- Setup do gerenciador de estados (MobX)  
+
+Implementação - Tela de login  
+
+- Implementado tela de login  
+- Criação da store responsável pelo gerenciamento dos estados  
+- Criado repository para registrar o usuário no back4app utilizando o parse server  
+
+Implementação - Tela base  
+
+- Implementado estrutura base de navegação  
+- Criado store responsável por gerenciar a navegação entre as páginas  
+
+Implementação - Tela de criação de tema  
+
+- Implementado tela para criação do tema  
+- Criado store para gerenciar o estado da tela de tema  
+- Implementado tela para adicionar objetivos ao tema  
+- Criado store para gerenciar o estado da tela de objetivos  
+- Iniciado a implementação para adicionar atividades ao objetivo  
+- Iniciado a criação da store para gerenciar o estado da tela de objetivos  
+
+## XXX-XX-XX
