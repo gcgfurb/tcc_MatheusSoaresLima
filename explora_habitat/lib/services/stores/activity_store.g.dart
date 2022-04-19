@@ -102,22 +102,11 @@ mixin _$ActivityStore on _ActivityStore, Store {
   }
 
   @override
-  bool isSelected(String value) {
+  void selectAcitivyType(int index) {
     final _$actionInfo = _$_ActivityStoreActionController.startAction(
-        name: '_ActivityStore.isSelected');
+        name: '_ActivityStore.selectAcitivyType');
     try {
-      return super.isSelected(value);
-    } finally {
-      _$_ActivityStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addActivityType(String value, bool selected) {
-    final _$actionInfo = _$_ActivityStoreActionController.startAction(
-        name: '_ActivityStore.addActivityType');
-    try {
-      return super.addActivityType(value, selected);
+      return super.selectAcitivyType(index);
     } finally {
       _$_ActivityStoreActionController.endAction(_$actionInfo);
     }

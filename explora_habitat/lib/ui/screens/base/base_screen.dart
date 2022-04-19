@@ -1,6 +1,6 @@
 import 'package:explora_habitat/services/stores/page_store.dart';
-import 'package:explora_habitat/ui/screens/create_theme/create_theme.dart';
-import 'package:explora_habitat/ui/screens/tema/tema_screen.dart';
+import 'package:explora_habitat/ui/screens/create/create_theme/create_theme.dart';
+import 'package:explora_habitat/ui/screens/theme/theme_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -33,7 +33,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          TemaScreen(),
+          ThemeScreen(),
           CreateThemeScreen(),
           Container(
             color: Colors.purple,

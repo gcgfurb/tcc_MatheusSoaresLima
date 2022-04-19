@@ -2,8 +2,8 @@ import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/stores/create_objective_store.dart';
 import 'package:explora_habitat/services/stores/create_tema_store.dart';
 import 'package:explora_habitat/ui/components/custom_drawer/custom_drawer.dart';
-import 'package:explora_habitat/ui/screens/create_objective/create_objective_screen.dart';
-import 'package:explora_habitat/ui/screens/create_theme/components/custom_elevated_button.dart';
+import 'package:explora_habitat/ui/screens/create/create_objective/create_objective_screen.dart';
+import 'package:explora_habitat/ui/screens/create/create_theme/components/custom_elevated_button.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -64,9 +64,9 @@ class CreateThemeScreen extends StatelessWidget {
               Observer(
                 builder: (_) => CustomElevatedButton(
                   icon: Icons.arrow_forward,
-                  onPressed: createThemeStore.temaValid
+                  onPressed: createThemeStore.themeValid
                       ? () {
-                          createThemeStore.setTema();
+                          createThemeStore.setTheme();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

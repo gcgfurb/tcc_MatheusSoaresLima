@@ -7,7 +7,19 @@ part 'activity_store.g.dart';
 class ActivityStore = _ActivityStore with _$ActivityStore;
 
 abstract class _ActivityStore with Store {
-  _ActivityStore({required this.activity, this.editing = false});
+  _ActivityStore({required this.activity, this.editing = false}) {
+    if (activity != null) {
+      title = activity!.title;
+      customFields = ObservableList.of(activity!.customFields);
+    }
+    types = ObservableList.of(ActivityType.values
+        .map((type) => AcitivityTypeChip(
+              activityType: type,
+              isSelected:
+                  activity != null ? activity!.types.contains(type) : false,
+            ))
+        .toList());
+  }
 
   @observable
   Activity? activity;
@@ -34,23 +46,38 @@ abstract class _ActivityStore with Store {
   void setCustomFieldTye(String type, int index) =>
       customFields[index].type = FieldTypeExtension.getFromString(type);
 
-  ObservableList<ActivityType> types = ObservableList();
+  ObservableList<AcitivityTypeChip> types = ObservableList();
 
   @action
-  bool isSelected(String value) {
-    final ActivityType activityType =
-        ActivityTypeExtension.getFromString(value);
-    return types.contains(activityType);
+  void selectAcitivyType(int index) {
+    final selectedType = AcitivityTypeChip(
+      activityType: types[index].activityType,
+      isSelected: !types[index].isSelected,
+    );
+    types[index] = selectedType;
   }
 
-  @action
-  void addActivityType(String value, bool selected) {
-    final ActivityType activityType =
-        ActivityTypeExtension.getFromString(value);
-    if (selected) {
-      types.add(activityType);
-    } else {
-      types.remove(activityType);
-    }
+  Activity createActivity() {
+    final fields = customFields.toList();
+    final activityTypes = types
+        .where((type) => type.isSelected)
+        .map((type) => type.activityType)
+        .toList();
+
+    return Activity(
+      title: title!,
+      customFields: fields,
+      types: activityTypes,
+    );
   }
+}
+
+class AcitivityTypeChip {
+  ActivityType activityType;
+  bool isSelected;
+
+  AcitivityTypeChip({
+    required this.activityType,
+    this.isSelected = false,
+  });
 }

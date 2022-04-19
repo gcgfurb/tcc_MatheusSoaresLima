@@ -1,9 +1,10 @@
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/stores/activity_store.dart';
-import 'package:explora_habitat/ui/screens/create_objective/components/activity_choice_chip.dart';
-import 'package:explora_habitat/ui/screens/create_objective/components/custom_option_selector.dart';
-import 'package:explora_habitat/ui/screens/create_objective/widgets/custom_material_button.dart';
+import 'package:explora_habitat/ui/screens/create/create_objective/widgets/activity_choice_chip.dart';
+import 'package:explora_habitat/ui/screens/create/create_objective/widgets/custom_list_view.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
+import 'package:explora_habitat/ui/widgets/custom_material_button.dart';
+import 'package:explora_habitat/ui/widgets/text_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,7 @@ class CreateActivityModal extends StatelessWidget {
                     builder: (_) => Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: CustomFormField(
+                        initialValue: activityStore.title,
                         labelText: 'Título',
                         errorText: null,
                         inputType: TextInputType.text,
@@ -57,7 +59,7 @@ class CreateActivityModal extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextLabel('Recursos'),
+                  const TextLabel('Recursos'),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: SizedBox(
@@ -65,10 +67,10 @@ class CreateActivityModal extends StatelessWidget {
                       child: ActivityChoiceChip(),
                     ),
                   ),
-                  TextLabel('Perguntas'),
+                  const TextLabel('Perguntas'),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 32),
-                    child: CustomOptionSelector(),
+                    child: CustomListView(),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -84,7 +86,11 @@ class CreateActivityModal extends StatelessWidget {
                       CustomMaterialButtom(
                         color: Colors.green,
                         text: 'Salvar',
-                        onPressed: () {},
+                        onPressed: () {
+                          final createdActivity =
+                              activityStore.createActivity();
+                          Navigator.pop(context, createdActivity);
+                        },
                       ),
                     ],
                   )
@@ -93,17 +99,6 @@ class CreateActivityModal extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget TextLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: Text(
-        text,
-        textAlign: TextAlign.start,
-        style: kLabelStyle.copyWith(color: Colors.black),
       ),
     );
   }

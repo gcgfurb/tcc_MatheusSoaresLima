@@ -37,12 +37,12 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
           Computed<String?>(() => super.descriptionError,
               name: '_CreateThemeStore.descriptionError'))
       .value;
-  Computed<bool>? _$temaValidComputed;
+  Computed<bool>? _$themeValidComputed;
 
   @override
-  bool get temaValid =>
-      (_$temaValidComputed ??= Computed<bool>(() => super.temaValid,
-              name: '_CreateThemeStore.temaValid'))
+  bool get themeValid =>
+      (_$themeValidComputed ??= Computed<bool>(() => super.themeValid,
+              name: '_CreateThemeStore.themeValid'))
           .value;
 
   final _$titleAtom = Atom(name: '_CreateThemeStore.title');
@@ -75,18 +75,18 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$temaAtom = Atom(name: '_CreateThemeStore.tema');
+  final _$themeAtom = Atom(name: '_CreateThemeStore.theme');
 
   @override
-  Tema? get tema {
-    _$temaAtom.reportRead();
-    return super.tema;
+  ThemeExplora? get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
   }
 
   @override
-  set tema(Tema? value) {
-    _$temaAtom.reportWrite(value, super.tema, () {
-      super.tema = value;
+  set theme(ThemeExplora? value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
     });
   }
 
@@ -116,11 +116,33 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
   }
 
   @override
-  void setTema() {
+  void setObjectives(List<Objective> objectives) {
     final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
-        name: '_CreateThemeStore.setTema');
+        name: '_CreateThemeStore.setObjectives');
     try {
-      return super.setTema();
+      return super.setObjectives(objectives);
+    } finally {
+      _$_CreateThemeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setTheme() {
+    final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
+        name: '_CreateThemeStore.setTheme');
+    try {
+      return super.setTheme();
+    } finally {
+      _$_CreateThemeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void saveTheme() {
+    final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
+        name: '_CreateThemeStore.saveTheme');
+    try {
+      return super.saveTheme();
     } finally {
       _$_CreateThemeStoreActionController.endAction(_$actionInfo);
     }
@@ -131,12 +153,12 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     return '''
 title: ${title},
 description: ${description},
-tema: ${tema},
+theme: ${theme},
 titleValid: ${titleValid},
 titleError: ${titleError},
 descriptionValid: ${descriptionValid},
 descriptionError: ${descriptionError},
-temaValid: ${temaValid}
+themeValid: ${themeValid}
     ''';
   }
 }

@@ -1,5 +1,6 @@
 import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/services/stores/page_store.dart';
+import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/services/stores/user_manager_store.dart';
 import 'package:explora_habitat/ui/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ Future<void> initializeParse() async {
 void setupLocators() {
   GetIt.I.registerSingleton(PageStore());
   GetIt.I.registerSingleton(UserManagerStore());
+  GetIt.I.registerSingleton(ThemeStore());
 }
 
 class MyApp extends StatelessWidget {

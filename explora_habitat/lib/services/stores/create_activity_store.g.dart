@@ -24,6 +24,21 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
     });
   }
 
+  final _$objectiveAtom = Atom(name: '_CreateActivityStore.objective');
+
+  @override
+  Objective get objective {
+    _$objectiveAtom.reportRead();
+    return super.objective;
+  }
+
+  @override
+  set objective(Objective value) {
+    _$objectiveAtom.reportWrite(value, super.objective, () {
+      super.objective = value;
+    });
+  }
+
   final _$_CreateActivityStoreActionController =
       ActionController(name: '_CreateActivityStore');
 
@@ -41,7 +56,8 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
   @override
   String toString() {
     return '''
-isExpanded: ${isExpanded}
+isExpanded: ${isExpanded},
+objective: ${objective}
     ''';
   }
 }

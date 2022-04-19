@@ -1,5 +1,8 @@
-import 'package:explora_habitat/services/models/tema.dart';
-import 'package:flutter/foundation.dart';
+import 'package:explora_habitat/services/models/objective.dart';
+import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/stores/page_store.dart';
+import 'package:explora_habitat/services/stores/theme_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'create_tema_store.g.dart';
@@ -34,13 +37,26 @@ abstract class _CreateThemeStore with Store {
       description == null || descriptionValid ? null : 'Descrição muito curta';
 
   @computed
-  bool get temaValid => titleValid && descriptionValid;
+  bool get themeValid => titleValid && descriptionValid;
 
   @observable
-  Tema? tema;
+  ThemeExplora? theme;
 
   @action
-  void setTema() {
-    tema = Tema(title: title!, description: description!);
+  void setObjectives(List<Objective> objectives) {
+    theme!.objectives = objectives;
+  }
+
+  @action
+  void setTheme() {
+    theme =
+        ThemeExplora(title: title!, description: description!, objectives: []);
+  }
+
+  @action
+  void saveTheme() {
+    final ThemeStore themeStore = GetIt.I<ThemeStore>();
+    themeStore.themes.add(theme!);
+    GetIt.I<PageStore>().setPage(0);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:explora_habitat/services/models/objetivo.dart';
+import 'package:explora_habitat/services/models/objective.dart';
 import 'package:mobx/mobx.dart';
 
 part 'create_objective_store.g.dart';
@@ -19,7 +19,7 @@ abstract class _CreateObjectiveStore with Store {
 
   @action
   void addNewItem() {
-    objectives.add(Objective(title: title!));
+    objectives.add(Objective(title: title!, activities: []));
     title = null;
   }
 

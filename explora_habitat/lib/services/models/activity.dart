@@ -1,4 +1,5 @@
 import 'package:explora_habitat/services/models/custom_field.dart';
+import 'package:flutter/material.dart';
 
 enum ActivityType {
   audio,
@@ -43,6 +44,25 @@ extension ActivityTypeExtension on ActivityType {
 
   static List<String> getStringList() {
     return ActivityType.values.map((v) => v.getStringValue()).toList();
+  }
+
+  static List<IconData> getActivityIcons(Activity activity) {
+    return activity.types.map((type) => _getIconData(type)).toList();
+  }
+
+  static IconData _getIconData(ActivityType type) {
+    switch (type) {
+      case ActivityType.audio:
+        return Icons.audio_file;
+      case ActivityType.datetime:
+        return Icons.date_range;
+      case ActivityType.drawing:
+        return Icons.draw_outlined;
+      case ActivityType.photo:
+        return Icons.camera_alt;
+      case ActivityType.video:
+        return Icons.video_call;
+    }
   }
 }
 
