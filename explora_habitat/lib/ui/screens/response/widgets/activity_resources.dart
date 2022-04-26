@@ -9,10 +9,7 @@ class ActivityResources extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(activityType);
     if (ActivityType.audio == activityType) {
-      return Container();
-    } else if (ActivityType.datetime == activityType) {
       return Container();
     } else if (ActivityType.drawing == activityType) {
       return Container();

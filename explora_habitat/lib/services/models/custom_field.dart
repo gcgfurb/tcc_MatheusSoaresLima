@@ -1,7 +1,9 @@
 enum FieldType {
   text,
   number,
+  date,
   decimal,
+  time,
 }
 
 extension FieldTypeExtension on FieldType {
@@ -11,8 +13,12 @@ extension FieldTypeExtension on FieldType {
         return 'Texto';
       case FieldType.number:
         return 'Número';
+      case FieldType.date:
+        return 'Data';
       case FieldType.decimal:
         return 'Decimal';
+      case FieldType.time:
+        return 'Hora';
     }
   }
 
@@ -20,10 +26,14 @@ extension FieldTypeExtension on FieldType {
     switch (type) {
       case 'Texto':
         return FieldType.text;
-      case 'Número' :
+      case 'Número':
         return FieldType.number;
+      case 'Data':
+        return FieldType.date;
       case 'Decimal':
         return FieldType.decimal;
+      case 'Hora':
+        return FieldType.time;
       default:
         throw Exception('Tipo não mapeado');
     }

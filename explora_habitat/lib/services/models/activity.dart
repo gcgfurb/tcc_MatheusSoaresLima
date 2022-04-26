@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 enum ActivityType {
   audio,
-  datetime,
   drawing,
   photo,
   video,
@@ -14,8 +13,6 @@ extension ActivityTypeExtension on ActivityType {
     switch (this) {
       case ActivityType.audio:
         return 'Áudio';
-      case ActivityType.datetime:
-        return 'Data';
       case ActivityType.drawing:
         return 'Desenho';
       case ActivityType.photo:
@@ -29,8 +26,6 @@ extension ActivityTypeExtension on ActivityType {
     switch (value) {
       case 'Áudio':
         return ActivityType.audio;
-      case 'Data':
-        return ActivityType.datetime;
       case 'Desenho':
         return ActivityType.drawing;
       case 'Foto':
@@ -54,8 +49,6 @@ extension ActivityTypeExtension on ActivityType {
     switch (type) {
       case ActivityType.audio:
         return Icons.audio_file;
-      case ActivityType.datetime:
-        return Icons.date_range;
       case ActivityType.drawing:
         return Icons.draw_outlined;
       case ActivityType.photo:

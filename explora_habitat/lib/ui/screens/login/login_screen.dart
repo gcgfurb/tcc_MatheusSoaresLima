@@ -2,6 +2,7 @@ import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/stores/login_store.dart';
 import 'package:explora_habitat/ui/screens/base/base_screen.dart';
+import 'package:explora_habitat/ui/screens/signup/signup_screen.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
 import 'package:explora_habitat/ui/widgets/access_button.dart';
 import 'package:explora_habitat/ui/widgets/error_indicator.dart';
@@ -76,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Observer(
                           builder: (_) => CustomFormField(
+                            enabled: !loginStore.loading,
                             labelText: 'E-mail',
                             errorText: loginStore.emailError,
                             inputType: TextInputType.emailAddress,
@@ -84,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Observer(
                           builder: (_) => CustomFormField(
+                            enabled: !loginStore.loading,
                             labelText: 'Senha',
                             errorText: loginStore.passwordError,
                             inputType: TextInputType.text,
@@ -142,17 +145,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       'Não tem uma conta? ',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         color: Colors.white,
                       ),
                     ),
                     GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => SignUpScreen(),
+                        ),
+                      ),
                       child: const Text(
                         'Cadastre-se',
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                           color: green,
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                     )

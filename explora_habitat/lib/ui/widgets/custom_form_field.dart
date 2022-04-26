@@ -8,10 +8,12 @@ class CustomFormField extends StatelessWidget {
   final TextInputType inputType;
   final Function(String value) onChanged;
   final bool obscure;
+  final bool enabled;
   final Color textColor;
   final String? initialValue;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
+  final Widget? sufixIcon;
 
   CustomFormField({
     this.labelText,
@@ -22,7 +24,9 @@ class CustomFormField extends StatelessWidget {
     this.controller,
     this.textColor = Colors.black,
     this.obscure = false,
+    this.enabled = true,
     this.inputFormatters,
+    this.sufixIcon,
   });
 
   @override
@@ -30,6 +34,7 @@ class CustomFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 3, bottom: 4, top: 8),
       child: TextFormField(
+        enabled: enabled,
         initialValue: initialValue,
         controller: controller,
         onChanged: onChanged,
@@ -38,6 +43,7 @@ class CustomFormField extends StatelessWidget {
         inputFormatters: inputFormatters,
         style: TextStyle(color: textColor),
         decoration: InputDecoration(
+          suffixIcon: sufixIcon,
           labelText: labelText,
           labelStyle: kLabelStyle.copyWith(color: textColor),
           contentPadding: kContentPadding,
