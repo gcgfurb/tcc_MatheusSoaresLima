@@ -27,6 +27,14 @@ abstract class _ResponseObjectiveStore with Store {
   void toggleExpanded() => isExpanded = !isExpanded;
 
   @computed
+  bool get isActivityCompleted {
+    print(objective.activities[currentStep].activityStatus);
+    return objective.activities[currentStep].activityStatus ==
+        ActivityStatus.completed;
+  }
+
+
+  @computed
   bool get canInitAcitivity => !(objective
               .activities[currentStep].activityStatus ==
           ActivityStatus.completed ||
