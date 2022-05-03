@@ -15,10 +15,27 @@ abstract class _CreateActivityStore with Store {
   bool isExpanded = false;
 
   @observable
+  bool keepOrder = false;
+
+  @observable
   Objective objective;
 
   @action
   void toggleExpanded() => isExpanded = !isExpanded;
 
+  @action
+  toggleKeepOrder() => keepOrder = !keepOrder;
+
   ObservableList<Activity> activities = ObservableList();
+
+  @action
+  void reOrder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final updatedActivities = [...activities];
+    final Activity item = updatedActivities.removeAt(oldIndex);
+    updatedActivities.insert(newIndex, item);
+    activities = ObservableList.of(updatedActivities);
+  }
 }

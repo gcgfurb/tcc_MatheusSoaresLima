@@ -9,6 +9,14 @@ part of 'response_objective_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
+  Computed<bool>? _$canInitAcitivityComputed;
+
+  @override
+  bool get canInitAcitivity => (_$canInitAcitivityComputed ??= Computed<bool>(
+          () => super.canInitAcitivity,
+          name: '_ResponseObjectiveStore.canInitAcitivity'))
+      .value;
+
   final _$objectiveAtom = Atom(name: '_ResponseObjectiveStore.objective');
 
   @override
@@ -84,7 +92,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     return '''
 objective: ${objective},
 currentStep: ${currentStep},
-isExpanded: ${isExpanded}
+isExpanded: ${isExpanded},
+canInitAcitivity: ${canInitAcitivity}
     ''';
   }
 }

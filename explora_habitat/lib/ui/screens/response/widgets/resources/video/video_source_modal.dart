@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageSourceModal extends StatelessWidget {
-  final Function(File?) onImageSelected;
+class VideoSourceModal extends StatelessWidget {
+  final Function(File?) onVideoSelected;
 
-  ImageSourceModal(this.onImageSelected);
+  VideoSourceModal(this.onVideoSelected);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class ImageSourceModal extends StatelessWidget {
     } else {
       return CupertinoActionSheet(
         title: const Text('Selecionar foto para a atividade'),
-        message: const Text('Escolha a origem da foto'),
+        message: const Text('Escolha a origem do vídeo'),
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
           child: const Text(
@@ -59,38 +58,17 @@ class ImageSourceModal extends StatelessWidget {
 
   Future<void> getFromCamera() async {
     final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+        await ImagePicker().pickVideo(source: ImageSource.camera);
     if (pickedFile != null) {
-      imageSelected(File(pickedFile.path));
+      onVideoSelected(File(pickedFile.path));
     }
   }
 
   Future<void> getFromGallery() async {
     final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
-      imageSelected(File(pickedFile.path));
+      onVideoSelected(File(pickedFile.path));
     }
-  }
-
-  Future<void> imageSelected(File image) async {
-    final croppedFile = await ImageCropper().cropImage(
-      androidUiSettings: const AndroidUiSettings(
-        toolbarTitle: 'Editar imagem',
-        toolbarColor: Colors.green,
-        toolbarWidgetColor: Colors.white,
-      ),
-      iosUiSettings: const IOSUiSettings(
-        title: 'Editar imagem',
-        cancelButtonTitle: 'Cancelar',
-        doneButtonTitle: 'Concluir,',
-      ),
-      sourcePath: image.path,
-      aspectRatio: const CropAspectRatio(
-        ratioX: 1,
-        ratioY: 1,
-      ),
-    );
-    onImageSelected(croppedFile);
   }
 }

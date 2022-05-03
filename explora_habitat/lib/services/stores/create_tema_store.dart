@@ -2,6 +2,7 @@ import 'package:explora_habitat/services/models/objective.dart';
 import 'package:explora_habitat/services/models/theme.dart';
 import 'package:explora_habitat/services/stores/page_store.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
+import 'package:explora_habitat/services/stores/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -56,6 +57,7 @@ abstract class _CreateThemeStore with Store {
   @action
   void saveTheme() {
     final ThemeStore themeStore = GetIt.I<ThemeStore>();
+    theme!.creator = GetIt.I<UserManagerStore>().user;
     themeStore.themes.add(theme!);
     GetIt.I<PageStore>().setPage(0);
   }

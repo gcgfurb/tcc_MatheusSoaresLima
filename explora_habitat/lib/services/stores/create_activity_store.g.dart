@@ -24,6 +24,21 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
     });
   }
 
+  final _$keepOrderAtom = Atom(name: '_CreateActivityStore.keepOrder');
+
+  @override
+  bool get keepOrder {
+    _$keepOrderAtom.reportRead();
+    return super.keepOrder;
+  }
+
+  @override
+  set keepOrder(bool value) {
+    _$keepOrderAtom.reportWrite(value, super.keepOrder, () {
+      super.keepOrder = value;
+    });
+  }
+
   final _$objectiveAtom = Atom(name: '_CreateActivityStore.objective');
 
   @override
@@ -54,9 +69,32 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
   }
 
   @override
+  dynamic toggleKeepOrder() {
+    final _$actionInfo = _$_CreateActivityStoreActionController.startAction(
+        name: '_CreateActivityStore.toggleKeepOrder');
+    try {
+      return super.toggleKeepOrder();
+    } finally {
+      _$_CreateActivityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reOrder(int oldIndex, int newIndex) {
+    final _$actionInfo = _$_CreateActivityStoreActionController.startAction(
+        name: '_CreateActivityStore.reOrder');
+    try {
+      return super.reOrder(oldIndex, newIndex);
+    } finally {
+      _$_CreateActivityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isExpanded: ${isExpanded},
+keepOrder: ${keepOrder},
 objective: ${objective}
     ''';
   }

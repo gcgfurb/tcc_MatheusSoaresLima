@@ -1,8 +1,9 @@
 import 'package:explora_habitat/services/models/theme.dart';
-import 'package:explora_habitat/ui/components/custom_drawer/custom_drawer.dart';
+import 'package:explora_habitat/services/stores/response_objective_store.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_objective_component.dart';
 import 'package:explora_habitat/ui/widgets/card_theme_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ResponseThemeScreen extends StatelessWidget {
   final ThemeExplora theme;
@@ -11,6 +12,7 @@ class ResponseThemeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -34,8 +36,11 @@ class ResponseThemeScreen extends StatelessWidget {
                     itemCount: theme.objectives.length,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
-                    itemBuilder: (_, index) => ResponseObjectiveComponent(
-                      objective: theme.objectives[index],
+                    itemBuilder: (_, index) => Provider(
+                      create: (_) => ResponseObjectiveStore(
+                        objective: theme.objectives[index],
+                      ),
+                      child: ResponseObjectiveComponent(),
                     ),
                   ),
                 ),

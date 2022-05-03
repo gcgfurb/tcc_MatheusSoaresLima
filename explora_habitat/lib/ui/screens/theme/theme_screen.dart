@@ -162,16 +162,16 @@ class ThemeScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
+                            children: [
+                              const Text(
                                 'Mediador',
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
                               Text(
-                                'Matheus Soares Lima',
-                                style: TextStyle(
+                                themeStore.themes[index].creator!.name,
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),

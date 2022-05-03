@@ -54,6 +54,25 @@ class ActivitiesContainer extends StatelessWidget {
                       createActivityStore.activities.isEmpty
                           ? const EmptyActivitiesContainer()
                           : CustomReorderableListView(),
+                      createActivityStore.activities.isEmpty
+                          ? Container()
+                          : Observer(
+                              builder: (_) => Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Checkbox(
+                                    value: createActivityStore.keepOrder,
+                                    onChanged: (value) {
+                                      createActivityStore.toggleKeepOrder();
+                                      objective.keepOrder =
+                                          createActivityStore.keepOrder;
+                                    },
+                                  ),
+                                  const Text(
+                                      'Realizar atividades na ordem proposta')
+                                ],
+                              ),
+                            ),
                       MaterialButton(
                         onPressed: () => _showAddActivityDialog(
                             context, createActivityStore),

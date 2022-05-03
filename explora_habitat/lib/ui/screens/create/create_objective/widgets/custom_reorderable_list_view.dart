@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomReorderableListView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final CreateActivityStore createActivityStore =
@@ -20,7 +19,7 @@ class CustomReorderableListView extends StatelessWidget {
         itemCount: createActivityStore.activities.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        onReorder: (int oldIndex, int newIndex) {},
+        onReorder: createActivityStore.reOrder,
         itemBuilder: (_, index) => Card(
             key: Key('$index'),
             elevation: 8,

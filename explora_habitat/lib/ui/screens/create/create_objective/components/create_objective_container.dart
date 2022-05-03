@@ -79,7 +79,7 @@ class CreateObjectiveContainer extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

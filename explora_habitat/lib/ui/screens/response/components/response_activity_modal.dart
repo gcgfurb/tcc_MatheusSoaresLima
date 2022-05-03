@@ -1,4 +1,5 @@
 import 'package:explora_habitat/constants/constants_style.dart';
+import 'package:explora_habitat/helpers/geolocator_manager.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/stores/response_activity_store.dart';
 import 'package:explora_habitat/ui/screens/response/widgets/activity_resources.dart';
@@ -66,7 +67,8 @@ class ResponseActivityModal extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: activity.types.length,
-                      itemBuilder: (_, index) => ActivityResources(activity.types[index]),
+                      itemBuilder: (_, index) =>
+                          ActivityResources(activity.types[index]),
                     ),
                   ),
                   Row(
@@ -106,7 +108,10 @@ class ResponseActivityModal extends StatelessWidget {
                       CustomMaterialButtom(
                         color: Colors.green,
                         text: 'Confirmar',
-                        onPressed: () {},
+                        onPressed: () async {
+                          await responseActivityStore.saveResponse();
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),

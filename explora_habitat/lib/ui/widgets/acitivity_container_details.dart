@@ -22,6 +22,7 @@ class AcitivityContainerDetails extends StatelessWidget {
               .toList(),
         ),
         Text(getActivityCustomFieldsText(activity)),
+        const SizedBox(height: 10),
       ],
     );
   }
