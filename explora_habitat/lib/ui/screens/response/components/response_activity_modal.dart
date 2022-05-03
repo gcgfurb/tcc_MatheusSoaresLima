@@ -7,6 +7,7 @@ import 'package:explora_habitat/ui/screens/response/widgets/custom_activity_fiel
 import 'package:explora_habitat/ui/widgets/custom_material_button.dart';
 import 'package:explora_habitat/ui/widgets/text_label.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ResponseActivityModal extends StatelessWidget {
@@ -105,13 +106,16 @@ class ResponseActivityModal extends StatelessWidget {
                           onPressed: () => Navigator.pop(context),
                         ),
                       ),
-                      CustomMaterialButtom(
-                        color: Colors.green,
-                        text: 'Confirmar',
-                        onPressed: () async {
-                          await responseActivityStore.saveResponse();
-                          Navigator.pop(context);
-                        },
+                      Observer(
+                        builder: (_) => CustomMaterialButtom(
+                          color: Colors.green,
+                          text: 'Confirmar',
+                          loading: responseActivityStore.loading,
+                          onPressed: () async {
+                            await responseActivityStore.saveResponse();
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ],
                   ),

@@ -68,8 +68,10 @@ class ActivitiesContainer extends StatelessWidget {
                                           createActivityStore.keepOrder;
                                     },
                                   ),
-                                  const Text(
-                                      'Realizar atividades na ordem proposta')
+                                  const Flexible(
+                                    child: Text(
+                                        'Realizar atividades na ordem proposta'),
+                                  )
                                 ],
                               ),
                             ),

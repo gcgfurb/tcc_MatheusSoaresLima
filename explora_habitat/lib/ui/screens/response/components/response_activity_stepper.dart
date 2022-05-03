@@ -2,14 +2,18 @@ import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/stores/response_activity_store.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_activity_modal.dart';
-import 'package:explora_habitat/ui/screens/response/widgets/position_activity_details.dart';
 import 'package:explora_habitat/ui/widgets/acitivity_container_details.dart';
 import 'package:explora_habitat/ui/widgets/custom_material_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-class ResponseActivityStepper extends StatelessWidget {
+class ResponseActivityStepper extends StatefulWidget {
+  @override
+  State<ResponseActivityStepper> createState() => _ResponseActivityStepperState();
+}
+
+class _ResponseActivityStepperState extends State<ResponseActivityStepper> {
   @override
   Widget build(BuildContext context) {
     final ResponseObjectiveStore responseObjectiveStore =
@@ -25,23 +29,6 @@ class ResponseActivityStepper extends StatelessWidget {
           child: ResponseActivityModal(),
         ),
       );
-    }
-
-    Widget getActivityButton() {
-      final step = responseObjectiveStore.currentStep;
-      final activity = responseObjectiveStore.objective.activities[step];
-      return activity.activityStatus == ActivityStatus.pending
-          ? CustomMaterialButtom(
-              onPressed:
-                  responseObjectiveStore.canInitAcitivity ? initActivity : null,
-              text: 'Iniciar',
-              color: Colors.orange,
-            )
-          : CustomMaterialButtom(
-              onPressed: () {},
-              text: 'Respostas',
-              color: Colors.green,
-            );
     }
 
     return Column(
@@ -73,7 +60,23 @@ class ResponseActivityStepper extends StatelessWidget {
                                 activity,
                               ),
                             ),
-                            getActivityButton(),
+                            Observer(
+                              builder: (_) =>
+                                  !responseObjectiveStore.isActivityCompleted
+                                      ? CustomMaterialButtom(
+                                          onPressed: responseObjectiveStore
+                                                  .canInitAcitivity
+                                              ? initActivity
+                                              : null,
+                                          text: 'Iniciar',
+                                          color: Colors.orange,
+                                        )
+                                      : CustomMaterialButtom(
+                                          onPressed: initActivity,
+                                          text: 'Respostas',
+                                          color: Colors.green,
+                                        ),
+                            ),
                           ],
                         ),
                         //PositionAcitivityDetails(activity),

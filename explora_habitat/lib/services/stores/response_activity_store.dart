@@ -10,7 +10,12 @@ class ResponseActivityStore = _ResponseActivityStore
     with _$ResponseActivityStore;
 
 abstract class _ResponseActivityStore with Store {
+
+  @observable
   Activity activity;
+
+  @observable
+  bool loading = false;
 
   ObservableList images = ObservableList();
   ObservableList videos = ObservableList();
@@ -22,6 +27,9 @@ abstract class _ResponseActivityStore with Store {
 
   @action
   Future<void> saveResponse() async {
+
+    loading = true;
+
     ResponseActivity responseActivity = ResponseActivity();
     responseActivity.images = images;
     responseActivity.videos = videos;
@@ -36,5 +44,7 @@ abstract class _ResponseActivityStore with Store {
 
     activity.responseActivity = responseActivity;
     activity.activityStatus = ActivityStatus.completed;
+
+    loading= true;
   }
 }
