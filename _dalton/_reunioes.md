@@ -71,3 +71,25 @@ Implementação - Tela de criação de tema
 Mostrou que já fez algumas torinas de interface.  
 E mais alguns trechos de código.  
 Confirmou que pode vir na próxima semana para a "grande reunião".  
+
+## 2022-05010
+
+### Relatório TCC2
+
+Novas implementações  
+
+- Implementação de recurso de câmera  
+- Implementação de recurso de vídeo  
+- Permitir executar atividades  
+- Realizar coleta de coordenadas ao executar uma atividade  
+- Inicio da tela de mapa  
+- Inicio da tela de temas criados pelo próprio usuário  
+
+Refinamentos
+
+- Criar atividade somente ao preencher todos os campos corretamente  
+- Salvar tema se houver ao menos um objetivo  
+- Salvar tema somente quando todos os objetivos possuirem ao menos   uma - atividade  
+- Exibir alerta ao excluir um objetivo com atividades cadastradas  
+- Permitir criar objetivo com ordem fixa das atividades  
+- Permitir reordenar as atividades  
