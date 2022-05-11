@@ -28,7 +28,7 @@ class ErrorIndicator extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Ops: $message. Por favor, tente novamente.',
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ),
             ],

@@ -23,4 +23,16 @@ class ThemeExplora {
     required this.objectives,
     this.status = ThemeStatus.pending,
   });
+
+  ThemeExplora clone() {
+    List<Objective> clonedObjectives =
+        objectives.map((objective) => objective.clone()).toList();
+
+    return ThemeExplora(
+      title: '$title - #Cópia',
+      description: description,
+      objectives: clonedObjectives,
+      creator: creator,
+    );
+  }
 }

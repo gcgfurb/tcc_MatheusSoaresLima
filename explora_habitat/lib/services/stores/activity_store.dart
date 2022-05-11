@@ -36,6 +36,12 @@ abstract class _ActivityStore with Store {
   @action
   void setTitle(String value) => title = value;
 
+  @computed
+  bool get titleValid => title != null && title!.length >= 4;
+
+  String? get titleError =>
+      title == null || titleValid ? null : 'Título muito curto';
+
   ObservableList<CustomField> customFields = ObservableList();
 
   @action
@@ -56,6 +62,14 @@ abstract class _ActivityStore with Store {
     );
     types[index] = selectedType;
   }
+
+  @computed
+  bool get activityContentValid =>
+      customFields.isNotEmpty ||
+      types.where((type) => type.isSelected).isNotEmpty;
+
+  @computed
+  bool get activityValid => titleValid && activityContentValid;
 
   Activity createActivity() {
     final fields = customFields.toList();

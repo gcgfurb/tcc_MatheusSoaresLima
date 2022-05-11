@@ -47,6 +47,17 @@ mixin _$CreateObjectiveStore on _CreateObjectiveStore, Store {
   }
 
   @override
+  void setObjectives(List<Objective> values) {
+    final _$actionInfo = _$_CreateObjectiveStoreActionController.startAction(
+        name: '_CreateObjectiveStore.setObjectives');
+    try {
+      return super.setObjectives(values);
+    } finally {
+      _$_CreateObjectiveStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addNewItem() {
     final _$actionInfo = _$_CreateObjectiveStoreActionController.startAction(
         name: '_CreateObjectiveStore.addNewItem');

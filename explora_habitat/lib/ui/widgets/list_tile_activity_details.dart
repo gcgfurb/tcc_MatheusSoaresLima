@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class ListTileActivityDetails extends StatelessWidget {
   final Activity activity;
   final Function()? onTap;
+  final Function()? onDelete;
 
-  ListTileActivityDetails({required this.activity, this.onTap});
+  ListTileActivityDetails({required this.activity, this.onTap, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,12 @@ class ListTileActivityDetails extends StatelessWidget {
       ),
       onTap: onTap,
       subtitle: AcitivityContainerDetails(activity),
-      trailing: const Icon(Icons.drag_handle),
+      trailing: onDelete != null
+          ? IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: onDelete,
+            )
+          : const Icon(Icons.drag_handle),
     );
   }
 }

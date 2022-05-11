@@ -50,15 +50,53 @@ abstract class _CreateThemeStore with Store {
 
   @action
   void setTheme() {
-    theme =
-        ThemeExplora(title: title!, description: description!, objectives: []);
+    theme = ThemeExplora(
+      title: title!,
+      description: description!,
+      objectives: [],
+    );
+  }
+
+  @observable
+  int? index;
+
+  @action
+  void editTheme(ThemeExplora themeEdit, int currentPosition) {
+    theme = themeEdit;
+    index = currentPosition;
+  }
+
+  @observable
+  String? themeContentError;
+
+  @action
+  bool isThemeValid() {
+    if (theme!.objectives.isEmpty) {
+      themeContentError = 'Inclua ao menos um objetivo ao tema!';
+      return false;
+    } else if (theme!.objectives
+        .any((objective) => objective.activities.isEmpty)) {
+      themeContentError =
+          'Inclua ao menos uma atividade aos objetivos do tema!';
+      return false;
+    }
+    return true;
   }
 
   @action
   void saveTheme() {
-    final ThemeStore themeStore = GetIt.I<ThemeStore>();
-    theme!.creator = GetIt.I<UserManagerStore>().user;
-    themeStore.themes.add(theme!);
-    GetIt.I<PageStore>().setPage(0);
+    themeContentError = null;
+
+    if (isThemeValid()) {
+      final ThemeStore themeStore = GetIt.I<ThemeStore>();
+
+      if (index != null) {
+        themeStore.themes.removeAt(index!);
+        themeStore.themes.add(theme!);
+      } else {
+        theme!.creator = GetIt.I<UserManagerStore>().user;
+        themeStore.themes.add(theme!);
+      }
+    }
   }
 }

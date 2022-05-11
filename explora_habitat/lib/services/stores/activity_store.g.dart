@@ -9,6 +9,28 @@ part of 'activity_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ActivityStore on _ActivityStore, Store {
+  Computed<bool>? _$titleValidComputed;
+
+  @override
+  bool get titleValid =>
+      (_$titleValidComputed ??= Computed<bool>(() => super.titleValid,
+              name: '_ActivityStore.titleValid'))
+          .value;
+  Computed<bool>? _$activityContentValidComputed;
+
+  @override
+  bool get activityContentValid => (_$activityContentValidComputed ??=
+          Computed<bool>(() => super.activityContentValid,
+              name: '_ActivityStore.activityContentValid'))
+      .value;
+  Computed<bool>? _$activityValidComputed;
+
+  @override
+  bool get activityValid =>
+      (_$activityValidComputed ??= Computed<bool>(() => super.activityValid,
+              name: '_ActivityStore.activityValid'))
+          .value;
+
   final _$activityAtom = Atom(name: '_ActivityStore.activity');
 
   @override
@@ -117,7 +139,10 @@ mixin _$ActivityStore on _ActivityStore, Store {
     return '''
 activity: ${activity},
 editing: ${editing},
-title: ${title}
+title: ${title},
+titleValid: ${titleValid},
+activityContentValid: ${activityContentValid},
+activityValid: ${activityValid}
     ''';
   }
 }

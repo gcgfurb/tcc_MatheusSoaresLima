@@ -45,6 +45,6 @@ abstract class _ResponseActivityStore with Store {
     activity.responseActivity = responseActivity;
     activity.activityStatus = ActivityStatus.completed;
 
-    loading= true;
+    loading = true;
   }
 }

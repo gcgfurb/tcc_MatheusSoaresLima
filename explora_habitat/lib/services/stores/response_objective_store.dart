@@ -28,7 +28,6 @@ abstract class _ResponseObjectiveStore with Store {
 
   @computed
   bool get isActivityCompleted {
-    print(objective.activities[currentStep].activityStatus);
     return objective.activities[currentStep].activityStatus ==
         ActivityStatus.completed;
   }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'objective_store.dart';
+part of 'edit_objective_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,38 +8,23 @@ part of 'objective_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ObjectiveStore on _ObjectiveStore, Store {
+mixin _$EditObjectiveStore on _EditObjectiveStore, Store {
   Computed<bool>? _$titleValidComputed;
 
   @override
   bool get titleValid =>
       (_$titleValidComputed ??= Computed<bool>(() => super.titleValid,
-              name: '_ObjectiveStore.titleValid'))
+              name: '_EditObjectiveStore.titleValid'))
           .value;
   Computed<String?>? _$titleErrorComputed;
 
   @override
   String? get titleError =>
       (_$titleErrorComputed ??= Computed<String?>(() => super.titleError,
-              name: '_ObjectiveStore.titleError'))
+              name: '_EditObjectiveStore.titleError'))
           .value;
 
-  final _$objectiveAtom = Atom(name: '_ObjectiveStore.objective');
-
-  @override
-  Objective get objective {
-    _$objectiveAtom.reportRead();
-    return super.objective;
-  }
-
-  @override
-  set objective(Objective value) {
-    _$objectiveAtom.reportWrite(value, super.objective, () {
-      super.objective = value;
-    });
-  }
-
-  final _$titleAtom = Atom(name: '_ObjectiveStore.title');
+  final _$titleAtom = Atom(name: '_EditObjectiveStore.title');
 
   @override
   String get title {
@@ -54,7 +39,7 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
     });
   }
 
-  final _$oldTitleAtom = Atom(name: '_ObjectiveStore.oldTitle');
+  final _$oldTitleAtom = Atom(name: '_EditObjectiveStore.oldTitle');
 
   @override
   String get oldTitle {
@@ -69,46 +54,45 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
     });
   }
 
-  final _$_ObjectiveStoreActionController =
-      ActionController(name: '_ObjectiveStore');
+  final _$_EditObjectiveStoreActionController =
+      ActionController(name: '_EditObjectiveStore');
 
   @override
   void setTitle(String value) {
-    final _$actionInfo = _$_ObjectiveStoreActionController.startAction(
-        name: '_ObjectiveStore.setTitle');
+    final _$actionInfo = _$_EditObjectiveStoreActionController.startAction(
+        name: '_EditObjectiveStore.setTitle');
     try {
       return super.setTitle(value);
     } finally {
-      _$_ObjectiveStoreActionController.endAction(_$actionInfo);
+      _$_EditObjectiveStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void updateTheme() {
-    final _$actionInfo = _$_ObjectiveStoreActionController.startAction(
-        name: '_ObjectiveStore.updateTheme');
+    final _$actionInfo = _$_EditObjectiveStoreActionController.startAction(
+        name: '_EditObjectiveStore.updateTheme');
     try {
       return super.updateTheme();
     } finally {
-      _$_ObjectiveStoreActionController.endAction(_$actionInfo);
+      _$_EditObjectiveStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void resetFields() {
-    final _$actionInfo = _$_ObjectiveStoreActionController.startAction(
-        name: '_ObjectiveStore.resetFields');
+    final _$actionInfo = _$_EditObjectiveStoreActionController.startAction(
+        name: '_EditObjectiveStore.resetFields');
     try {
       return super.resetFields();
     } finally {
-      _$_ObjectiveStoreActionController.endAction(_$actionInfo);
+      _$_EditObjectiveStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   String toString() {
     return '''
-objective: ${objective},
 title: ${title},
 oldTitle: ${oldTitle},
 titleValid: ${titleValid},

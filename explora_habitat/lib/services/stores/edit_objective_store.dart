@@ -1,14 +1,11 @@
 import 'package:explora_habitat/services/models/objective.dart';
 import 'package:mobx/mobx.dart';
 
-part 'objective_store.g.dart';
+part 'edit_objective_store.g.dart';
 
-class ObjectiveStore = _ObjectiveStore with _$ObjectiveStore;
+class EditObjectiveStore = _EditObjectiveStore with _$EditObjectiveStore;
 
-abstract class _ObjectiveStore with Store {
-  @observable
-  Objective objective;
-
+abstract class _EditObjectiveStore with Store {
   @observable
   String title;
 
@@ -22,11 +19,8 @@ abstract class _ObjectiveStore with Store {
   bool get titleValid => title.length >= 4;
 
   @computed
-  String? get titleError => titleValid ? null : 'Título muito curto';
-
-  _ObjectiveStore(this.objective)
-      : title = objective.title,
-        oldTitle = objective.title;
+  String? get titleError =>
+      titleValid ? null : 'Título muito curto';
 
   @action
   void updateTheme() {
@@ -36,4 +30,10 @@ abstract class _ObjectiveStore with Store {
 
   @action
   void resetFields() => setTitle(oldTitle);
+
+  Objective objective;
+
+  _EditObjectiveStore(this.objective)
+      : title = objective.title,
+        oldTitle = objective.title;
 }

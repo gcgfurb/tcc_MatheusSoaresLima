@@ -90,6 +90,37 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
+  final _$indexAtom = Atom(name: '_CreateThemeStore.index');
+
+  @override
+  int? get index {
+    _$indexAtom.reportRead();
+    return super.index;
+  }
+
+  @override
+  set index(int? value) {
+    _$indexAtom.reportWrite(value, super.index, () {
+      super.index = value;
+    });
+  }
+
+  final _$themeContentErrorAtom =
+      Atom(name: '_CreateThemeStore.themeContentError');
+
+  @override
+  String? get themeContentError {
+    _$themeContentErrorAtom.reportRead();
+    return super.themeContentError;
+  }
+
+  @override
+  set themeContentError(String? value) {
+    _$themeContentErrorAtom.reportWrite(value, super.themeContentError, () {
+      super.themeContentError = value;
+    });
+  }
+
   final _$_CreateThemeStoreActionController =
       ActionController(name: '_CreateThemeStore');
 
@@ -138,6 +169,28 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
   }
 
   @override
+  void editTheme(ThemeExplora themeEdit, int currentPosition) {
+    final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
+        name: '_CreateThemeStore.editTheme');
+    try {
+      return super.editTheme(themeEdit, currentPosition);
+    } finally {
+      _$_CreateThemeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool isThemeValid() {
+    final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
+        name: '_CreateThemeStore.isThemeValid');
+    try {
+      return super.isThemeValid();
+    } finally {
+      _$_CreateThemeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void saveTheme() {
     final _$actionInfo = _$_CreateThemeStoreActionController.startAction(
         name: '_CreateThemeStore.saveTheme');
@@ -154,6 +207,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
 title: ${title},
 description: ${description},
 theme: ${theme},
+index: ${index},
+themeContentError: ${themeContentError},
 titleValid: ${titleValid},
 titleError: ${titleError},
 descriptionValid: ${descriptionValid},

@@ -78,4 +78,12 @@ class Activity {
     required this.customFields,
     this.activityStatus = ActivityStatus.pending,
   });
+
+  Activity clone() {
+    return Activity(
+      title: title,
+      types: types,
+      customFields: customFields,
+    );
+  }
 }

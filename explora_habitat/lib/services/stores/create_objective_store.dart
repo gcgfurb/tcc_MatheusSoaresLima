@@ -13,9 +13,14 @@ abstract class _CreateObjectiveStore with Store {
   void setTitle(String value) => title = value;
 
   @computed
-  bool get titleValid => title != null && title!.replaceAll(' ', '').length >= 4;
+  bool get titleValid =>
+      title != null && title!.replaceAll(' ', '').length >= 4;
 
   ObservableList<Objective> objectives = ObservableList();
+
+  @action
+  void setObjectives(List<Objective> values) =>
+      objectives = ObservableList.of(values);
 
   @action
   void addNewItem() {

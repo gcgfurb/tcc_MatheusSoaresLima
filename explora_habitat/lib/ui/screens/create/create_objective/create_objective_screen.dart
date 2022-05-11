@@ -6,7 +6,9 @@ import 'package:explora_habitat/ui/screens/base/base_screen.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/components/create_objective_container.dart';
 import 'package:explora_habitat/ui/screens/create/create_theme/components/custom_elevated_button.dart';
 import 'package:explora_habitat/ui/widgets/card_theme_details.dart';
+import 'package:explora_habitat/ui/widgets/custom_alert_dialog.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
+import 'package:explora_habitat/ui/widgets/error_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,14 @@ class CreateObjetivoScreen extends StatelessWidget {
     final CreateObjectiveStore createObjetivoStore =
         Provider.of<CreateObjectiveStore>(context);
 
+    void saveTheme() {
+      createThemeStore.setObjectives(createObjetivoStore.objectives);
+      createThemeStore.saveTheme();
+      if (createThemeStore.themeContentError == null) {
+        Navigator.pop(context);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicione objetivos'),
@@ -32,16 +42,7 @@ class CreateObjetivoScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16),
             child: InkWell(
               customBorder: const CircleBorder(),
-              onTap: () {
-                createThemeStore.setObjectives(createObjetivoStore.objectives);
-                createThemeStore.saveTheme();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BaseScreen(),
-                  ),
-                );
-              },
+              onTap: saveTheme,
               child: Ink(
                 child: const Icon(
                   Icons.save,
@@ -57,7 +58,18 @@ class CreateObjetivoScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                CardThemeDetails(theme: theme),
+                Observer(
+                  builder: (_) => Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: ErrorIndicator(
+                      message: createThemeStore.themeContentError,
+                    ),
+                  ),
+                ),
+                CardThemeDetails(
+                  theme: theme,
+                  editing: true,
+                ),
                 Card(
                   elevation: 8,
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -111,7 +123,28 @@ class CreateObjetivoScreen extends StatelessWidget {
                   itemCount: createObjetivoStore.objectives.length,
                   itemBuilder: (_, index) => CreateObjectiveContainer(
                     objective: createObjetivoStore.objectives[index],
-                    onRemove: () => createObjetivoStore.removeItem(index),
+                    onRemove: () async {
+                      var objective = createObjetivoStore.objectives[index];
+                      if (objective.activities.isNotEmpty) {
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomAlertDialog(
+                            title: 'Exclusão de objetivo',
+                            body: const Text(
+                              'Deseja excluir um objetivo com atividades cadastradas?',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onSave: () {
+                              createObjetivoStore.removeItem(index);
+                              Navigator.pop(context);
+                            },
+                            onCancel: () => Navigator.pop(context),
+                          ),
+                        );
+                      } else {
+                        createObjetivoStore.removeItem(index);
+                      }
+                    },
                   ),
                 ),
               ),

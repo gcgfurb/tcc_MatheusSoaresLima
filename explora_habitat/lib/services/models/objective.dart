@@ -5,5 +5,20 @@ class Objective {
   List<Activity> activities = [];
   bool keepOrder;
 
-  Objective({required this.title, required this.activities, this.keepOrder = false});
+  Objective({
+    required this.title,
+    required this.activities,
+    this.keepOrder = false,
+  });
+
+  Objective clone() {
+
+    List<Activity> clonedActivities = activities.map((activity) => activity.clone()).toList();
+
+    return Objective(
+      title: title,
+      activities: clonedActivities,
+      keepOrder: keepOrder,
+    );
+  }
 }

@@ -53,7 +53,7 @@ class CreateActivityModal extends StatelessWidget {
                       child: CustomFormField(
                         initialValue: activityStore.title,
                         labelText: 'Título',
-                        errorText: null,
+                        errorText: activityStore.titleError,
                         inputType: TextInputType.text,
                         onChanged: activityStore.setTitle,
                       ),
@@ -83,14 +83,18 @@ class CreateActivityModal extends StatelessWidget {
                           onPressed: () => Navigator.pop(context),
                         ),
                       ),
-                      CustomMaterialButtom(
-                        color: Colors.green,
-                        text: 'Salvar',
-                        onPressed: () {
-                          final createdActivity =
-                              activityStore.createActivity();
-                          Navigator.pop(context, createdActivity);
-                        },
+                      Observer(
+                        builder: (_) => CustomMaterialButtom(
+                          color: Colors.green,
+                          text: 'Salvar',
+                          onPressed: activityStore.activityValid
+                              ? () {
+                                  final createdActivity =
+                                      activityStore.createActivity();
+                                  Navigator.pop(context, createdActivity);
+                                }
+                              : null,
+                        ),
                       ),
                     ],
                   )

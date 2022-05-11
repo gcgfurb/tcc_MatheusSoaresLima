@@ -28,6 +28,9 @@ class CustomReorderableListView extends StatelessWidget {
             color: Colors.white,
             child: ListTileActivityDetails(
               activity: createActivityStore.activities[index],
+              onDelete: () {
+                createActivityStore.activities.removeAt(index);
+              },
               onTap: () => _showUpdateActivityDialog(
                   context, createActivityStore, index),
             )),

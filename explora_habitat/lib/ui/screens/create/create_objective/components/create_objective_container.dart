@@ -3,7 +3,9 @@ import 'package:explora_habitat/services/models/objective.dart';
 import 'package:explora_habitat/services/stores/create_activity_store.dart';
 import 'package:explora_habitat/services/stores/objective_store.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/components/activities_container.dart';
+import 'package:explora_habitat/ui/widgets/update_objective_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CreateObjectiveContainer extends StatelessWidget {
@@ -30,13 +32,15 @@ class CreateObjectiveContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Flexible(
-                  child: Text(
-                    objectiveStore.objective.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                Observer(
+                  builder: (_) => Flexible(
+                    child: Text(
+                      objectiveStore.title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -44,7 +48,10 @@ class CreateObjectiveContainer extends StatelessWidget {
                 Column(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (_) => UpdateObjectiveModal(objectiveStore),
+                      ),
                       child: Ink(
                         child: const Icon(
                           Icons.edit,
