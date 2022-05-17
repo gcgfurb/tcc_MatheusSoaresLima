@@ -1,13 +1,14 @@
 import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/models/objective.dart';
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/ui/components/custom_drawer/custom_drawer.dart';
 import 'package:explora_habitat/ui/screens/response/response_theme/response_theme_screen.dart';
 import 'package:explora_habitat/ui/screens/theme/components/expandable_fab.dart';
 import 'package:explora_habitat/ui/screens/theme/widgets/theme_content_container.dart';
 import 'package:explora_habitat/ui/screens/theme/widgets/theme_details_tile.dart';
+import 'package:explora_habitat/ui/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -54,6 +55,9 @@ class ThemeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Temas'),
         centerTitle: true,
+        actions: const [
+          LogoutButton(),
+        ],
       ),
       floatingActionButton: ExpandableFab(
         distance: 70,

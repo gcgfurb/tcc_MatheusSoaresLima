@@ -1,3 +1,4 @@
+import 'package:explora_habitat/services/enum/activity_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:mobx/mobx.dart';
 
@@ -28,17 +29,17 @@ abstract class _ResponseObjectiveStore with Store {
 
   @computed
   bool get isActivityCompleted {
-    return objective.activities[currentStep].activityStatus ==
+    return objective.activities[currentStep].status ==
         ActivityStatus.completed;
   }
 
 
   @computed
   bool get canInitAcitivity => !(objective
-              .activities[currentStep].activityStatus ==
+              .activities[currentStep].status ==
           ActivityStatus.completed ||
       (currentStep > 0 &&
           objective.keepOrder &&
-          objective.activities[currentStep - 1].activityStatus !=
+          objective.activities[currentStep - 1].status !=
               ActivityStatus.completed));
 }

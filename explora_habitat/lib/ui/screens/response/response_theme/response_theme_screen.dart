@@ -1,4 +1,4 @@
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_objective_component.dart';
 import 'package:explora_habitat/ui/widgets/card_theme_details.dart';

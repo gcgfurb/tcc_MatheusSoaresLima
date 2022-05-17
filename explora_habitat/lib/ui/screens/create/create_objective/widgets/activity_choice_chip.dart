@@ -1,8 +1,8 @@
-import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/stores/activity_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:explora_habitat/services/enum/activity_type.dart';
 
 class ActivityChoiceChip extends StatelessWidget {
   @override

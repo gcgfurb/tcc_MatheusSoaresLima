@@ -1,3 +1,4 @@
+import 'package:explora_habitat/services/enum/field_type.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/ui/screens/response/widgets/custom_field/custom_field_date.dart';
 import 'package:explora_habitat/ui/screens/response/widgets/custom_field/custom_field_decimal.dart';

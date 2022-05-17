@@ -1,53 +1,35 @@
-enum FieldType {
-  text,
-  number,
-  date,
-  decimal,
-  time,
-}
+import 'package:hive/hive.dart';
+import 'package:explora_habitat/services/enum/field_type.dart';
 
-extension FieldTypeExtension on FieldType {
-  String getStringValue() {
-    switch (this) {
-      case FieldType.text:
-        return 'Texto';
-      case FieldType.number:
-        return 'Número';
-      case FieldType.date:
-        return 'Data';
-      case FieldType.decimal:
-        return 'Decimal';
-      case FieldType.time:
-        return 'Hora';
-    }
-  }
+part 'custom_field.g.dart';
 
-  static FieldType getFromString(String type) {
-    switch (type) {
-      case 'Texto':
-        return FieldType.text;
-      case 'Número':
-        return FieldType.number;
-      case 'Data':
-        return FieldType.date;
-      case 'Decimal':
-        return FieldType.decimal;
-      case 'Hora':
-        return FieldType.time;
-      default:
-        throw Exception('Tipo não mapeado');
-    }
-  }
-
-  static List<String> getStringList() {
-    return FieldType.values.map((v) => v.getStringValue()).toList();
-  }
-}
-
-class CustomField {
+@HiveType(typeId: 8)
+class CustomField extends HiveObject {
+  @HiveField(0)
   String? title;
+
+  @HiveField(1)
   FieldType type;
+
+  @HiveField(2)
   dynamic value;
 
-  CustomField({required this.title, required this.type, this.value});
+  @HiveField(3, defaultValue: false)
+  bool required;
+
+  CustomField({
+    required this.title,
+    required this.type,
+    this.value,
+    this.required = false,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'type': type.getValue(),
+      'value': value,
+      'required': required,
+    };
+  }
 }

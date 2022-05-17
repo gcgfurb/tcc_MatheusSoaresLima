@@ -1,18 +1,29 @@
 import 'package:explora_habitat/services/models/objective.dart';
 import 'package:explora_habitat/services/models/user.dart';
+import 'package:hive/hive.dart';
 
-enum ThemeStatus {
-  pending,
-  inProgress,
-  completed,
-}
+import '../enum/theme_status.dart';
 
-class ThemeExplora {
+part 'theme_explora.g.dart';
+
+@HiveType(typeId: 0)
+class ThemeExplora extends HiveObject {
+  @HiveField(0)
   String? id;
+
+  @HiveField(1)
   User? creator;
+
+  @HiveField(2)
   String title;
+
+  @HiveField(3)
   String description;
+
+  @HiveField(4)
   List<Objective> objectives = [];
+
+  @HiveField(5)
   ThemeStatus status;
 
   ThemeExplora({

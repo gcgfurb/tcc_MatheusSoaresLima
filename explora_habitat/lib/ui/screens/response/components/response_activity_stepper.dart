@@ -1,4 +1,4 @@
-import 'package:explora_habitat/services/models/activity.dart';
+import 'package:explora_habitat/services/enum/activity_status.dart';
 import 'package:explora_habitat/services/stores/response_activity_store.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_activity_modal.dart';
@@ -43,7 +43,7 @@ class _ResponseActivityStepperState extends State<ResponseActivityStepper> {
             steps: responseObjectiveStore.objective.activities
                 .map(
                   (activity) => Step(
-                    state: activity.activityStatus == ActivityStatus.pending
+                    state: activity.status == ActivityStatus.pending
                         ? StepState.indexed
                         : StepState.complete,
                     title: Text(

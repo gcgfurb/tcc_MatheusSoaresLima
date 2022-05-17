@@ -1,6 +1,5 @@
 import 'package:explora_habitat/services/models/objective.dart';
-import 'package:explora_habitat/services/models/theme.dart';
-import 'package:explora_habitat/services/stores/page_store.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/services/stores/user_manager_store.dart';
 import 'package:get_it/get_it.dart';
@@ -77,7 +76,7 @@ abstract class _CreateThemeStore with Store {
     } else if (theme!.objectives
         .any((objective) => objective.activities.isEmpty)) {
       themeContentError =
-          'Inclua ao menos uma atividade aos objetivos do tema!';
+      'Inclua ao menos uma atividade aos objetivos do tema!';
       return false;
     }
     return true;
@@ -91,11 +90,12 @@ abstract class _CreateThemeStore with Store {
       final ThemeStore themeStore = GetIt.I<ThemeStore>();
 
       if (index != null) {
-        themeStore.themes.removeAt(index!);
-        themeStore.themes.add(theme!);
+        themeStore.update(index!, theme!);
       } else {
-        theme!.creator = GetIt.I<UserManagerStore>().user;
-        themeStore.themes.add(theme!);
+        theme!.creator = GetIt
+            .I<UserManagerStore>()
+            .user;
+        themeStore.add(theme!);
       }
     }
   }

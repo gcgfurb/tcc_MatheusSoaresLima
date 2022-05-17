@@ -1,3 +1,4 @@
+import 'package:explora_habitat/services/enum/activity_type.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:flutter/material.dart';
 

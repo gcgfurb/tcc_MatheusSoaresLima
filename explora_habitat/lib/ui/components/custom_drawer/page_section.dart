@@ -14,14 +14,14 @@ class PageSection extends StatelessWidget {
     return Column(
       children: [
         PageTile(
-          label: 'Temas',
-          iconData: Icons.list,
+          label: 'Meus Temas',
+          iconData: Icons.my_library_add,
           onTap: () => pageStore.setPage(0),
           highlighted: pageStore.page == 0,
         ),
         PageTile(
-          label: 'Meus Temas',
-          iconData: Icons.my_library_add,
+          label: 'Temas',
+          iconData: Icons.list,
           onTap: () => pageStore.setPage(1),
           highlighted: pageStore.page == 1,
         ),

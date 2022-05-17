@@ -1,7 +1,8 @@
 import 'package:explora_habitat/constants/constants_style.dart';
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/create_objective_store.dart';
 import 'package:explora_habitat/services/stores/create_tema_store.dart';
+import 'package:explora_habitat/services/stores/page_store.dart';
 import 'package:explora_habitat/ui/screens/base/base_screen.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/components/create_objective_container.dart';
 import 'package:explora_habitat/ui/screens/create/create_theme/components/custom_elevated_button.dart';
@@ -11,6 +12,7 @@ import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
 import 'package:explora_habitat/ui/widgets/error_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class CreateObjetivoScreen extends StatelessWidget {
@@ -29,7 +31,12 @@ class CreateObjetivoScreen extends StatelessWidget {
       createThemeStore.setObjectives(createObjetivoStore.objectives);
       createThemeStore.saveTheme();
       if (createThemeStore.themeContentError == null) {
-        Navigator.pop(context);
+        GetIt.I<PageStore>().setPage(0);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BaseScreen(),
+            ));
       }
     }
 

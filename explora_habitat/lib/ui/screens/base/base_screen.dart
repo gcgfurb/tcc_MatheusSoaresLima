@@ -20,11 +20,11 @@ class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
     super.initState();
-
     reaction(
       (_) => pageStore.page,
       (int page) => pageController.jumpToPage(page),
     );
+
   }
 
   @override
@@ -34,8 +34,8 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          ThemeScreen(),
           MyThemeScreen(),
+          ThemeScreen(),
           CreateThemeScreen(),
           Container(
             color: Colors.purple,

@@ -1,4 +1,4 @@
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:flutter/material.dart';
 
 class ThemeDetailsTile extends StatelessWidget {

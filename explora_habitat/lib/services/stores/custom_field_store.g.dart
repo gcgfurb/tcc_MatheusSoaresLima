@@ -24,6 +24,21 @@ mixin _$CustomFieldStore on _CustomFieldStore, Store {
     });
   }
 
+  final _$requiredAtom = Atom(name: '_CustomFieldStore.required');
+
+  @override
+  bool get required {
+    _$requiredAtom.reportRead();
+    return super.required;
+  }
+
+  @override
+  set required(bool value) {
+    _$requiredAtom.reportWrite(value, super.required, () {
+      super.required = value;
+    });
+  }
+
   final _$_CustomFieldStoreActionController =
       ActionController(name: '_CustomFieldStore');
 
@@ -50,9 +65,21 @@ mixin _$CustomFieldStore on _CustomFieldStore, Store {
   }
 
   @override
+  void toggleRequired() {
+    final _$actionInfo = _$_CustomFieldStoreActionController.startAction(
+        name: '_CustomFieldStore.toggleRequired');
+    try {
+      return super.toggleRequired();
+    } finally {
+      _$_CustomFieldStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-customField: ${customField}
+customField: ${customField},
+required: ${required}
     ''';
   }
 }

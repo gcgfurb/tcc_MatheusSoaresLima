@@ -1,4 +1,4 @@
-import 'package:explora_habitat/services/models/custom_field.dart';
+import 'package:explora_habitat/services/enum/field_type.dart';
 import 'package:explora_habitat/services/stores/custom_field_store.dart';
 import 'package:flutter/material.dart';
 

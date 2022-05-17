@@ -1,6 +1,6 @@
-import 'package:explora_habitat/services/models/activity.dart';
-import 'package:explora_habitat/ui/screens/response/widgets/resources/video/videos_field.dart';
+import 'package:explora_habitat/services/enum/activity_type.dart';
 import 'package:explora_habitat/ui/screens/response/widgets/resources/image/images_field.dart';
+import 'package:explora_habitat/ui/screens/response/widgets/resources/video/videos_field.dart';
 import 'package:flutter/material.dart';
 
 class ActivityResources extends StatelessWidget {

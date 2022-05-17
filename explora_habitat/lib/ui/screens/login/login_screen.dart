@@ -1,6 +1,7 @@
 import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/stores/login_store.dart';
+import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/ui/screens/base/base_screen.dart';
 import 'package:explora_habitat/ui/screens/signup/signup_screen.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
@@ -21,13 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    when(
-      (_) => loginStore.loggedIn,
-      () => Navigator.pushReplacement(
+    when((_) => loginStore.loggedIn, () {
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => BaseScreen()),
-      ),
-    );
+      );
+    });
   }
 
   @override

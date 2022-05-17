@@ -1,3 +1,5 @@
+import 'package:explora_habitat/services/enum/activity_type.dart';
+import 'package:explora_habitat/services/enum/field_type.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:mobx/mobx.dart';
 import 'package:explora_habitat/services/models/activity.dart';

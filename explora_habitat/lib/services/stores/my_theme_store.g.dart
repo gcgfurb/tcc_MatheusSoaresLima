@@ -24,10 +24,40 @@ mixin _$MyThemeStore on _MyThemeStore, Store {
     });
   }
 
+  final _$isExpandedAtom = Atom(name: '_MyThemeStore.isExpanded');
+
+  @override
+  bool get isExpanded {
+    _$isExpandedAtom.reportRead();
+    return super.isExpanded;
+  }
+
+  @override
+  set isExpanded(bool value) {
+    _$isExpandedAtom.reportWrite(value, super.isExpanded, () {
+      super.isExpanded = value;
+    });
+  }
+
+  final _$_MyThemeStoreActionController =
+      ActionController(name: '_MyThemeStore');
+
+  @override
+  void toggleExpanded() {
+    final _$actionInfo = _$_MyThemeStoreActionController.startAction(
+        name: '_MyThemeStore.toggleExpanded');
+    try {
+      return super.toggleExpanded();
+    } finally {
+      _$_MyThemeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-theme: ${theme}
+theme: ${theme},
+isExpanded: ${isExpanded}
     ''';
   }
 }

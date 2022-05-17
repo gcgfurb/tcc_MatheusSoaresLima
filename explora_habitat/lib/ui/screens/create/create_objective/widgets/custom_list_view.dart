@@ -1,3 +1,4 @@
+import 'package:explora_habitat/services/enum/field_type.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/stores/activity_store.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/widgets/custom_field_selector.dart';

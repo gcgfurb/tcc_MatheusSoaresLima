@@ -1,5 +1,5 @@
 import 'package:explora_habitat/constants/constants_style.dart';
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/edit_theme_store.dart';
 import 'package:explora_habitat/ui/widgets/update_theme_modal.dart';
 import 'package:flutter/material.dart';

@@ -1,82 +1,36 @@
+import 'package:explora_habitat/services/enum/activity_status.dart';
+import 'package:explora_habitat/services/enum/activity_type.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/models/response_activity.dart';
-import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-enum ActivityType {
-  audio,
-  drawing,
-  photo,
-  video,
-}
+part 'activity.g.dart';
 
-extension ActivityTypeExtension on ActivityType {
-  String getStringValue() {
-    switch (this) {
-      case ActivityType.audio:
-        return 'Áudio';
-      case ActivityType.drawing:
-        return 'Desenho';
-      case ActivityType.photo:
-        return 'Foto';
-      case ActivityType.video:
-        return 'Vídeo';
-    }
-  }
+@HiveType(typeId: 5)
+class Activity extends HiveObject {
+  @HiveField(0)
+  String? id;
 
-  static ActivityType getFromString(String value) {
-    switch (value) {
-      case 'Áudio':
-        return ActivityType.audio;
-      case 'Desenho':
-        return ActivityType.drawing;
-      case 'Foto':
-        return ActivityType.photo;
-      case 'Vídeo':
-        return ActivityType.video;
-      default:
-        throw Exception('Tipo não mapeado');
-    }
-  }
-
-  static List<String> getStringList() {
-    return ActivityType.values.map((v) => v.getStringValue()).toList();
-  }
-
-  static List<IconData> getActivityIcons(Activity activity) {
-    return activity.types.map((type) => _getIconData(type)).toList();
-  }
-
-  static IconData _getIconData(ActivityType type) {
-    switch (type) {
-      case ActivityType.audio:
-        return Icons.audio_file;
-      case ActivityType.drawing:
-        return Icons.draw_outlined;
-      case ActivityType.photo:
-        return Icons.camera_alt;
-      case ActivityType.video:
-        return Icons.video_call;
-    }
-  }
-}
-
-enum ActivityStatus {
-  pending,
-  completed,
-}
-
-class Activity {
+  @HiveField(1)
   String title;
+
+  @HiveField(2)
   List<ActivityType> types = [];
+
+  @HiveField(3)
   List<CustomField> customFields = [];
-  ActivityStatus activityStatus;
+
+  @HiveField(4)
+  ActivityStatus status;
+
+  @HiveField(5)
   ResponseActivity? responseActivity;
 
   Activity({
     required this.title,
     required this.types,
     required this.customFields,
-    this.activityStatus = ActivityStatus.pending,
+    this.status = ActivityStatus.pending,
   });
 
   Activity clone() {

@@ -12,7 +12,6 @@ class UserRepository {
     );
 
     parseUser.set<String>(keyUserName, user.name);
-    parseUser.set<int>(keyUserType, user.type.index);
 
     final response = await parseUser.signUp();
 
@@ -50,5 +49,12 @@ class UserRepository {
       }
     }
     return null;
+  }
+
+  Future<void> logout() async {
+    final ParseUser? parseUser = await ParseUser.currentUser() as ParseUser;
+    if (parseUser != null && parseUser.sessionToken != null) {
+      await parseUser.logout();
+    }
   }
 }

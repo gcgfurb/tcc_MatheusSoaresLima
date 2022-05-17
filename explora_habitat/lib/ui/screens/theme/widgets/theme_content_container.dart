@@ -1,6 +1,6 @@
 import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/services/models/objective.dart';
-import 'package:explora_habitat/services/models/theme.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:flutter/material.dart';
 
 class ThemeContentContainer extends StatelessWidget {

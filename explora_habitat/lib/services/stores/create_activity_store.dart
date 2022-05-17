@@ -9,13 +9,14 @@ class CreateActivityStore = _CreateActivityStore with _$CreateActivityStore;
 
 abstract class _CreateActivityStore with Store {
   _CreateActivityStore(List<Activity> activities, this.objective)
-      : activities = ObservableList.of(activities);
+      : activities = ObservableList.of(activities),
+        keepOrder = objective.keepOrder;
 
   @observable
   bool isExpanded = false;
 
   @observable
-  bool keepOrder = false;
+  bool keepOrder;
 
   @observable
   Objective objective;
