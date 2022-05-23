@@ -45,7 +45,8 @@ mixin _$EditThemeStore on _EditThemeStore, Store {
               name: '_EditThemeStore.themeValid'))
           .value;
 
-  final _$titleAtom = Atom(name: '_EditThemeStore.title');
+  late final _$titleAtom =
+      Atom(name: '_EditThemeStore.title', context: context);
 
   @override
   String get title {
@@ -60,7 +61,8 @@ mixin _$EditThemeStore on _EditThemeStore, Store {
     });
   }
 
-  final _$oldTitleAtom = Atom(name: '_EditThemeStore.oldTitle');
+  late final _$oldTitleAtom =
+      Atom(name: '_EditThemeStore.oldTitle', context: context);
 
   @override
   String get oldTitle {
@@ -75,7 +77,8 @@ mixin _$EditThemeStore on _EditThemeStore, Store {
     });
   }
 
-  final _$descriptionAtom = Atom(name: '_EditThemeStore.description');
+  late final _$descriptionAtom =
+      Atom(name: '_EditThemeStore.description', context: context);
 
   @override
   String get description {
@@ -90,7 +93,8 @@ mixin _$EditThemeStore on _EditThemeStore, Store {
     });
   }
 
-  final _$oldDescriptionAtom = Atom(name: '_EditThemeStore.oldDescription');
+  late final _$oldDescriptionAtom =
+      Atom(name: '_EditThemeStore.oldDescription', context: context);
 
   @override
   String get oldDescription {
@@ -105,8 +109,8 @@ mixin _$EditThemeStore on _EditThemeStore, Store {
     });
   }
 
-  final _$_EditThemeStoreActionController =
-      ActionController(name: '_EditThemeStore');
+  late final _$_EditThemeStoreActionController =
+      ActionController(name: '_EditThemeStore', context: context);
 
   @override
   void setTitle(String value) {

@@ -25,4 +25,34 @@ class ObjectiveRepository {
       return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
+
+  Future<List<Objective>> findAllByTheme(ParseObject themeObject) async {
+    final queryBuilder =
+        QueryBuilder<ParseObject>(ParseObject(keyObjectiveTable))
+          ..whereEqualTo('theme', themeObject.toPointer());
+
+    ParseResponse response = await queryBuilder.query();
+
+    if (response.success) {
+      List<Objective> objectives = [];
+      for (ParseObject result in response.results!) {
+        Objective objective = mapParseToObjective(result);
+        objective.activities =
+            await ActivityRepository().findAllByObjective(result);
+        objectives.add(objective);
+      }
+      return objectives;
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
+
+  Objective mapParseToObjective(ParseObject parseObject) {
+    return Objective(
+      id: parseObject.objectId!,
+      title: parseObject.get<String>(keyObjectiveTitle)!,
+      keepOrder: parseObject.get<bool>(keyObjectiveKeepOrder)!,
+      activities: [],
+    );
+  }
 }

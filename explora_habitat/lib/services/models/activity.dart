@@ -27,6 +27,7 @@ class Activity extends HiveObject {
   ResponseActivity? responseActivity;
 
   Activity({
+    this.id,
     required this.title,
     required this.types,
     required this.customFields,

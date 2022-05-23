@@ -12,6 +12,7 @@ import 'package:explora_habitat/services/models/user.dart';
 import 'package:explora_habitat/services/stores/page_store.dart';
 import 'package:explora_habitat/services/stores/user_manager_store.dart';
 import 'package:explora_habitat/ui/screens/login/login_screen.dart';
+import 'package:explora_habitat/ui/screens/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -59,16 +60,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ExploraHabitat',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          scaffoldBackgroundColor: darkGreen,
-          textSelectionTheme:
-              const TextSelectionThemeData(cursorColor: darkGreen),
-          appBarTheme: const AppBarTheme(elevation: 0, color: darkGreen)),
-      home: LoginScreen(),
+    return FutureBuilder(
+      future: GetIt.I<UserManagerStore>().getCurrentUser(),
+      builder: (_, value) => MaterialApp(
+        title: 'ExploraHabitat',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            scaffoldBackgroundColor: darkGreen,
+            textSelectionTheme:
+                const TextSelectionThemeData(cursorColor: darkGreen),
+            appBarTheme: const AppBarTheme(elevation: 0, color: darkGreen)),
+        home: value.hasData ? UserScreen() : LoginScreen(),
+      ),
     );
   }
 }

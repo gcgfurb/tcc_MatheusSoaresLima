@@ -31,7 +31,8 @@ mixin _$ActivityStore on _ActivityStore, Store {
               name: '_ActivityStore.activityValid'))
           .value;
 
-  final _$activityAtom = Atom(name: '_ActivityStore.activity');
+  late final _$activityAtom =
+      Atom(name: '_ActivityStore.activity', context: context);
 
   @override
   Activity? get activity {
@@ -46,7 +47,8 @@ mixin _$ActivityStore on _ActivityStore, Store {
     });
   }
 
-  final _$editingAtom = Atom(name: '_ActivityStore.editing');
+  late final _$editingAtom =
+      Atom(name: '_ActivityStore.editing', context: context);
 
   @override
   bool get editing {
@@ -61,7 +63,7 @@ mixin _$ActivityStore on _ActivityStore, Store {
     });
   }
 
-  final _$titleAtom = Atom(name: '_ActivityStore.title');
+  late final _$titleAtom = Atom(name: '_ActivityStore.title', context: context);
 
   @override
   String? get title {
@@ -76,8 +78,8 @@ mixin _$ActivityStore on _ActivityStore, Store {
     });
   }
 
-  final _$_ActivityStoreActionController =
-      ActionController(name: '_ActivityStore');
+  late final _$_ActivityStoreActionController =
+      ActionController(name: '_ActivityStore', context: context);
 
   @override
   void setActivity(Activity activity) {

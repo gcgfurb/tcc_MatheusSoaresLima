@@ -17,13 +17,12 @@ class ActivityAdapter extends TypeAdapter<Activity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Activity(
+      id: fields[0] as String?,
       title: fields[1] as String,
       types: (fields[2] as List).cast<ActivityType>(),
       customFields: (fields[3] as List).cast<CustomField>(),
       status: fields[4] as ActivityStatus,
-    )
-      ..id = fields[0] as String?
-      ..responseActivity = fields[5] as ResponseActivity?;
+    )..responseActivity = fields[5] as ResponseActivity?;
   }
 
   @override

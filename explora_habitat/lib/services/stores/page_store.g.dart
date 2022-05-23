@@ -9,7 +9,7 @@ part of 'page_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PageStore on _PageStore, Store {
-  final _$pageAtom = Atom(name: '_PageStore.page');
+  late final _$pageAtom = Atom(name: '_PageStore.page', context: context);
 
   @override
   int get page {
@@ -24,7 +24,8 @@ mixin _$PageStore on _PageStore, Store {
     });
   }
 
-  final _$_PageStoreActionController = ActionController(name: '_PageStore');
+  late final _$_PageStoreActionController =
+      ActionController(name: '_PageStore', context: context);
 
   @override
   void setPage(int value) {

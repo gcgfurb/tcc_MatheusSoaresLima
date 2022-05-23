@@ -17,10 +17,11 @@ class ObjectiveAdapter extends TypeAdapter<Objective> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Objective(
+      id: fields[0] as String?,
       title: fields[1] as String,
       activities: (fields[2] as List).cast<Activity>(),
       keepOrder: fields[3] as bool,
-    )..id = fields[0] as String?;
+    );
   }
 
   @override

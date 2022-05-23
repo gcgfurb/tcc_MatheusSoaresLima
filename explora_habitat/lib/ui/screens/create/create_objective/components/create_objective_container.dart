@@ -11,8 +11,13 @@ import 'package:provider/provider.dart';
 class CreateObjectiveContainer extends StatelessWidget {
   final Objective objective;
   final Function()? onRemove;
+  final bool readOnly;
 
-  CreateObjectiveContainer({required this.objective, required this.onRemove});
+  CreateObjectiveContainer({
+    required this.objective,
+    required this.onRemove,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,32 +50,35 @@ class CreateObjectiveContainer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Column(
-                  children: [
-                    InkWell(
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (_) => UpdateObjectiveModal(objectiveStore),
-                      ),
-                      child: Ink(
-                        child: const Icon(
-                          Icons.edit,
-                          color: darkGreen,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    InkWell(
-                      onTap: onRemove,
-                      child: Ink(
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                !readOnly
+                    ? Column(
+                        children: [
+                          InkWell(
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  UpdateObjectiveModal(objectiveStore),
+                            ),
+                            child: Ink(
+                              child: const Icon(
+                                Icons.edit,
+                                color: darkGreen,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: onRemove,
+                            child: Ink(
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container(),
               ],
             ),
             Row(
@@ -83,6 +91,7 @@ class CreateObjectiveContainer extends StatelessWidget {
                   ),
                   child: ActivitiesContainer(
                     objective: objectiveStore.objective,
+                    readOnly: readOnly,
                   ),
                 ),
               ],

@@ -24,7 +24,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
           name: '_ResponseObjectiveStore.canInitAcitivity'))
       .value;
 
-  final _$objectiveAtom = Atom(name: '_ResponseObjectiveStore.objective');
+  late final _$objectiveAtom =
+      Atom(name: '_ResponseObjectiveStore.objective', context: context);
 
   @override
   Objective get objective {
@@ -39,7 +40,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     });
   }
 
-  final _$currentStepAtom = Atom(name: '_ResponseObjectiveStore.currentStep');
+  late final _$currentStepAtom =
+      Atom(name: '_ResponseObjectiveStore.currentStep', context: context);
 
   @override
   int get currentStep {
@@ -54,7 +56,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     });
   }
 
-  final _$isExpandedAtom = Atom(name: '_ResponseObjectiveStore.isExpanded');
+  late final _$isExpandedAtom =
+      Atom(name: '_ResponseObjectiveStore.isExpanded', context: context);
 
   @override
   bool get isExpanded {
@@ -69,8 +72,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     });
   }
 
-  final _$_ResponseObjectiveStoreActionController =
-      ActionController(name: '_ResponseObjectiveStore');
+  late final _$_ResponseObjectiveStoreActionController =
+      ActionController(name: '_ResponseObjectiveStore', context: context);
 
   @override
   void setCurrentStep(int value) {

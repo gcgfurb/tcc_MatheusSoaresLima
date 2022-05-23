@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomReorderableListView extends StatelessWidget {
+  final bool readOnly;
+
+  CustomReorderableListView({this.readOnly = false});
+
   @override
   Widget build(BuildContext context) {
     final CreateActivityStore createActivityStore =
@@ -19,7 +23,7 @@ class CustomReorderableListView extends StatelessWidget {
         itemCount: createActivityStore.activities.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        onReorder: createActivityStore.reOrder,
+        onReorder: !readOnly ? createActivityStore.reOrder : (x, y) {},
         itemBuilder: (_, index) => Card(
             key: Key('$index'),
             elevation: 8,
@@ -28,9 +32,11 @@ class CustomReorderableListView extends StatelessWidget {
             color: Colors.white,
             child: ListTileActivityDetails(
               activity: createActivityStore.activities[index],
-              onDelete: () {
-                createActivityStore.activities.removeAt(index);
-              },
+              onDelete: !readOnly
+                  ? () {
+                      createActivityStore.activities.removeAt(index);
+                    }
+                  : null,
               onTap: () => _showUpdateActivityDialog(
                   context, createActivityStore, index),
             )),
@@ -45,7 +51,9 @@ class CustomReorderableListView extends StatelessWidget {
       builder: (_) => Provider(
         create: (_) =>
             ActivityStore(activity: createActivityStore.activities[index]),
-        child: CreateActivityModal(),
+        child: CreateActivityModal(
+          readOnly: readOnly,
+        ),
       ),
     );
     if (activity != null) {

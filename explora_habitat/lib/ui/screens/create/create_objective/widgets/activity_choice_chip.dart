@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:explora_habitat/services/enum/activity_type.dart';
 
 class ActivityChoiceChip extends StatelessWidget {
+  final bool readOnly;
+
+  ActivityChoiceChip({this.readOnly = false});
+
   @override
   Widget build(BuildContext context) {
     final ActivityStore activityStore = Provider.of<ActivityStore>(context);
@@ -18,9 +22,11 @@ class ActivityChoiceChip extends StatelessWidget {
         child: Observer(
           builder: (_) => ChoiceChip(
             selectedColor: Colors.green,
-            label: Text(chips[index].activityType.getStringValue()),
+            label: Text(chips[index].activityType.description),
             selected: chips[index].isSelected,
-            onSelected: (bool value) => activityStore.selectAcitivyType(index),
+            onSelected: !readOnly
+                ? (bool value) => activityStore.selectAcitivyType(index)
+                : null,
           ),
         ),
       ),

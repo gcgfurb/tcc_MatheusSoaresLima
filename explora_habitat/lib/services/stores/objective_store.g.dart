@@ -24,7 +24,8 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
               name: '_ObjectiveStore.titleError'))
           .value;
 
-  final _$objectiveAtom = Atom(name: '_ObjectiveStore.objective');
+  late final _$objectiveAtom =
+      Atom(name: '_ObjectiveStore.objective', context: context);
 
   @override
   Objective get objective {
@@ -39,7 +40,8 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
     });
   }
 
-  final _$titleAtom = Atom(name: '_ObjectiveStore.title');
+  late final _$titleAtom =
+      Atom(name: '_ObjectiveStore.title', context: context);
 
   @override
   String get title {
@@ -54,7 +56,8 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
     });
   }
 
-  final _$oldTitleAtom = Atom(name: '_ObjectiveStore.oldTitle');
+  late final _$oldTitleAtom =
+      Atom(name: '_ObjectiveStore.oldTitle', context: context);
 
   @override
   String get oldTitle {
@@ -69,8 +72,8 @@ mixin _$ObjectiveStore on _ObjectiveStore, Store {
     });
   }
 
-  final _$_ObjectiveStoreActionController =
-      ActionController(name: '_ObjectiveStore');
+  late final _$_ObjectiveStoreActionController =
+      ActionController(name: '_ObjectiveStore', context: context);
 
   @override
   void setTitle(String value) {

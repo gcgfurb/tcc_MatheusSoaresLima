@@ -1,5 +1,6 @@
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
+import 'package:explora_habitat/services/stores/synced_theme_store.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/services/stores/user_manager_store.dart';
 import 'package:flutter/foundation.dart';
@@ -62,6 +63,9 @@ abstract class _LoginStore with Store {
 
       GetIt.I.registerSingleton(ThemeStore());
       await GetIt.I<ThemeStore>().initThemesBox(userMapped.id!);
+
+      GetIt.I.registerSingleton(SyncedThemeStore());
+      await GetIt.I<SyncedThemeStore>().initThemesBox(userMapped.id!);
 
       loggedIn = true;
     } catch (e) {

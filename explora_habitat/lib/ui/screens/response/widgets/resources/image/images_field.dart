@@ -6,6 +6,7 @@ import 'package:explora_habitat/ui/screens/response/widgets/resources/image/imag
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
 
 class ImagesField extends StatelessWidget {
@@ -14,9 +15,9 @@ class ImagesField extends StatelessWidget {
     final ResponseActivityStore responseActivityStore =
         Provider.of<ResponseActivityStore>(context);
 
-    void onImageSelected(File? image) {
+    void onImageSelected(CroppedFile? image) {
       if (image != null) {
-        responseActivityStore.images.add(image);
+        responseActivityStore.images.add(File(image.path));
       }
 
       Navigator.pop(context);

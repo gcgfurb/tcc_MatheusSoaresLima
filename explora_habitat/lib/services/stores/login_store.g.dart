@@ -31,7 +31,7 @@ mixin _$LoginStore on _LoginStore, Store {
               name: '_LoginStore.loginPressed'))
       .value;
 
-  final _$emailAtom = Atom(name: '_LoginStore.email');
+  late final _$emailAtom = Atom(name: '_LoginStore.email', context: context);
 
   @override
   String? get email {
@@ -46,7 +46,8 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_LoginStore.password');
+  late final _$passwordAtom =
+      Atom(name: '_LoginStore.password', context: context);
 
   @override
   String? get password {
@@ -61,7 +62,8 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_LoginStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_LoginStore.loading', context: context);
 
   @override
   bool get loading {
@@ -76,7 +78,7 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$errorAtom = Atom(name: '_LoginStore.error');
+  late final _$errorAtom = Atom(name: '_LoginStore.error', context: context);
 
   @override
   String? get error {
@@ -91,7 +93,8 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$loggedInAtom = Atom(name: '_LoginStore.loggedIn');
+  late final _$loggedInAtom =
+      Atom(name: '_LoginStore.loggedIn', context: context);
 
   @override
   bool get loggedIn {
@@ -106,14 +109,16 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$_loginAsyncAction = AsyncAction('_LoginStore._login');
+  late final _$_loginAsyncAction =
+      AsyncAction('_LoginStore._login', context: context);
 
   @override
   Future<void> _login() {
     return _$_loginAsyncAction.run(() => super._login());
   }
 
-  final _$_LoginStoreActionController = ActionController(name: '_LoginStore');
+  late final _$_LoginStoreActionController =
+      ActionController(name: '_LoginStore', context: context);
 
   @override
   void setEmail(String value) {

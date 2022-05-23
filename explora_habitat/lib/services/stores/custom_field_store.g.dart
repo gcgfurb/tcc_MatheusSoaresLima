@@ -9,7 +9,8 @@ part of 'custom_field_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CustomFieldStore on _CustomFieldStore, Store {
-  final _$customFieldAtom = Atom(name: '_CustomFieldStore.customField');
+  late final _$customFieldAtom =
+      Atom(name: '_CustomFieldStore.customField', context: context);
 
   @override
   CustomField? get customField {
@@ -24,7 +25,8 @@ mixin _$CustomFieldStore on _CustomFieldStore, Store {
     });
   }
 
-  final _$requiredAtom = Atom(name: '_CustomFieldStore.required');
+  late final _$requiredAtom =
+      Atom(name: '_CustomFieldStore.required', context: context);
 
   @override
   bool get required {
@@ -39,8 +41,8 @@ mixin _$CustomFieldStore on _CustomFieldStore, Store {
     });
   }
 
-  final _$_CustomFieldStoreActionController =
-      ActionController(name: '_CustomFieldStore');
+  late final _$_CustomFieldStoreActionController =
+      ActionController(name: '_CustomFieldStore', context: context);
 
   @override
   void setFieldType(FieldType value) {

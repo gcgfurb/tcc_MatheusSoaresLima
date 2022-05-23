@@ -51,7 +51,7 @@ mixin _$SignupStore on _SignupStore, Store {
               name: '_SignupStore.signUpPressed'))
       .value;
 
-  final _$nameAtom = Atom(name: '_SignupStore.name');
+  late final _$nameAtom = Atom(name: '_SignupStore.name', context: context);
 
   @override
   String? get name {
@@ -66,7 +66,7 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: '_SignupStore.email');
+  late final _$emailAtom = Atom(name: '_SignupStore.email', context: context);
 
   @override
   String? get email {
@@ -81,7 +81,7 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$pass1Atom = Atom(name: '_SignupStore.pass1');
+  late final _$pass1Atom = Atom(name: '_SignupStore.pass1', context: context);
 
   @override
   String? get pass1 {
@@ -96,7 +96,7 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$pass2Atom = Atom(name: '_SignupStore.pass2');
+  late final _$pass2Atom = Atom(name: '_SignupStore.pass2', context: context);
 
   @override
   String? get pass2 {
@@ -111,7 +111,8 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_SignupStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_SignupStore.loading', context: context);
 
   @override
   bool get loading {
@@ -126,7 +127,7 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$errorAtom = Atom(name: '_SignupStore.error');
+  late final _$errorAtom = Atom(name: '_SignupStore.error', context: context);
 
   @override
   String? get error {
@@ -141,7 +142,8 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$loggedInAtom = Atom(name: '_SignupStore.loggedIn');
+  late final _$loggedInAtom =
+      Atom(name: '_SignupStore.loggedIn', context: context);
 
   @override
   bool get loggedIn {
@@ -156,14 +158,16 @@ mixin _$SignupStore on _SignupStore, Store {
     });
   }
 
-  final _$_signUpAsyncAction = AsyncAction('_SignupStore._signUp');
+  late final _$_signUpAsyncAction =
+      AsyncAction('_SignupStore._signUp', context: context);
 
   @override
   Future<void> _signUp() {
     return _$_signUpAsyncAction.run(() => super._signUp());
   }
 
-  final _$_SignupStoreActionController = ActionController(name: '_SignupStore');
+  late final _$_SignupStoreActionController =
+      ActionController(name: '_SignupStore', context: context);
 
   @override
   void setName(String value) {

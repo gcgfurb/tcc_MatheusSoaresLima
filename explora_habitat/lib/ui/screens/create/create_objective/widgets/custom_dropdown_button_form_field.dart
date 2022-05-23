@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 
 class CustomDropdownButtonFormField extends StatelessWidget {
   final CustomFieldStore customFieldStore;
+  final bool readOnly;
 
-  CustomDropdownButtonFormField(this.customFieldStore);
+  CustomDropdownButtonFormField(
+    this.customFieldStore, {
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: DropdownButtonFormField<String>(
-        value: customFieldStore.customField!.type.getStringValue(),
+        value: customFieldStore.customField!.type.description,
         hint: const Text(
           'Tipo',
           style: TextStyle(
@@ -31,6 +35,7 @@ class CustomDropdownButtonFormField extends StatelessWidget {
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
+            enabled: !readOnly,
             child: Text(value),
           );
         }).toList(),

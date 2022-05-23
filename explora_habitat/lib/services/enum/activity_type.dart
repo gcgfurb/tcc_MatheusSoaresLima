@@ -7,44 +7,23 @@ part 'activity_type.g.dart';
 @HiveType(typeId: 7)
 enum ActivityType {
   @HiveField(0)
-  audio,
+  audio('audio', 'Áudio'),
 
   @HiveField(1)
-  drawing,
+  drawing('drawing', 'Desenho'),
 
   @HiveField(2)
-  photo,
+  photo('photo', 'Foto'),
 
   @HiveField(3)
-  video,
+  video('video', 'Vídeo');
+
+  const ActivityType(this.value, this.description);
+  final String value;
+  final String description;
 }
 
 extension ActivityTypeExtension on ActivityType {
-  String getStringValue() {
-    switch (this) {
-      case ActivityType.audio:
-        return 'Áudio';
-      case ActivityType.drawing:
-        return 'Desenho';
-      case ActivityType.photo:
-        return 'Foto';
-      case ActivityType.video:
-        return 'Vídeo';
-    }
-  }
-
-  String getValue() {
-    switch (this) {
-      case ActivityType.audio:
-        return 'audio';
-      case ActivityType.drawing:
-        return 'drawing';
-      case ActivityType.photo:
-        return 'photo';
-      case ActivityType.video:
-        return 'video';
-    }
-  }
 
   static ActivityType getFromString(String value) {
     switch (value) {
@@ -62,7 +41,7 @@ extension ActivityTypeExtension on ActivityType {
   }
 
   static List<String> getStringList() {
-    return ActivityType.values.map((v) => v.getStringValue()).toList();
+    return ActivityType.values.map((v) => v.description).toList();
   }
 
   static List<IconData> getActivityIcons(Activity activity) {

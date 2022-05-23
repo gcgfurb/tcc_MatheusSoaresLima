@@ -45,7 +45,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
               name: '_CreateThemeStore.themeValid'))
           .value;
 
-  final _$titleAtom = Atom(name: '_CreateThemeStore.title');
+  late final _$titleAtom =
+      Atom(name: '_CreateThemeStore.title', context: context);
 
   @override
   String? get title {
@@ -60,7 +61,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$descriptionAtom = Atom(name: '_CreateThemeStore.description');
+  late final _$descriptionAtom =
+      Atom(name: '_CreateThemeStore.description', context: context);
 
   @override
   String? get description {
@@ -75,7 +77,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$themeAtom = Atom(name: '_CreateThemeStore.theme');
+  late final _$themeAtom =
+      Atom(name: '_CreateThemeStore.theme', context: context);
 
   @override
   ThemeExplora? get theme {
@@ -90,7 +93,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$indexAtom = Atom(name: '_CreateThemeStore.index');
+  late final _$indexAtom =
+      Atom(name: '_CreateThemeStore.index', context: context);
 
   @override
   int? get index {
@@ -105,8 +109,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$themeContentErrorAtom =
-      Atom(name: '_CreateThemeStore.themeContentError');
+  late final _$themeContentErrorAtom =
+      Atom(name: '_CreateThemeStore.themeContentError', context: context);
 
   @override
   String? get themeContentError {
@@ -121,8 +125,8 @@ mixin _$CreateThemeStore on _CreateThemeStore, Store {
     });
   }
 
-  final _$_CreateThemeStoreActionController =
-      ActionController(name: '_CreateThemeStore');
+  late final _$_CreateThemeStoreActionController =
+      ActionController(name: '_CreateThemeStore', context: context);
 
   @override
   void setTitle(String value) {

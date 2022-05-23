@@ -10,6 +10,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CreateActivityModal extends StatelessWidget {
+
+  final bool readOnly;
+
+  CreateActivityModal({this.readOnly = false});
+
   @override
   Widget build(BuildContext context) {
     final ActivityStore activityStore = Provider.of<ActivityStore>(context);
@@ -33,7 +38,7 @@ class CreateActivityModal extends StatelessWidget {
                 color: Colors.lightGreen,
               ),
               child: const Text(
-                'Nova Atividade',
+                'Atividade',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -56,6 +61,7 @@ class CreateActivityModal extends StatelessWidget {
                         errorText: activityStore.titleError,
                         inputType: TextInputType.text,
                         onChanged: activityStore.setTitle,
+                        enabled: !readOnly,
                       ),
                     ),
                   ),
@@ -64,13 +70,13 @@ class CreateActivityModal extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: SizedBox(
                       height: 40,
-                      child: ActivityChoiceChip(),
+                      child: ActivityChoiceChip(readOnly: readOnly),
                     ),
                   ),
                   const TextLabel('Perguntas'),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 32),
-                    child: CustomListView(),
+                    child: CustomListView(readOnly: readOnly),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +93,7 @@ class CreateActivityModal extends StatelessWidget {
                         builder: (_) => CustomMaterialButtom(
                           color: Colors.green,
                           text: 'Salvar',
-                          onPressed: activityStore.activityValid
+                          onPressed: activityStore.activityValid && !readOnly
                               ? () {
                                   final createdActivity =
                                       activityStore.createActivity();

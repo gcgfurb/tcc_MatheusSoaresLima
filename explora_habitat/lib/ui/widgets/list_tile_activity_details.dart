@@ -7,7 +7,11 @@ class ListTileActivityDetails extends StatelessWidget {
   final Function()? onTap;
   final Function()? onDelete;
 
-  ListTileActivityDetails({required this.activity, this.onTap, this.onDelete});
+  ListTileActivityDetails({
+    required this.activity,
+    this.onTap,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {

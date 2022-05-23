@@ -9,7 +9,8 @@ part of 'create_activity_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CreateActivityStore on _CreateActivityStore, Store {
-  final _$isExpandedAtom = Atom(name: '_CreateActivityStore.isExpanded');
+  late final _$isExpandedAtom =
+      Atom(name: '_CreateActivityStore.isExpanded', context: context);
 
   @override
   bool get isExpanded {
@@ -24,7 +25,8 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
     });
   }
 
-  final _$keepOrderAtom = Atom(name: '_CreateActivityStore.keepOrder');
+  late final _$keepOrderAtom =
+      Atom(name: '_CreateActivityStore.keepOrder', context: context);
 
   @override
   bool get keepOrder {
@@ -39,7 +41,8 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
     });
   }
 
-  final _$objectiveAtom = Atom(name: '_CreateActivityStore.objective');
+  late final _$objectiveAtom =
+      Atom(name: '_CreateActivityStore.objective', context: context);
 
   @override
   Objective get objective {
@@ -54,8 +57,8 @@ mixin _$CreateActivityStore on _CreateActivityStore, Store {
     });
   }
 
-  final _$_CreateActivityStoreActionController =
-      ActionController(name: '_CreateActivityStore');
+  late final _$_CreateActivityStoreActionController =
+      ActionController(name: '_CreateActivityStore', context: context);
 
   @override
   void toggleExpanded() {

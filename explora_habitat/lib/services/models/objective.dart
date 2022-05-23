@@ -19,6 +19,7 @@ class Objective extends HiveObject{
   bool keepOrder;
 
   Objective({
+    this.id,
     required this.title,
     required this.activities,
     this.keepOrder = false,

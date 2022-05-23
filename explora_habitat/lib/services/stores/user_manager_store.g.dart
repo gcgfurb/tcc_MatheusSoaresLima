@@ -17,7 +17,8 @@ mixin _$UserManagerStore on _UserManagerStore, Store {
               name: '_UserManagerStore.isLoggedIn'))
           .value;
 
-  final _$userAtom = Atom(name: '_UserManagerStore.user');
+  late final _$userAtom =
+      Atom(name: '_UserManagerStore.user', context: context);
 
   @override
   User? get user {
@@ -32,8 +33,8 @@ mixin _$UserManagerStore on _UserManagerStore, Store {
     });
   }
 
-  final _$_UserManagerStoreActionController =
-      ActionController(name: '_UserManagerStore');
+  late final _$_UserManagerStoreActionController =
+      ActionController(name: '_UserManagerStore', context: context);
 
   @override
   void setUser(User? value) {

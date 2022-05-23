@@ -11,8 +11,12 @@ import 'package:provider/provider.dart';
 
 class ActivitiesContainer extends StatelessWidget {
   final Objective objective;
+  final bool readOnly;
 
-  ActivitiesContainer({required this.objective});
+  ActivitiesContainer({
+    required this.objective,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,9 @@ class ActivitiesContainer extends StatelessWidget {
                     children: [
                       createActivityStore.activities.isEmpty
                           ? const EmptyActivitiesContainer()
-                          : CustomReorderableListView(),
+                          : CustomReorderableListView(
+                              readOnly: readOnly,
+                            ),
                       createActivityStore.activities.isEmpty
                           ? Container()
                           : Observer(
@@ -62,11 +68,14 @@ class ActivitiesContainer extends StatelessWidget {
                                 children: [
                                   Checkbox(
                                     value: createActivityStore.keepOrder,
-                                    onChanged: (value) {
-                                      createActivityStore.toggleKeepOrder();
-                                      objective.keepOrder =
-                                          createActivityStore.keepOrder;
-                                    },
+                                    onChanged: !readOnly
+                                        ? (value) {
+                                            createActivityStore
+                                                .toggleKeepOrder();
+                                            objective.keepOrder =
+                                                createActivityStore.keepOrder;
+                                          }
+                                        : null,
                                   ),
                                   const Flexible(
                                     child: Text(
@@ -75,16 +84,18 @@ class ActivitiesContainer extends StatelessWidget {
                                 ],
                               ),
                             ),
-                      MaterialButton(
-                        onPressed: () => _showAddActivityDialog(
-                            context, createActivityStore),
-                        color: Colors.green,
-                        shape: kRoundedRectangleBorder,
-                        child: const Text(
-                          '+ Adicionar',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                      !readOnly
+                          ? MaterialButton(
+                              onPressed: () => _showAddActivityDialog(
+                                  context, createActivityStore),
+                              color: Colors.green,
+                              shape: kRoundedRectangleBorder,
+                              child: const Text(
+                                '+ Adicionar',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
           ),
@@ -100,7 +111,9 @@ class ActivitiesContainer extends StatelessWidget {
       builder: (_) => Provider(
         create: (_) => ActivityStore(
             activity: Activity(title: '', types: [], customFields: [])),
-        child: CreateActivityModal(),
+        child: CreateActivityModal(
+          readOnly: readOnly,
+        ),
       ),
     );
     if (activity != null) {

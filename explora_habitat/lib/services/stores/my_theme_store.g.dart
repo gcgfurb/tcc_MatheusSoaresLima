@@ -9,7 +9,7 @@ part of 'my_theme_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MyThemeStore on _MyThemeStore, Store {
-  final _$themeAtom = Atom(name: '_MyThemeStore.theme');
+  late final _$themeAtom = Atom(name: '_MyThemeStore.theme', context: context);
 
   @override
   ThemeExplora get theme {
@@ -24,7 +24,8 @@ mixin _$MyThemeStore on _MyThemeStore, Store {
     });
   }
 
-  final _$isExpandedAtom = Atom(name: '_MyThemeStore.isExpanded');
+  late final _$isExpandedAtom =
+      Atom(name: '_MyThemeStore.isExpanded', context: context);
 
   @override
   bool get isExpanded {
@@ -39,8 +40,8 @@ mixin _$MyThemeStore on _MyThemeStore, Store {
     });
   }
 
-  final _$_MyThemeStoreActionController =
-      ActionController(name: '_MyThemeStore');
+  late final _$_MyThemeStoreActionController =
+      ActionController(name: '_MyThemeStore', context: context);
 
   @override
   void toggleExpanded() {

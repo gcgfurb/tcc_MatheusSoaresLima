@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/theme_repository.dart';
+import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,7 +13,9 @@ part 'theme_store.g.dart';
 class ThemeStore = _ThemeStore with _$ThemeStore;
 
 abstract class _ThemeStore with Store {
-  ObservableList<ThemeExplora> themes = ObservableList();
+
+  @observable
+  bool loading = false;
 
   late final Box<ThemeExplora> myThemesBox;
 
@@ -22,9 +25,6 @@ abstract class _ThemeStore with Store {
     Hive.init(result.path);
     myThemesBox = await Hive.openBox<ThemeExplora>('themes.$userId');
   }
-
-  void setThemes(List<ThemeExplora> values) =>
-      themes = ObservableList.of(values);
 
   void add(ThemeExplora theme) => myThemesBox.add(theme);
 
@@ -49,5 +49,15 @@ abstract class _ThemeStore with Store {
     var theme = myThemesBox.get(index);
     await ThemeRepository().save(theme!);
     update(index, theme);
+  }
+
+  @action
+  Future<void> syncThemes() async {
+    loading = true;
+    await myThemesBox.clear();
+    var currentUser = await UserRepository().currentUser();
+    var themes = await ThemeRepository().findAllByCreator(currentUser!);
+    myThemesBox.addAll(themes);
+    loading = false;
   }
 }

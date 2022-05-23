@@ -6,7 +6,6 @@ import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/ui/components/custom_drawer/custom_drawer.dart';
 import 'package:explora_habitat/ui/components/qr_code_modal.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/create_objective_screen.dart';
-import 'package:explora_habitat/ui/screens/theme/components/expandable_fab.dart';
 import 'package:explora_habitat/ui/screens/theme/components/my_theme_card.dart';
 import 'package:explora_habitat/ui/widgets/custom_alert_dialog.dart';
 import 'package:explora_habitat/ui/widgets/logout_button.dart';
@@ -14,33 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class MyThemeScreen extends StatefulWidget {
-  static const _actionTitles = ['Sincronizar temas', 'Ler QRCode'];
-
   @override
   State<MyThemeScreen> createState() => _MyThemeScreenState();
 }
 
 class _MyThemeScreenState extends State<MyThemeScreen> {
-  void _showAction(BuildContext context, int index) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Text(MyThemeScreen._actionTitles[index]),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Fechar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -50,7 +29,7 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
   Widget build(BuildContext context) {
     final ThemeStore themeStore = GetIt.I<ThemeStore>();
 
-    void editTheme(int index) {
+    void openTheme(int index, bool readOnly) {
       var theme = themeStore.myThemesBox.get(index)!;
 
       final CreateThemeStore createThemeStore = CreateThemeStore()
@@ -69,8 +48,27 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
                   .toList()),
             child: CreateObjetivoScreen(
               createThemeStore: createThemeStore,
+              readOnly: readOnly,
             ),
           ),
+        ),
+      );
+    }
+
+    void _syncThemes(BuildContext context, int index) {
+      showDialog<void>(
+        context: context,
+        builder: (_) => CustomAlertDialog(
+          title: 'Buscar temas sincronizados',
+          body: const Text(
+            'Ao realizar este processo temas não sincronizados serão descartados. Tem certeza que deseja prosseguir?',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            themeStore.syncThemes();
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
         ),
       );
     }
@@ -92,24 +90,23 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
               ));
     }
 
-    void syncTheme(int index) {
-      showDialog(
-          context: context,
-          builder: (context) => CustomAlertDialog(
-                title: 'Sincronização de tema',
-                body: const Text(
-                  'Tem certeza que deseja sincronizar este tema? Após sincronizado, o tema não poderá ser editado ou excluido!',
-                  style: TextStyle(fontSize: 18),
-                ),
-                onSave: () {
-                  themeStore.sync(index);
-                  Navigator.pop(context);
-                },
-                onCancel: () => Navigator.pop(context),
-              ));
+    void syncTheme(int index) async {
+      await showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Sincronização de tema',
+          body: const Text(
+            'Tem certeza que deseja sincronizar este tema? Após sincronizado, o tema não poderá ser editado ou excluido!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            themeStore.sync(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
     }
-
-    void readOnly(int index) {}
 
     void generateQrCode(int index) {
       var theme = themeStore.myThemesBox.get(index)!;
@@ -128,26 +125,20 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
           LogoutButton(),
         ],
       ),
-      floatingActionButton: ExpandableFab(
-        distance: 70,
-        children: [
-          ActionButton(
-            onPressed: () => _showAction(context, 0),
-            icon: const Icon(Icons.sync),
-          ),
-          ActionButton(
-            onPressed: () => _showAction(context, 1),
-            icon: const Icon(Icons.qr_code_scanner),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _syncThemes(context, 0),
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.sync),
       ),
       body: ValueListenableBuilder(
         valueListenable: themeStore.myThemesBox.listenable(),
         builder: (context, Box<ThemeExplora> box, widget) {
-          if (box.isEmpty) {
+          if (themeStore.loading) {
             return const Center(
-              child: Text('Empty'),
+              child: CircularProgressIndicator(),
             );
+          } else if (box.isEmpty) {
+            return Container();
           } else {
             return ListView.builder(
               itemCount: box.length,
@@ -156,10 +147,10 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
                 child: MyThemeCard(
                   onDelete: () => deleteTheme(box.keyAt(index)!),
                   onCopy: () => themeStore.copy(box.keyAt(index)!),
-                  onEdit: () => editTheme(box.keyAt(index)!),
+                  onEdit: () => openTheme(box.keyAt(index)!, false),
                   onSync: () => syncTheme(box.keyAt(index)!),
                   onQrCode: () => generateQrCode(box.keyAt(index)!),
-                  onReadOnly: () => readOnly(box.keyAt(index)!),
+                  onReadOnly: () => openTheme(box.keyAt(index)!, true),
                 ),
               ),
             );

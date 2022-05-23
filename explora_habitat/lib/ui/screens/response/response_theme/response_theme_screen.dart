@@ -1,7 +1,9 @@
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
+import 'package:explora_habitat/ui/components/google_map/custom_google_map.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_objective_component.dart';
 import 'package:explora_habitat/ui/widgets/card_theme_details.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,7 @@ class ResponseThemeScreen extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             Column(
               children: [
@@ -46,7 +49,7 @@ class ResponseThemeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(),
+            CustomGoogleMap(),
           ],
         ),
       ),

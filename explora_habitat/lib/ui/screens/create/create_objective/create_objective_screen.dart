@@ -17,9 +17,13 @@ import 'package:provider/provider.dart';
 
 class CreateObjetivoScreen extends StatelessWidget {
   final CreateThemeStore createThemeStore;
+  final bool readOnly;
   final TextEditingController _textEditingController = TextEditingController();
 
-  CreateObjetivoScreen({required this.createThemeStore});
+  CreateObjetivoScreen({
+    required this.createThemeStore,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +46,23 @@ class CreateObjetivoScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicione objetivos'),
+        title: Text(readOnly ? 'Objetivos' : 'Adicione objetivos'),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: InkWell(
-              customBorder: const CircleBorder(),
-              onTap: saveTheme,
-              child: Ink(
-                child: const Icon(
-                  Icons.save,
-                ),
-              ),
-            ),
-          ),
+          !readOnly
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: saveTheme,
+                    child: Ink(
+                      child: const Icon(
+                        Icons.save,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
       body: Container(
@@ -75,51 +81,53 @@ class CreateObjetivoScreen extends StatelessWidget {
                 ),
                 CardThemeDetails(
                   theme: theme,
-                  editing: true,
+                  editing: !readOnly,
                 ),
-                Card(
-                  elevation: 8,
-                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  shape: kRoundedRectangleBorder,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Observer(
-                                builder: (_) => CustomFormField(
-                                  controller: _textEditingController,
-                                  labelText: 'Novo Objetivo',
-                                  textColor: Colors.black,
-                                  errorText: null,
-                                  inputType: TextInputType.text,
-                                  onChanged: createObjetivoStore.setTitle,
-                                ),
+                !readOnly
+                    ? Card(
+                        elevation: 8,
+                        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        shape: kRoundedRectangleBorder,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: Observer(
+                                      builder: (_) => CustomFormField(
+                                        controller: _textEditingController,
+                                        labelText: 'Novo Objetivo',
+                                        textColor: Colors.black,
+                                        errorText: null,
+                                        inputType: TextInputType.text,
+                                        onChanged: createObjetivoStore.setTitle,
+                                      ),
+                                    ),
+                                  ),
+                                  Observer(
+                                    builder: (_) => CustomElevatedButton(
+                                      icon: Icons.add_task,
+                                      iconSize: 20,
+                                      onPressed: !createObjetivoStore.titleValid
+                                          ? null
+                                          : () {
+                                              createObjetivoStore.addNewItem();
+                                              _textEditingController.clear();
+                                            },
+                                      size: const Size(40, 40),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Observer(
-                              builder: (_) => CustomElevatedButton(
-                                icon: Icons.add_task,
-                                iconSize: 20,
-                                onPressed: !createObjetivoStore.titleValid
-                                    ? null
-                                    : () {
-                                        createObjetivoStore.addNewItem();
-                                        _textEditingController.clear();
-                                      },
-                                size: const Size(40, 40),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : Container(),
               ],
             ),
             Observer(
@@ -130,6 +138,7 @@ class CreateObjetivoScreen extends StatelessWidget {
                   itemCount: createObjetivoStore.objectives.length,
                   itemBuilder: (_, index) => CreateObjectiveContainer(
                     objective: createObjetivoStore.objectives[index],
+                    readOnly: readOnly,
                     onRemove: () async {
                       var objective = createObjetivoStore.objectives[index];
                       if (objective.activities.isNotEmpty) {

@@ -27,7 +27,7 @@ class CustomField extends HiveObject {
   Map<String, dynamic> toJson() {
     return {
       'title': title,
-      'type': type.getValue(),
+      'type': type.value,
       'value': value,
       'required': required,
     };

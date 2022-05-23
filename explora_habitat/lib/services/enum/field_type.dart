@@ -5,51 +5,26 @@ part 'field_type.g.dart';
 @HiveType(typeId: 9)
 enum FieldType {
   @HiveField(0)
-  text,
+  text('text', 'Texto'),
 
   @HiveField(1)
-  number,
+  number('number', 'Número'),
 
   @HiveField(2)
-  date,
+  date('date', 'Data'),
 
   @HiveField(3)
-  decimal,
+  decimal('decimal', 'Decimal'),
 
   @HiveField(4)
-  time,
+  time('time', 'Hora');
+
+  const FieldType(this.value, this.description);
+  final String value;
+  final String description;
 }
 
 extension FieldTypeExtension on FieldType {
-  String getStringValue() {
-    switch (this) {
-      case FieldType.text:
-        return 'Texto';
-      case FieldType.number:
-        return 'Número';
-      case FieldType.date:
-        return 'Data';
-      case FieldType.decimal:
-        return 'Decimal';
-      case FieldType.time:
-        return 'Hora';
-    }
-  }
-
-  String getValue() {
-    switch (this) {
-      case FieldType.text:
-        return 'text';
-      case FieldType.number:
-        return 'number';
-      case FieldType.date:
-        return 'date';
-      case FieldType.decimal:
-        return 'decimal';
-      case FieldType.time:
-        return 'time';
-    }
-  }
 
   static FieldType getFromString(String type) {
     switch (type) {
@@ -69,6 +44,6 @@ extension FieldTypeExtension on FieldType {
   }
 
   static List<String> getStringList() {
-    return FieldType.values.map((v) => v.getStringValue()).toList();
+    return FieldType.values.map((v) => v.description).toList();
   }
 }

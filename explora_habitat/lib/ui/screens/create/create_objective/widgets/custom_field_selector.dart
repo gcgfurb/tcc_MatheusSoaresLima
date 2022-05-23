@@ -7,8 +7,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class CustomFieldSelector extends StatelessWidget {
   final CustomField? customField;
   final Function()? onRemove;
+  final bool readOnly;
 
-  CustomFieldSelector({required this.customField, required this.onRemove});
+  CustomFieldSelector({
+    required this.customField,
+    required this.onRemove,
+    this.readOnly = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +28,42 @@ class CustomFieldSelector extends StatelessWidget {
           Observer(
             builder: (_) => Checkbox(
               value: customFieldStore.required,
-              onChanged: (value) {
-                customFieldStore.toggleRequired();
-                customField!.required = customFieldStore.required;
-              },
+              onChanged: !readOnly
+                  ? (value) {
+                      customFieldStore.toggleRequired();
+                      customField!.required = customFieldStore.required;
+                    }
+                  : null,
             ),
           ),
-          CustomDropdownButtonFormField(customFieldStore),
+          CustomDropdownButtonFormField(
+            customFieldStore,
+            readOnly: readOnly,
+          ),
           const SizedBox(width: 10),
           Flexible(
             child: TextFormField(
               initialValue: customFieldStore.customField!.title,
               onChanged: customFieldStore.setTitle,
+              enabled: !readOnly,
             ),
           ),
           const SizedBox(width: 10),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: InkWell(
-              onTap: onRemove,
-              child: Ink(
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                  size: 20,
-                ),
-              ),
-            ),
-          ),
+          !readOnly
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: InkWell(
+                    onTap: onRemove,
+                    child: Ink(
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

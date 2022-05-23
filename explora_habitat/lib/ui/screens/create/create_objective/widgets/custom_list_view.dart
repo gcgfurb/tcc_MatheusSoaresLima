@@ -7,6 +7,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CustomListView extends StatelessWidget {
+  final bool readOnly;
+
+  CustomListView({this.readOnly = false});
+
   @override
   Widget build(BuildContext context) {
     final ActivityStore activityStore = Provider.of<ActivityStore>(context);
@@ -29,6 +33,7 @@ class CustomListView extends StatelessWidget {
                   children: [
                     Flexible(
                       child: CustomFieldSelector(
+                        readOnly: readOnly,
                         customField: activityStore.customFields[index],
                         onRemove: () =>
                             activityStore.customFields.removeAt(index),
@@ -41,21 +46,23 @@ class CustomListView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        Observer(
-          builder: (_) => InkWell(
-            onTap: () => activityStore.customFields.add(CustomField(
-              title: '',
-              type: FieldType.text,
-            )),
-            child: Ink(
-              child: const Icon(
-                Icons.add_circle,
-                color: Colors.teal,
-                size: 30,
-              ),
-            ),
-          ),
-        ),
+        !readOnly
+            ? Observer(
+                builder: (_) => InkWell(
+                  onTap: () => activityStore.customFields.add(CustomField(
+                    title: '',
+                    type: FieldType.text,
+                  )),
+                  child: Ink(
+                    child: const Icon(
+                      Icons.add_circle,
+                      color: Colors.teal,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
       ],
     );
   }

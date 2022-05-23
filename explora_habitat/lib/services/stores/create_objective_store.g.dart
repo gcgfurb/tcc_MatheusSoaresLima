@@ -17,7 +17,8 @@ mixin _$CreateObjectiveStore on _CreateObjectiveStore, Store {
               name: '_CreateObjectiveStore.titleValid'))
           .value;
 
-  final _$titleAtom = Atom(name: '_CreateObjectiveStore.title');
+  late final _$titleAtom =
+      Atom(name: '_CreateObjectiveStore.title', context: context);
 
   @override
   String? get title {
@@ -32,8 +33,8 @@ mixin _$CreateObjectiveStore on _CreateObjectiveStore, Store {
     });
   }
 
-  final _$_CreateObjectiveStoreActionController =
-      ActionController(name: '_CreateObjectiveStore');
+  late final _$_CreateObjectiveStoreActionController =
+      ActionController(name: '_CreateObjectiveStore', context: context);
 
   @override
   void setTitle(String value) {

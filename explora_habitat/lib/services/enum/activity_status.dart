@@ -5,19 +5,11 @@ part 'activity_status.g.dart';
 @HiveType(typeId: 6)
 enum ActivityStatus {
   @HiveField(0)
-  pending,
+  pending('pending'),
 
   @HiveField(1)
-  completed,
-}
+  completed('completed');
 
-extension ActivityStatusExtension on ActivityStatus {
-  String getValue() {
-    switch (this) {
-      case ActivityStatus.pending:
-        return 'pending';
-      case ActivityStatus.completed:
-        return 'completed';
-    }
-  }
+  const ActivityStatus(this.value);
+  final String value;
 }

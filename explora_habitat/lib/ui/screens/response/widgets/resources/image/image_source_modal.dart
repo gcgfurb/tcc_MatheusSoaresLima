@@ -6,7 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageSourceModal extends StatelessWidget {
-  final Function(File?) onImageSelected;
+  final Function(CroppedFile?) onImageSelected;
 
   ImageSourceModal(this.onImageSelected);
 
@@ -75,16 +75,18 @@ class ImageSourceModal extends StatelessWidget {
 
   Future<void> imageSelected(File image) async {
     final croppedFile = await ImageCropper().cropImage(
-      androidUiSettings: const AndroidUiSettings(
-        toolbarTitle: 'Editar imagem',
-        toolbarColor: Colors.green,
-        toolbarWidgetColor: Colors.white,
-      ),
-      iosUiSettings: const IOSUiSettings(
-        title: 'Editar imagem',
-        cancelButtonTitle: 'Cancelar',
-        doneButtonTitle: 'Concluir,',
-      ),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Editar imagem',
+          toolbarColor: Colors.green,
+          toolbarWidgetColor: Colors.white,
+        ),
+        IOSUiSettings(
+          title: 'Editar imagem',
+          cancelButtonTitle: 'Cancelar',
+          doneButtonTitle: 'Concluir,',
+        ),
+      ],
       sourcePath: image.path,
       aspectRatio: const CropAspectRatio(
         ratioX: 1,

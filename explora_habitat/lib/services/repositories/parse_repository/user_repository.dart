@@ -37,7 +37,7 @@ class UserRepository {
   }
 
   Future<ParseUser?> currentUser() async {
-    final ParseUser? parseUser = await ParseUser.currentUser() as ParseUser;
+    final ParseUser? parseUser = await ParseUser.currentUser();
 
     if (parseUser != null && parseUser.sessionToken != null) {
       final ParseResponse? response =
@@ -52,9 +52,34 @@ class UserRepository {
   }
 
   Future<void> logout() async {
-    final ParseUser? parseUser = await ParseUser.currentUser() as ParseUser;
-    if (parseUser != null && parseUser.sessionToken != null) {
+    final ParseUser parseUser = await ParseUser.currentUser() as ParseUser;
+    if (parseUser.sessionToken != null) {
       await parseUser.logout();
+    }
+  }
+
+  User mapParseToUser(ParseUser parseUser) {
+    return User(
+      id: parseUser.objectId,
+      name: parseUser.get(keyUserName),
+      email: parseUser.get(keyUserEmail),
+      createdAt: parseUser.createdAt,
+      updatedAt: parseUser.updatedAt,
+    );
+  }
+
+  Future<User> findById(String objectId) async {
+    QueryBuilder<ParseObject> parseQuery =
+        QueryBuilder<ParseObject>(ParseUser.forQuery())
+          ..whereEqualTo("objectId", objectId);
+
+    ParseResponse response = await parseQuery.query();
+
+    if (response.success) {
+      var parseObject = response.results!.first;
+      return mapParseToUser(parseObject);
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
     }
   }
 }

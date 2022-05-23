@@ -5,24 +5,30 @@ part 'theme_status.g.dart';
 @HiveType(typeId: 1)
 enum ThemeStatus {
   @HiveField(0)
-  pending,
+  pending('pending'),
 
   @HiveField(1)
-  inProgress,
+  inProgress('inProgress'),
 
   @HiveField(2)
-  completed,
+  completed('completed');
+
+  const ThemeStatus(this.value);
+  final String value;
 }
 
 extension ThemeStatusExtension on ThemeStatus {
-  String getStringValue() {
-    switch (this) {
-      case ThemeStatus.pending:
-        return 'pending';
-      case ThemeStatus.inProgress:
-        return 'inProgress';
-      case ThemeStatus.completed:
-        return 'completed';
+
+  static ThemeStatus getFromString(String type) {
+    switch (type) {
+      case 'pending':
+        return ThemeStatus.pending;
+      case 'inProgress':
+        return ThemeStatus.inProgress;
+      case 'completed':
+        return ThemeStatus.completed;
+      default:
+        throw Exception('Tipo não mapeado');
     }
   }
 }

@@ -1,4 +1,5 @@
 // User
+const keyUserTable = 'User';
 const keyUserId = 'objectId';
 const keyUserName = 'name';
 const keyUserEmail = 'email';

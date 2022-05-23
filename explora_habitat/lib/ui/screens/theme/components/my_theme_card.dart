@@ -72,7 +72,7 @@ class MyThemeCard extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         )
-                      : Text(
+                      : SelectableText(
                           myThemeStore.theme.id!,
                           style: const TextStyle(
                             fontSize: 22,

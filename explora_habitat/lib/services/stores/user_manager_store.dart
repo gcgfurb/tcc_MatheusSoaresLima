@@ -1,5 +1,6 @@
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
+import 'package:explora_habitat/services/stores/synced_theme_store.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -9,10 +10,6 @@ part 'user_manager_store.g.dart';
 class UserManagerStore = _UserManagerStore with _$UserManagerStore;
 
 abstract class _UserManagerStore with Store {
-  _UserManagerStore() {
-    _getCurrentUser();
-  }
-
   @observable
   User? user;
 
@@ -22,12 +19,12 @@ abstract class _UserManagerStore with Store {
   @computed
   bool get isLoggedIn => user != null;
 
-  Future<void> _getCurrentUser() async {
-    final user = await UserRepository().currentUser();
+  Future<User?> getCurrentUser() async {
+    var user = await UserRepository().currentUser();
     if (user != null) {
-      final userMapped = User.fromParse(user);
-      setUser(userMapped);
+      setUser(User.fromParse(user));
     }
+    return this.user;
   }
 
   Future<void> logout() async {
@@ -43,5 +40,6 @@ abstract class _UserManagerStore with Store {
 
   void _unRegisterStores() {
     GetIt.I.unregister(instance: GetIt.I<ThemeStore>());
+    GetIt.I.unregister(instance: GetIt.I<SyncedThemeStore>());
   }
 }

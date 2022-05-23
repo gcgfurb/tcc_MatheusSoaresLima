@@ -1,6 +1,8 @@
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
 import 'package:explora_habitat/helpers/extensions.dart';
+import 'package:explora_habitat/services/stores/synced_theme_store.dart';
+import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -114,8 +116,17 @@ abstract class _SignupStore with Store {
     try {
       final createdUser = await UserRepository().signUp(user);
       final userMapped = User.fromParse(createdUser);
-      loggedIn = true;
       GetIt.I<UserManagerStore>().setUser(userMapped);
+
+      GetIt.I.registerSingleton(ThemeStore());
+      await GetIt.I<ThemeStore>().initThemesBox(userMapped.id!);
+
+      GetIt.I.registerSingleton(SyncedThemeStore());
+      await GetIt.I<SyncedThemeStore>().initThemesBox(userMapped.id!);
+
+      loggedIn = true;
+
+
     } catch (e) {
       error = e.toString();
     }

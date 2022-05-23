@@ -1,7 +1,6 @@
 import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/stores/login_store.dart';
-import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:explora_habitat/ui/screens/base/base_screen.dart';
 import 'package:explora_habitat/ui/screens/signup/signup_screen.dart';
 import 'package:explora_habitat/ui/widgets/custom_form_field.dart';
@@ -116,19 +115,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircleAvatar(
+                              backgroundColor: Colors.white,
                               child: Image.asset(
                                 'images/google-icon.png',
                               ),
-                              backgroundColor: Colors.white,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             CircleAvatar(
+                              backgroundColor: Colors.white,
                               child: Image.asset(
                                 'images/facebook-icon.png',
                               ),
-                              backgroundColor: Colors.white,
                             ),
                           ],
                         ),
