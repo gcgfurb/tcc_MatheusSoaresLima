@@ -21,10 +21,22 @@ const keyObjectiveTitle = 'title';
 const keyObjectiveActivities = 'activities';
 const keyObjectiveKeepOrder = 'keepOrder';
 
-//ThemeExplora
+//Activity
 const keyActivityTable = 'Activity';
 const keyActivityTitle = 'title';
 const keyActivityTypes = 'types';
 const keyActivityCustomFields = 'customFields';
 const keyActivityStatus = 'status';
 const keyActivityResponseActivity = 'response';
+
+//Response
+const keyResponseTable = 'Response';
+const keyResponseCustomFields = 'customFields';
+const keyResponseLatitude = 'latitude';
+const keyResponseLongitude = 'longitude';
+const keyResponseUser = 'user';
+const keyResponseActivity = 'activity';
+const keyResponseImages = 'images';
+const keyResponseVideos = 'videos';
+const keyResponseAudios = 'audios';
+const keyResponseDrawings = 'drawings';

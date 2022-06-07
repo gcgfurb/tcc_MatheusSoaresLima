@@ -17,7 +17,8 @@ class CustomFieldNumber extends StatelessWidget {
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
-      onChanged: (value) {},
+      onChanged: (value) => customField.value = value,
+      initialValue: customField.value,
     );
   }
 }

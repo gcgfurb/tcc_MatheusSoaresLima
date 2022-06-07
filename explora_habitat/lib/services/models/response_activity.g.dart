@@ -23,13 +23,15 @@ class ResponseActivityAdapter extends TypeAdapter<ResponseActivity> {
       ..drawings = (fields[3] as List).cast<dynamic>()
       ..latitude = fields[4] as double?
       ..longitude = fields[5] as double?
-      ..customFields = (fields[6] as List).cast<CustomField>();
+      ..customFields = (fields[6] as List).cast<CustomField>()
+      ..user = fields[7] as User?
+      ..id = fields[8] as String?;
   }
 
   @override
   void write(BinaryWriter writer, ResponseActivity obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.audios)
       ..writeByte(1)
@@ -43,7 +45,11 @@ class ResponseActivityAdapter extends TypeAdapter<ResponseActivity> {
       ..writeByte(5)
       ..write(obj.longitude)
       ..writeByte(6)
-      ..write(obj.customFields);
+      ..write(obj.customFields)
+      ..writeByte(7)
+      ..write(obj.user)
+      ..writeByte(8)
+      ..write(obj.id);
   }
 
   @override

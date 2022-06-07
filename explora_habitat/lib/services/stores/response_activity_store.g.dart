@@ -25,6 +25,22 @@ mixin _$ResponseActivityStore on _ResponseActivityStore, Store {
     });
   }
 
+  late final _$idAtom =
+      Atom(name: '_ResponseActivityStore.id', context: context);
+
+  @override
+  String? get id {
+    _$idAtom.reportRead();
+    return super.id;
+  }
+
+  @override
+  set id(String? value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
+    });
+  }
+
   late final _$loadingAtom =
       Atom(name: '_ResponseActivityStore.loading', context: context);
 
@@ -53,6 +69,7 @@ mixin _$ResponseActivityStore on _ResponseActivityStore, Store {
   String toString() {
     return '''
 activity: ${activity},
+id: ${id},
 loading: ${loading}
     ''';
   }

@@ -24,7 +24,7 @@ class Activity extends HiveObject {
   ActivityStatus status;
 
   @HiveField(5)
-  ResponseActivity? responseActivity;
+  List<ResponseActivity> responsesActivity = [];
 
   Activity({
     this.id,
@@ -32,6 +32,7 @@ class Activity extends HiveObject {
     required this.types,
     required this.customFields,
     this.status = ActivityStatus.pending,
+    required this.responsesActivity,
   });
 
   Activity clone() {
@@ -39,6 +40,27 @@ class Activity extends HiveObject {
       title: title,
       types: types,
       customFields: customFields,
+      responsesActivity: [],
+    );
+  }
+
+  Activity cloneWithResponse() {
+    var customFieldsCloned = customFields
+        .map((e) => CustomField(
+              type: e.type,
+              title: e.title,
+              required: e.required,
+            ))
+        .toList();
+
+    return Activity(
+      id: id,
+      title: title,
+      types: types,
+      customFields: customFieldsCloned,
+      responsesActivity:
+          responsesActivity.map((response) => response.clone()).toList(),
+      status: status,
     );
   }
 }

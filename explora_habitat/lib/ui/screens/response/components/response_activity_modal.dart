@@ -88,10 +88,10 @@ class ResponseActivityModal extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
-                      itemCount: activity.customFields.length,
+                      itemCount: responseActivityStore.customFields.length,
                       shrinkWrap: true,
                       itemBuilder: (_, index) => CustomActivityField(
-                        activity.customFields[index],
+                        responseActivityStore.customFields[index],
                       ),
                     ),
                   ),

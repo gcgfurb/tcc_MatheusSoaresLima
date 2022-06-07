@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class LogoutButton extends StatelessWidget {
-  const LogoutButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

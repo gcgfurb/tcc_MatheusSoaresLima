@@ -26,7 +26,7 @@ class ObjectiveRepository {
     }
   }
 
-  Future<List<Objective>> findAllByTheme(ParseObject themeObject) async {
+  Future<List<Objective>> findAllByTheme(ParseObject themeObject, {complete = false}) async {
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyObjectiveTable))
           ..whereEqualTo('theme', themeObject.toPointer());
@@ -38,7 +38,7 @@ class ObjectiveRepository {
       for (ParseObject result in response.results!) {
         Objective objective = mapParseToObjective(result);
         objective.activities =
-            await ActivityRepository().findAllByObjective(result);
+            await ActivityRepository().findAllByObjective(result, complete: complete);
         objectives.add(objective);
       }
       return objectives;

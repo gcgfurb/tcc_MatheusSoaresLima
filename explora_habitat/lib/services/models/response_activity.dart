@@ -1,10 +1,12 @@
 import 'package:explora_habitat/services/models/custom_field.dart';
+import 'package:explora_habitat/services/models/user.dart';
 import 'package:hive/hive.dart';
 
 part 'response_activity.g.dart';
 
 @HiveType(typeId: 10)
 class ResponseActivity extends HiveObject {
+
   @HiveField(0)
   List audios = [];
 
@@ -25,4 +27,32 @@ class ResponseActivity extends HiveObject {
 
   @HiveField(6)
   List<CustomField> customFields = [];
+
+  @HiveField(7)
+  User? user;
+
+  @HiveField(8)
+  String? id;
+
+  ResponseActivity clone() {
+    ResponseActivity responseCloned = ResponseActivity();
+    responseCloned.id = id;
+    responseCloned.videos = videos;
+    responseCloned.images = images;
+    responseCloned.audios = audios;
+    responseCloned.drawings = drawings;
+    responseCloned.user = user;
+    responseCloned.id = id;
+    responseCloned.latitude = latitude;
+    responseCloned.longitude = longitude;
+    responseCloned.customFields = customFields
+        .map((e) => CustomField(
+              type: e.type,
+              title: e.title,
+              required: e.required,
+              value: e.value,
+            ))
+        .toList();
+    return responseCloned;
+  }
 }

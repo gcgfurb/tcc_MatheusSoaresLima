@@ -5,6 +5,7 @@ import 'package:explora_habitat/services/enum/field_type.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/parse_errors.dart';
+import 'package:explora_habitat/services/repositories/parse_repository/response_repository.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/table_keys.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -38,7 +39,8 @@ class ActivityRepository {
     return jsonEncode(types.map((type) => type.value).toList());
   }
 
-  Future<List<Activity>> findAllByObjective(ParseObject objectiveObject) async {
+  Future<List<Activity>> findAllByObjective(ParseObject objectiveObject,
+      {complete = false}) async {
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyActivityTable))
           ..whereEqualTo('objective', objectiveObject.toPointer());
@@ -46,9 +48,16 @@ class ActivityRepository {
     ParseResponse response = await queryBuilder.query();
 
     if (response.success) {
-      return response.results!
-          .map((result) => mapParseToActivity(result))
-          .toList();
+      List<Activity> activities = [];
+      for (ParseObject parseObject in response.results!) {
+        var activity = mapParseToActivity(parseObject);
+        if (complete) {
+          activity.responsesActivity =
+              await ResponseRepository().findAllByActivity(parseObject);
+        }
+        activities.add(activity);
+      }
+      return activities;
     } else {
       return Future.error(ParseErrors.getDescription(response.error!.code));
     }
@@ -56,12 +65,12 @@ class ActivityRepository {
 
   Activity mapParseToActivity(ParseObject parseObject) {
     return Activity(
-      id: parseObject.objectId!,
-      title: parseObject.get<String>(keyActivityTitle)!,
-      types: convertTypes(parseObject.get<String>(keyActivityTypes)),
-      customFields:
-          convertCustomField(parseObject.get<String>(keyActivityCustomFields)),
-    );
+        id: parseObject.objectId!,
+        title: parseObject.get<String>(keyActivityTitle)!,
+        types: convertTypes(parseObject.get<String>(keyActivityTypes)),
+        customFields: convertCustomField(
+            parseObject.get<String>(keyActivityCustomFields)),
+        responsesActivity: []);
   }
 
   List<CustomField> convertCustomField(String? fields) {

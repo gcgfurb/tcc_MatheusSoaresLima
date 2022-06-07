@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class PageSection extends StatelessWidget {
-
   PageSection({Key? key}) : super(key: key);
 
   final PageStore pageStore = GetIt.I<PageStore>();
@@ -26,23 +25,29 @@ class PageSection extends StatelessWidget {
           highlighted: pageStore.page == 1,
         ),
         PageTile(
-          label: 'Criar tema',
-          iconData: Icons.edit,
+          label: 'Respostas',
+          iconData: Icons.question_answer,
           onTap: () => pageStore.setPage(2),
           highlighted: pageStore.page == 2,
         ),
         PageTile(
-          label: 'Sobre',
-          iconData: Icons.info,
+          label: 'Criar tema',
+          iconData: Icons.edit,
           onTap: () => pageStore.setPage(3),
           highlighted: pageStore.page == 3,
         ),
-        PageTile(
-          label: 'Minha Conta',
-          iconData: Icons.person,
-          onTap: () => pageStore.setPage(4),
-          highlighted: pageStore.page == 4,
-        ),
+        // PageTile(
+        //   label: 'Sobre',
+        //   iconData: Icons.info,
+        //   onTap: () => pageStore.setPage(4),
+        //   highlighted: pageStore.page == 4,
+        // ),
+        // PageTile(
+        //   label: 'Minha Conta',
+        //   iconData: Icons.person,
+        //   onTap: () => pageStore.setPage(5),
+        //   highlighted: pageStore.page == 5,
+        // ),
       ],
     );
   }

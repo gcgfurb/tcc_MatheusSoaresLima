@@ -19,7 +19,8 @@ class CustomFieldDecimal extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         CentavosInputFormatter(),
       ],
-      onChanged: (value) {},
+      onChanged: (value) => customField.value = value,
+      initialValue: customField.value,
     );
   }
 }

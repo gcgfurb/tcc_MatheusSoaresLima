@@ -1,5 +1,5 @@
 import 'package:explora_habitat/services/repositories/parse_repository/theme_repository.dart';
-import 'package:explora_habitat/services/stores/synced_theme_store.dart';
+import 'package:explora_habitat/services/stores/synced_themes_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -37,7 +37,7 @@ abstract class _SyncThemeStore with Store {
     error = null;
 
     var codeValid = code!.replaceAll(' ', '');
-    var syncedThemeStore = GetIt.I<SyncedThemeStore>();
+    var syncedThemeStore = GetIt.I<SyncedThemesStore>();
 
     bool isOnBox = syncedThemeStore.syncedThemeBox.isNotEmpty &&
         syncedThemeStore.syncedThemeBox.values
@@ -47,7 +47,6 @@ abstract class _SyncThemeStore with Store {
         var themeSynced = await ThemeRepository().findById(codeValid);
         syncedThemeStore.add(themeSynced);
       } catch (e) {
-        print(e.toString());
         syncError = e.toString();
       }
     } else {

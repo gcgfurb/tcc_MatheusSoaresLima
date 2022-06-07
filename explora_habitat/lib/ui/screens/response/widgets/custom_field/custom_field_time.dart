@@ -6,17 +6,13 @@ import 'package:intl/intl.dart';
 
 class CustomFieldTime extends StatelessWidget {
   final CustomField customField;
+  final TextEditingController _textEditingController = TextEditingController();
 
-  const CustomFieldTime(this.customField);
+  CustomFieldTime(this.customField);
 
   @override
   Widget build(BuildContext context) {
-    final DateTime value = customField.value != null &&
-        DateTime.tryParse(customField.value) != null
-        ? DateTime.parse(customField.value)
-        : DateTime.now();
-
-    TimeOfDay initialValue = TimeOfDay.fromDateTime(value);
+    TimeOfDay initialValue = getTime(customField.value);
 
     return Row(
       children: [
@@ -26,8 +22,8 @@ class CustomFieldTime extends StatelessWidget {
             labelText: customField.title,
             inputType: TextInputType.text,
             errorText: null,
-            initialValue: DateFormat("HH:mm").format(value),
-            onChanged: (value) {},
+            controller: _textEditingController,
+            onChanged: (value) => customField.value = value,
           ),
         ),
         IconButton(
@@ -57,9 +53,27 @@ class CustomFieldTime extends StatelessWidget {
                 );
               },
             );
+            if (time != null) {
+              customField.value = getTime(time);
+              final now = DateTime.now();
+              final dt = DateTime(
+                  now.year, now.month, now.day, time.hour, time.minute);
+              _textEditingController.value =
+                  TextEditingValue(text: DateFormat("HH:mm").format(dt));
+            }
           },
         ),
       ],
     );
+  }
+
+  TimeOfDay getTime(TimeOfDay? value) {
+    var initialValue = value ?? TimeOfDay.fromDateTime(DateTime.now());
+    final now = DateTime.now();
+    final dt = DateTime(
+        now.year, now.month, now.day, initialValue.hour, initialValue.minute);
+    _textEditingController.value =
+        TextEditingValue(text: DateFormat("HH:mm").format(dt));
+    return initialValue;
   }
 }

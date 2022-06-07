@@ -1,4 +1,5 @@
 import 'package:explora_habitat/services/models/objective.dart';
+import 'package:explora_habitat/services/models/response_activity.dart';
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:hive/hive.dart';
 
@@ -35,12 +36,12 @@ class ThemeExplora extends HiveObject {
     this.status = ThemeStatus.pending,
   });
 
-  ThemeExplora clone() {
+  ThemeExplora clone({bool cloneResponse = false}) {
     List<Objective> clonedObjectives =
-        objectives.map((objective) => objective.clone()).toList();
+        objectives.map((objective) => objective.clone(cloneResponse: cloneResponse)).toList();
 
     return ThemeExplora(
-      title: '$title - #Cópia',
+      title: title,
       description: description,
       objectives: clonedObjectives,
       creator: creator,

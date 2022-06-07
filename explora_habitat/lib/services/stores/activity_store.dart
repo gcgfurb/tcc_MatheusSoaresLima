@@ -84,6 +84,7 @@ abstract class _ActivityStore with Store {
       title: title!,
       customFields: fields,
       types: activityTypes,
+      responsesActivity: [],
     );
   }
 }

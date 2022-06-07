@@ -1,5 +1,6 @@
 import 'package:explora_habitat/services/models/user.dart';
-import 'package:explora_habitat/services/stores/synced_theme_store.dart';
+import 'package:explora_habitat/services/stores/responses_theme_store.dart';
+import 'package:explora_habitat/services/stores/synced_themes_store.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -13,8 +14,10 @@ abstract class _UserStore with Store {
     GetIt.I.registerSingleton(ThemeStore());
     await GetIt.I<ThemeStore>().initThemesBox(user.id!);
 
-    GetIt.I.registerSingleton(SyncedThemeStore());
-    await GetIt.I<SyncedThemeStore>().initThemesBox(user.id!);
+    GetIt.I.registerSingleton(SyncedThemesStore());
+    await GetIt.I<SyncedThemesStore>().initThemesBox(user.id!);
 
+    GetIt.I.registerSingleton(ResponsesThemeStore());
+    await GetIt.I<ResponsesThemeStore>().initThemesBox(user.id!);
   }
 }

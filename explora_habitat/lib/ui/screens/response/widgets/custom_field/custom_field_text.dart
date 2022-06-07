@@ -13,7 +13,8 @@ class CustomFieldText extends StatelessWidget {
       labelText: customField.title,
       errorText: null,
       inputType: TextInputType.text,
-      onChanged: (value) {},
+      onChanged: (value) => customField.value = value,
+      initialValue: customField.value,
     );
   }
 }

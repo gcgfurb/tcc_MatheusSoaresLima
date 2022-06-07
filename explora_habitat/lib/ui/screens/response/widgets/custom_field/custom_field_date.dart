@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 class CustomFieldDate extends StatelessWidget {
   final CustomField customField;
 
-  const CustomFieldDate(this.customField);
+  CustomFieldDate(this.customField);
+
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final DateTime initialValue = customField.value != null &&
-            DateTime.tryParse(customField.value) != null
-        ? DateTime.parse(customField.value)
-        : DateTime.now();
+    final DateTime initialValue = customField.value ?? DateTime.now();
+    _textEditingController.text = DateFormat('dd/MM/yyyy').format(initialValue);
 
     return Row(
       children: [
@@ -24,7 +24,7 @@ class CustomFieldDate extends StatelessWidget {
             labelText: customField.title,
             inputType: TextInputType.text,
             errorText: null,
-            initialValue: DateFormat('dd/MM/yyyy').format(initialValue),
+            controller: _textEditingController,
             onChanged: (value) {},
           ),
         ),
@@ -37,8 +37,8 @@ class CustomFieldDate extends StatelessWidget {
               cancelText: 'CANCELAR',
               context: context,
               initialDate: initialValue,
-              firstDate: initialValue,
-              lastDate: initialValue,
+              firstDate: initialValue.subtract(const Duration(days: 30)),
+              lastDate: initialValue.add(const Duration(days: 30)),
               builder: (context, child) {
                 return Theme(
                   data: Theme.of(context).copyWith(
@@ -57,6 +57,11 @@ class CustomFieldDate extends StatelessWidget {
                 );
               },
             );
+            if (date != null) {
+              customField.value = date;
+              _textEditingController.value =
+                  TextEditingValue(text: DateFormat('dd/MM/yyyy').format(date));
+            }
           },
         ),
       ],

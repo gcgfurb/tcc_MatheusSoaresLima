@@ -4,8 +4,7 @@ import 'package:hive/hive.dart';
 part 'objective.g.dart';
 
 @HiveType(typeId: 4)
-class Objective extends HiveObject{
-
+class Objective extends HiveObject {
   @HiveField(0)
   String? id;
 
@@ -25,9 +24,11 @@ class Objective extends HiveObject{
     this.keepOrder = false,
   });
 
-  Objective clone() {
-
-    List<Activity> clonedActivities = activities.map((activity) => activity.clone()).toList();
+  Objective clone({bool cloneResponse = false}) {
+    List<Activity> clonedActivities = activities
+        .map((activity) =>
+            cloneResponse ? activity.cloneWithResponse() : activity.clone())
+        .toList();
 
     return Objective(
       title: title,

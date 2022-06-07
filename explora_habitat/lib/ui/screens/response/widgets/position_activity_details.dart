@@ -8,13 +8,13 @@ class PositionAcitivityDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (activity.responseActivity != null &&
-        activity.responseActivity!.latitude != null &&
-        activity.responseActivity!.longitude != null) {
+    if (activity.responsesActivity.isNotEmpty &&
+        activity.responsesActivity.first.latitude != null &&
+        activity.responsesActivity.first.longitude != null) {
       return Column(
         children: [
-          Text(activity.responseActivity!.latitude!.toStringAsFixed(8)),
-          Text(activity.responseActivity!.longitude!.toStringAsFixed(8))
+          Text(activity.responsesActivity.first.latitude!.toStringAsFixed(8)),
+          Text(activity.responsesActivity.first.longitude!.toStringAsFixed(8))
         ],
       );
     } else {

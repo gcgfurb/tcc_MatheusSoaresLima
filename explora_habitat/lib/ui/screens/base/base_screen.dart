@@ -1,5 +1,6 @@
 import 'package:explora_habitat/services/stores/page_store.dart';
 import 'package:explora_habitat/ui/screens/create/create_theme/create_theme.dart';
+import 'package:explora_habitat/ui/screens/response/responses_theme/responses_theme_screen.dart';
 import 'package:explora_habitat/ui/screens/theme/my_theme_screen.dart';
 import 'package:explora_habitat/ui/screens/theme/theme_screen.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _BaseScreenState extends State<BaseScreen> {
         children: [
           MyThemeScreen(),
           ThemeScreen(),
+          ResponsesThemeScreen(),
           CreateThemeScreen(),
           Container(
             color: Colors.purple,

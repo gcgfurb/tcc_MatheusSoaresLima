@@ -22,7 +22,8 @@ class ActivityAdapter extends TypeAdapter<Activity> {
       types: (fields[2] as List).cast<ActivityType>(),
       customFields: (fields[3] as List).cast<CustomField>(),
       status: fields[4] as ActivityStatus,
-    )..responseActivity = fields[5] as ResponseActivity?;
+      responsesActivity: (fields[5] as List).cast<ResponseActivity>(),
+    );
   }
 
   @override
@@ -40,7 +41,7 @@ class ActivityAdapter extends TypeAdapter<Activity> {
       ..writeByte(4)
       ..write(obj.status)
       ..writeByte(5)
-      ..write(obj.responseActivity);
+      ..write(obj.responsesActivity);
   }
 
   @override

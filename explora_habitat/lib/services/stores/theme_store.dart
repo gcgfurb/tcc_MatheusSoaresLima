@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:explora_habitat/services/enum/theme_status.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/theme_repository.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
@@ -13,7 +14,6 @@ part 'theme_store.g.dart';
 class ThemeStore = _ThemeStore with _$ThemeStore;
 
 abstract class _ThemeStore with Store {
-
   @observable
   bool loading = false;
 
@@ -23,7 +23,7 @@ abstract class _ThemeStore with Store {
     await Permission.storage.request().isGranted;
     final Directory result = await getApplicationSupportDirectory();
     Hive.init(result.path);
-    myThemesBox = await Hive.openBox<ThemeExplora>('themes.$userId');
+    myThemesBox = await Hive.openBox<ThemeExplora>('themes_explora.$userId');
   }
 
   void add(ThemeExplora theme) => myThemesBox.add(theme);
@@ -31,23 +31,26 @@ abstract class _ThemeStore with Store {
   void update(int index, ThemeExplora theme) => myThemesBox.put(index, theme);
 
   void delete(int index) {
-    var theme = myThemesBox.get(index);
-    if (theme!.id == null) {
-      myThemesBox.delete(index);
-    } else {
-      throw Exception('Não é possível excluir um tema já sincronizado!');
-    }
+    myThemesBox.delete(index);
   }
 
   void copy(int index) {
     var theme = myThemesBox.get(index);
     var clonedTheme = theme!.clone();
+    clonedTheme.title = "${clonedTheme.title} - Cópia";
     add(clonedTheme);
   }
 
   Future<void> sync(int index) async {
     var theme = myThemesBox.get(index);
     await ThemeRepository().save(theme!);
+    update(index, theme);
+  }
+
+  Future<void> finish(int index) async {
+    var theme = myThemesBox.get(index);
+    theme!.status = ThemeStatus.completed;
+    await ThemeRepository().save(theme);
     update(index, theme);
   }
 

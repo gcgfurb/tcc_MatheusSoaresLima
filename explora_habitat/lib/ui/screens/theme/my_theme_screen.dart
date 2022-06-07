@@ -14,17 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-class MyThemeScreen extends StatefulWidget {
-  @override
-  State<MyThemeScreen> createState() => _MyThemeScreenState();
-}
-
-class _MyThemeScreenState extends State<MyThemeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MyThemeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeStore themeStore = GetIt.I<ThemeStore>();
@@ -55,7 +45,7 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
       );
     }
 
-    void _syncThemes(BuildContext context, int index) {
+    void _syncThemes(BuildContext context) {
       showDialog<void>(
         context: context,
         builder: (_) => CustomAlertDialog(
@@ -75,19 +65,56 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
 
     void deleteTheme(int index) {
       showDialog(
-          context: context,
-          builder: (context) => CustomAlertDialog(
-                title: 'Exclusão de tema',
-                body: const Text(
-                  'Tem certeza que deseja excluir este tema? Essa ação não poderá ser revertida!',
-                  style: TextStyle(fontSize: 18),
-                ),
-                onSave: () {
-                  themeStore.delete(index);
-                  Navigator.pop(context);
-                },
-                onCancel: () => Navigator.pop(context),
-              ));
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Exclusão de tema',
+          body: const Text(
+            'Tem certeza que deseja excluir este tema? Essa ação não poderá ser revertida!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () async {
+            themeStore.delete(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
+    }
+
+    void closeTheme(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Remover tema sincronizado',
+          body: const Text(
+            'Tem certeza que deseja remover este tema? Será necessário realizar uma nova sincronização para obter o tema novamente!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () async {
+            themeStore.delete(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
+    }
+
+    void finishTheme(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Finalizar tema',
+          body: const Text(
+            'Tem certeza que deseja finalizar o envio de respostas para este tema? Após finalizado nenhum clubista poderá realizar o envio!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () async {
+            themeStore.finish(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
     }
 
     void syncTheme(int index) async {
@@ -121,12 +148,12 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
       appBar: AppBar(
         title: const Text('Meus Temas'),
         centerTitle: true,
-        actions: const [
+        actions: [
           LogoutButton(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _syncThemes(context, 0),
+        onPressed: () => _syncThemes(context),
         backgroundColor: Colors.green,
         child: const Icon(Icons.sync),
       ),
@@ -151,6 +178,8 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
                   onSync: () => syncTheme(box.keyAt(index)!),
                   onQrCode: () => generateQrCode(box.keyAt(index)!),
                   onReadOnly: () => openTheme(box.keyAt(index)!, true),
+                  onClose: () => closeTheme(box.keyAt(index)!),
+                  onFinish: () => finishTheme(box.keyAt(index)!),
                 ),
               ),
             );

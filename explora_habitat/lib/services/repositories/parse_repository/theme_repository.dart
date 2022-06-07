@@ -96,4 +96,34 @@ class ThemeRepository {
       objectives: [],
     );
   }
+
+  Future<List<ThemeExplora>> findAllByCreatorAndStatusCompleted(
+      ParseUser parseUser) async {
+    QueryBuilder<ParseObject> parseQuery =
+        QueryBuilder<ParseObject>(ParseObject(keyThemeTable))
+          ..whereEqualTo("creator", parseUser.toPointer())
+          ..whereEqualTo("status", ThemeStatus.completed.value);
+
+    ParseResponse response = await parseQuery.query();
+
+    if (response.success) {
+      if (response.results != null) {
+        List<ThemeExplora> themes = [];
+        for (var parseObject in response.results!) {
+          ThemeExplora theme = mapParseToTheme(parseObject);
+          theme.objectives =
+              await ObjectiveRepository().findAllByTheme(parseObject, complete: true);
+          ParseUser creator = parseObject.get<ParseUser>(keyThemeCreator)!;
+          theme.creator = await UserRepository().findById(creator.objectId!);
+
+          themes.add(theme);
+        }
+        return themes;
+      } else {
+        return Future.error('Nenhum tema sincronizado encontrado!');
+      }
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
 }

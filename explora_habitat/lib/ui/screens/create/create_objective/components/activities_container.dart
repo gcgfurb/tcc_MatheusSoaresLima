@@ -110,7 +110,12 @@ class ActivitiesContainer extends StatelessWidget {
       context: context,
       builder: (_) => Provider(
         create: (_) => ActivityStore(
-            activity: Activity(title: '', types: [], customFields: [])),
+            activity: Activity(
+          title: '',
+          types: [],
+          customFields: [],
+          responsesActivity: [],
+        )),
         child: CreateActivityModal(
           readOnly: readOnly,
         ),

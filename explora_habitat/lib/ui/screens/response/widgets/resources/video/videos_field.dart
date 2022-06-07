@@ -12,18 +12,25 @@ class VideosField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ResponseActivityStore responseActivityStore =
-    Provider.of<ResponseActivityStore>(context);
+        Provider.of<ResponseActivityStore>(context);
 
     void onVideoSelected(File? video) {
       if (video != null) {
-        responseActivityStore.videos.add(video);
+        responseActivityStore.videos.add(video.path);
       }
-
       Navigator.pop(context);
     }
 
     return Column(
       children: [
+        const Text(
+          "Grave videos para a atividade",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 5),
         Container(
           color: Colors.grey[200],
           height: 120,
@@ -70,13 +77,13 @@ class VideosField extends StatelessWidget {
                 } else {
                   return Padding(
                     padding:
-                    EdgeInsets.fromLTRB(8, 16, index == 4 ? 16 : 0, 16),
+                        EdgeInsets.fromLTRB(8, 16, index == 4 ? 16 : 0, 16),
                     child: GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (_) => VideoDialog(
-                            video: responseActivityStore.videos[index],
+                            video: File(responseActivityStore.videos[index]),
                             onDelete: () =>
                                 responseActivityStore.videos.removeAt(index),
                           ),
@@ -84,8 +91,8 @@ class VideosField extends StatelessWidget {
                       },
                       child: CircleAvatar(
                         radius: 44,
-                        backgroundImage:
-                        FileImage(responseActivityStore.videos[index]),
+                        backgroundImage: FileImage(
+                            File(responseActivityStore.videos[index])),
                       ),
                     ),
                   );

@@ -17,7 +17,7 @@ class ImagesField extends StatelessWidget {
 
     void onImageSelected(CroppedFile? image) {
       if (image != null) {
-        responseActivityStore.images.add(File(image.path));
+        responseActivityStore.images.add(image.path);
       }
 
       Navigator.pop(context);
@@ -25,6 +25,14 @@ class ImagesField extends StatelessWidget {
 
     return Column(
       children: [
+        const Text(
+          "Tire fotos para a atividade",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 5),
         Container(
           color: Colors.grey[200],
           height: 120,
@@ -77,7 +85,7 @@ class ImagesField extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (_) => ImageDialog(
-                            image: responseActivityStore.images[index],
+                            image: File(responseActivityStore.images[index]),
                             onDelete: () =>
                                 responseActivityStore.images.removeAt(index),
                           ),
@@ -85,8 +93,8 @@ class ImagesField extends StatelessWidget {
                       },
                       child: CircleAvatar(
                         radius: 44,
-                        backgroundImage:
-                            FileImage(responseActivityStore.images[index]),
+                        backgroundImage: FileImage(
+                            File(responseActivityStore.images[index])),
                       ),
                     ),
                   );
