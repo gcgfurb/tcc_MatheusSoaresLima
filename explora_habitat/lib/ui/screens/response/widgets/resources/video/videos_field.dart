@@ -42,38 +42,42 @@ class VideosField extends StatelessWidget {
                   : 5,
               itemBuilder: (_, index) {
                 if (index == responseActivityStore.videos.length) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (Platform.isAndroid) {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (_) => VideoSourceModal(onVideoSelected),
-                          );
-                        } else {
-                          showCupertinoModalPopup(
-                            context: context,
-                            builder: (_) => VideoSourceModal(onVideoSelected),
-                          );
-                        }
-                      },
-                      child: CircleAvatar(
-                        radius: 44,
-                        backgroundColor: Colors.grey[300],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.video_call,
-                              size: 40,
-                              color: Colors.white,
+                  return responseActivityStore.readOnly
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (Platform.isAndroid) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) =>
+                                      VideoSourceModal(onVideoSelected),
+                                );
+                              } else {
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (_) =>
+                                      VideoSourceModal(onVideoSelected),
+                                );
+                              }
+                            },
+                            child: CircleAvatar(
+                              radius: 44,
+                              backgroundColor: Colors.grey[300],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.video_call,
+                                    size: 40,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                          ),
+                        );
                 } else {
                   return Padding(
                     padding:
@@ -84,6 +88,7 @@ class VideosField extends StatelessWidget {
                           context: context,
                           builder: (_) => VideoDialog(
                             video: File(responseActivityStore.videos[index]),
+                            readOnly: responseActivityStore.readOnly,
                             onDelete: () =>
                                 responseActivityStore.videos.removeAt(index),
                           ),

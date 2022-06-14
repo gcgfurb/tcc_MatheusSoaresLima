@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 
 class CustomFieldNumber extends StatelessWidget {
   final CustomField customField;
+  final bool readOnly;
 
-  const CustomFieldNumber(this.customField);
+  CustomFieldNumber(this.customField, {this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class CustomFieldNumber extends StatelessWidget {
       ],
       onChanged: (value) => customField.value = value,
       initialValue: customField.value,
+      enabled: !readOnly,
     );
   }
 }

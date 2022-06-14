@@ -1,5 +1,6 @@
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
+import 'package:explora_habitat/services/stores/responses_theme_store.dart';
 import 'package:explora_habitat/services/stores/synced_themes_store.dart';
 import 'package:explora_habitat/services/stores/theme_store.dart';
 import 'package:get_it/get_it.dart';
@@ -41,5 +42,6 @@ abstract class _UserManagerStore with Store {
   void _unRegisterStores() {
     GetIt.I.unregister(instance: GetIt.I<ThemeStore>());
     GetIt.I.unregister(instance: GetIt.I<SyncedThemesStore>());
+    GetIt.I.unregister(instance: GetIt.I<ResponsesThemeStore>());
   }
 }

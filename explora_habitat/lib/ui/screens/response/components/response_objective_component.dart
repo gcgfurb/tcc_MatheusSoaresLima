@@ -5,12 +5,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ResponseObjectiveComponent extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     final ResponseObjectiveStore responseObjectiveStore =
-    Provider.of<ResponseObjectiveStore>(context);
+        Provider.of<ResponseObjectiveStore>(context);
 
     return SingleChildScrollView(
       child: Container(
@@ -38,8 +36,10 @@ class ResponseObjectiveComponent extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Icon(
-                    Icons.pending,
+                  Icon(
+                    responseObjectiveStore.completed
+                        ? Icons.done
+                        : Icons.pending,
                     color: Colors.green,
                     size: 35,
                   ),
@@ -72,7 +72,7 @@ class ResponseObjectiveComponent extends StatelessWidget {
               Observer(
                 builder: (_) => !responseObjectiveStore.isExpanded
                     ? Container()
-                    : ResponseActivityStepper()
+                    : ResponseActivityStepper(),
               ),
             ],
           ),

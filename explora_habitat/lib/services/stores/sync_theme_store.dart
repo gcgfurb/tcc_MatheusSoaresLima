@@ -1,3 +1,7 @@
+import 'package:explora_habitat/services/models/activity.dart';
+import 'package:explora_habitat/services/models/objective.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
+import 'package:explora_habitat/services/repositories/parse_repository/response_repository.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/theme_repository.dart';
 import 'package:explora_habitat/services/stores/synced_themes_store.dart';
 import 'package:flutter/foundation.dart';
@@ -45,6 +49,7 @@ abstract class _SyncThemeStore with Store {
     if (!isOnBox) {
       try {
         var themeSynced = await ThemeRepository().findById(codeValid);
+        await _validateActivity(themeSynced);
         syncedThemeStore.add(themeSynced);
       } catch (e) {
         syncError = e.toString();
@@ -53,5 +58,16 @@ abstract class _SyncThemeStore with Store {
       error = 'Tema já está sincronizado';
     }
     loading = false;
+  }
+
+  Future<void> _validateActivity(ThemeExplora theme) async {
+    for (Objective objective in theme.objectives) {
+      for (Activity activity in objective.activities) {
+        var response = await ResponseRepository().isActivityAlreadyAnswered(activity.id!);
+        if(response) {
+          return Future.error('Este tema já foi respondido anteriormente');
+        }
+      }
+    }
   }
 }

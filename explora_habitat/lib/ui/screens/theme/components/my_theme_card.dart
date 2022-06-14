@@ -19,6 +19,7 @@ class MyThemeCard extends StatelessWidget {
   final Function()? onFinish;
 
   MyThemeCard({
+    Key? key,
     required this.onDelete,
     required this.onEdit,
     required this.onCopy,
@@ -27,13 +28,14 @@ class MyThemeCard extends StatelessWidget {
     required this.onReadOnly,
     required this.onClose,
     required this.onFinish,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     MyThemeStore myThemeStore = Provider.of<MyThemeStore>(context);
 
     return Card(
+      key: key,
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       clipBehavior: Clip.antiAlias,
@@ -81,7 +83,7 @@ class MyThemeCard extends StatelessWidget {
                           ? const Text(
                               'Finalizado',
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 20,
                                 color: Colors.green,
                                 fontWeight: FontWeight.w600,
                               ),

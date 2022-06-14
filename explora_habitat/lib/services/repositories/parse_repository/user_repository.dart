@@ -62,7 +62,7 @@ class UserRepository {
     return User(
       id: parseUser.objectId,
       name: parseUser.get(keyUserName),
-      email: parseUser.get(keyUserEmail),
+      email: parseUser.get(keyUserEmail) ?? parseUser.username!,
       createdAt: parseUser.createdAt,
       updatedAt: parseUser.updatedAt,
     );

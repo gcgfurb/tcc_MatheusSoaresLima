@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class CustomFieldText extends StatelessWidget {
   final CustomField customField;
+  final bool readOnly;
 
-  CustomFieldText(this.customField);
+  CustomFieldText(this.customField, {this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class CustomFieldText extends StatelessWidget {
       inputType: TextInputType.text,
       onChanged: (value) => customField.value = value,
       initialValue: customField.value,
+      enabled: !readOnly,
     );
   }
 }

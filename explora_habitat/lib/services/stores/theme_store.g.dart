@@ -25,6 +25,30 @@ mixin _$ThemeStore on _ThemeStore, Store {
     });
   }
 
+  late final _$syncingAtom =
+      Atom(name: '_ThemeStore.syncing', context: context);
+
+  @override
+  bool get syncing {
+    _$syncingAtom.reportRead();
+    return super.syncing;
+  }
+
+  @override
+  set syncing(bool value) {
+    _$syncingAtom.reportWrite(value, super.syncing, () {
+      super.syncing = value;
+    });
+  }
+
+  late final _$syncAsyncAction =
+      AsyncAction('_ThemeStore.sync', context: context);
+
+  @override
+  Future<void> sync(int index) {
+    return _$syncAsyncAction.run(() => super.sync(index));
+  }
+
   late final _$syncThemesAsyncAction =
       AsyncAction('_ThemeStore.syncThemes', context: context);
 
@@ -36,7 +60,8 @@ mixin _$ThemeStore on _ThemeStore, Store {
   @override
   String toString() {
     return '''
-loading: ${loading}
+loading: ${loading},
+syncing: ${syncing}
     ''';
   }
 }

@@ -56,6 +56,38 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     });
   }
 
+  late final _$readOnlyAtom =
+      Atom(name: '_ResponseObjectiveStore.readOnly', context: context);
+
+  @override
+  bool get readOnly {
+    _$readOnlyAtom.reportRead();
+    return super.readOnly;
+  }
+
+  @override
+  set readOnly(bool value) {
+    _$readOnlyAtom.reportWrite(value, super.readOnly, () {
+      super.readOnly = value;
+    });
+  }
+
+  late final _$completedAtom =
+      Atom(name: '_ResponseObjectiveStore.completed', context: context);
+
+  @override
+  bool get completed {
+    _$completedAtom.reportRead();
+    return super.completed;
+  }
+
+  @override
+  set completed(bool value) {
+    _$completedAtom.reportWrite(value, super.completed, () {
+      super.completed = value;
+    });
+  }
+
   late final _$isExpandedAtom =
       Atom(name: '_ResponseObjectiveStore.isExpanded', context: context);
 
@@ -102,6 +134,8 @@ mixin _$ResponseObjectiveStore on _ResponseObjectiveStore, Store {
     return '''
 objective: ${objective},
 currentStep: ${currentStep},
+readOnly: ${readOnly},
+completed: ${completed},
 isExpanded: ${isExpanded},
 isActivityCompleted: ${isActivityCompleted},
 canInitAcitivity: ${canInitAcitivity}

@@ -9,14 +9,6 @@ part of 'response_theme_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ResponseThemeStore on _ResponseThemeStore, Store {
-  Computed<List<ResponseActivity>>? _$responsesComputed;
-
-  @override
-  List<ResponseActivity> get responses => (_$responsesComputed ??=
-          Computed<List<ResponseActivity>>(() => super.responses,
-              name: '_ResponseThemeStore.responses'))
-      .value;
-
   late final _$themeAtom =
       Atom(name: '_ResponseThemeStore.theme', context: context);
 
@@ -46,6 +38,38 @@ mixin _$ResponseThemeStore on _ResponseThemeStore, Store {
   set key(int value) {
     _$keyAtom.reportWrite(value, super.key, () {
       super.key = value;
+    });
+  }
+
+  late final _$readOnlyAtom =
+      Atom(name: '_ResponseThemeStore.readOnly', context: context);
+
+  @override
+  bool get readOnly {
+    _$readOnlyAtom.reportRead();
+    return super.readOnly;
+  }
+
+  @override
+  set readOnly(bool value) {
+    _$readOnlyAtom.reportWrite(value, super.readOnly, () {
+      super.readOnly = value;
+    });
+  }
+
+  late final _$completedAtom =
+      Atom(name: '_ResponseThemeStore.completed', context: context);
+
+  @override
+  bool get completed {
+    _$completedAtom.reportRead();
+    return super.completed;
+  }
+
+  @override
+  set completed(bool value) {
+    _$completedAtom.reportWrite(value, super.completed, () {
+      super.completed = value;
     });
   }
 
@@ -95,8 +119,9 @@ mixin _$ResponseThemeStore on _ResponseThemeStore, Store {
     return '''
 theme: ${theme},
 key: ${key},
-isExpanded: ${isExpanded},
-responses: ${responses}
+readOnly: ${readOnly},
+completed: ${completed},
+isExpanded: ${isExpanded}
     ''';
   }
 }

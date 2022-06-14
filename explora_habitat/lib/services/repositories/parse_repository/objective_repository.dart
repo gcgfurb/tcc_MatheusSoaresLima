@@ -9,6 +9,7 @@ class ObjectiveRepository {
   Future<void> save(Objective objective, String themeId) async {
     final objectiveObject = ParseObject(keyObjectiveTable);
 
+    objectiveObject.objectId = objective.id;
     objectiveObject.set<String>(keyObjectiveTitle, objective.title);
     objectiveObject.set<bool>(keyObjectiveKeepOrder, objective.keepOrder);
     objectiveObject.set(

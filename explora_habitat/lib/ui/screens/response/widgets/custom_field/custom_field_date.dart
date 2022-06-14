@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 
 class CustomFieldDate extends StatelessWidget {
   final CustomField customField;
+  final bool readOnly;
 
-  CustomFieldDate(this.customField);
+  CustomFieldDate(this.customField, {this.readOnly = false});
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -31,38 +32,41 @@ class CustomFieldDate extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.date_range),
           color: darkGreen,
-          onPressed: () async {
-            var date = await showDatePicker(
-              confirmText: 'CONFIRMAR',
-              cancelText: 'CANCELAR',
-              context: context,
-              initialDate: initialValue,
-              firstDate: initialValue.subtract(const Duration(days: 30)),
-              lastDate: initialValue.add(const Duration(days: 30)),
-              builder: (context, child) {
-                return Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: const ColorScheme.light(
-                      primary: Colors.lightGreen, // header background color
-                      onPrimary: Colors.white, // header text color
-                      onSurface: Colors.black, // body text color
-                    ),
-                    textButtonTheme: TextButtonThemeData(
-                      style: TextButton.styleFrom(
-                        primary: darkGreen, // button text color
-                      ),
-                    ),
-                  ),
-                  child: child!,
-                );
-              },
-            );
-            if (date != null) {
-              customField.value = date;
-              _textEditingController.value =
-                  TextEditingValue(text: DateFormat('dd/MM/yyyy').format(date));
-            }
-          },
+          onPressed: readOnly
+              ? null
+              : () async {
+                  var date = await showDatePicker(
+                    confirmText: 'CONFIRMAR',
+                    cancelText: 'CANCELAR',
+                    context: context,
+                    initialDate: initialValue,
+                    firstDate: initialValue.subtract(const Duration(days: 30)),
+                    lastDate: initialValue.add(const Duration(days: 30)),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary:
+                                Colors.lightGreen, // header background color
+                            onPrimary: Colors.white, // header text color
+                            onSurface: Colors.black, // body text color
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: darkGreen, // button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (date != null) {
+                    customField.value = date;
+                    _textEditingController.value = TextEditingValue(
+                        text: DateFormat('dd/MM/yyyy').format(date));
+                  }
+                },
         ),
       ],
     );

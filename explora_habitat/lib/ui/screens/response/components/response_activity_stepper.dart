@@ -1,7 +1,10 @@
 import 'package:explora_habitat/services/enum/activity_status.dart';
+import 'package:explora_habitat/services/models/response_activity.dart';
 import 'package:explora_habitat/services/stores/response_activity_store.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
+import 'package:explora_habitat/services/stores/response_theme_store.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_activity_modal.dart';
+import 'package:explora_habitat/ui/screens/response/components/responses_activity_list_view.dart';
 import 'package:explora_habitat/ui/widgets/acitivity_container_details.dart';
 import 'package:explora_habitat/ui/widgets/custom_material_button.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,8 @@ import 'package:provider/provider.dart';
 
 class ResponseActivityStepper extends StatefulWidget {
   @override
-  State<ResponseActivityStepper> createState() => _ResponseActivityStepperState();
+  State<ResponseActivityStepper> createState() =>
+      _ResponseActivityStepperState();
 }
 
 class _ResponseActivityStepperState extends State<ResponseActivityStepper> {
@@ -25,12 +29,12 @@ class _ResponseActivityStepperState extends State<ResponseActivityStepper> {
       showDialog(
         context: context,
         builder: (_) => Provider(
-          create: (_) => ResponseActivityStore(activity),
+          create: (_) => ResponseActivityStore(activity,
+              readOnly: responseObjectiveStore.readOnly),
           child: ResponseActivityModal(),
         ),
       );
     }
-
     return Column(
       children: [
         Observer(
@@ -60,25 +64,31 @@ class _ResponseActivityStepperState extends State<ResponseActivityStepper> {
                                 activity,
                               ),
                             ),
-                            Observer(
-                              builder: (_) =>
-                                  !responseObjectiveStore.isActivityCompleted
-                                      ? CustomMaterialButtom(
-                                          onPressed: responseObjectiveStore
-                                                  .canInitAcitivity
-                                              ? initActivity
-                                              : null,
-                                          text: 'Iniciar',
-                                          color: Colors.orange,
-                                        )
-                                      : CustomMaterialButtom(
-                                          onPressed: initActivity,
-                                          text: 'Respostas',
-                                          color: Colors.green,
-                                        ),
-                            ),
+                            responseObjectiveStore.completed
+                                ? Container()
+                                : Observer(
+                                    builder: (_) =>
+                                        !responseObjectiveStore.readOnly
+                                            ? CustomMaterialButtom(
+                                                onPressed:
+                                                    responseObjectiveStore
+                                                            .canInitAcitivity
+                                                        ? initActivity
+                                                        : null,
+                                                text: 'Responder',
+                                                color: Colors.orange,
+                                              )
+                                            : CustomMaterialButtom(
+                                                onPressed: initActivity,
+                                                text: 'Respostas',
+                                                color: Colors.green,
+                                              ),
+                                  ),
                           ],
                         ),
+                        responseObjectiveStore.completed
+                            ? ResponseActivityListView(activity: activity)
+                            : Container(),
                         //PositionAcitivityDetails(activity),
                       ],
                     ),

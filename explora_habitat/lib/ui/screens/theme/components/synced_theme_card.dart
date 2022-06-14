@@ -1,5 +1,6 @@
 import 'package:explora_habitat/constants/constants_style.dart';
 import 'package:explora_habitat/services/enum/theme_status.dart';
+import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/synced_theme_store.dart';
 import 'package:explora_habitat/ui/screens/theme/widgets/theme_content_container.dart';
 import 'package:explora_habitat/ui/screens/theme/widgets/theme_details_tile.dart';
@@ -10,15 +11,70 @@ import 'package:provider/provider.dart';
 class SyncedThemeCard extends StatelessWidget {
   final Function()? onStart;
   final Function()? onSync;
+  final Function()? onReadOnly;
+  final Function()? onClose;
 
   SyncedThemeCard({
     required this.onStart,
     required this.onSync,
+    required this.onReadOnly,
+    required this.onClose,
   });
 
   @override
   Widget build(BuildContext context) {
     SyncedThemeStore syncedThemeStore = Provider.of<SyncedThemeStore>(context);
+
+    bool isThemePending() {
+      return syncedThemeStore.theme.objectives.any((objective) => objective
+          .activities
+          .any((activity) => activity.responsesActivity.isEmpty || activity.responsesActivity.first.id == null));
+    }
+
+    Widget _getThemeActions() {
+      return Column(
+        children: [
+          const Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              isThemePending()
+                  ? IconButton(
+                splashRadius: 20,
+                icon: const Icon(Icons.play_arrow_sharp),
+                iconSize: 35,
+                color: Colors.green,
+                onPressed: onStart,
+              )
+                  : IconButton(
+                onPressed: onReadOnly,
+                splashRadius: 20,
+                icon: const Icon(
+                  Icons.visibility,
+                  color: Colors.blueGrey,
+                ),
+              ),
+              isThemePending()
+                  ? IconButton(
+                splashRadius: 20,
+                icon: const Icon(Icons.sync),
+                color: Colors.green,
+                onPressed: onSync,
+              )
+                  : Container(),
+              IconButton(
+                onPressed: onClose,
+                splashRadius: 20,
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
 
     return Card(
       elevation: 8,
@@ -54,14 +110,12 @@ class SyncedThemeCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Observer(
-                  builder: (_) => Text(
-                    _getThemeStatus(syncedThemeStore.theme.status),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w600,
-                    ),
+                Text(
+                  isThemePending() ? "Pendente" : "Sincronizado",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.red,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -69,43 +123,6 @@ class SyncedThemeCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  String _getThemeStatus(ThemeStatus themeStatus) {
-    switch (themeStatus) {
-      case ThemeStatus.pending:
-        return "Não iniciado";
-      case ThemeStatus.inProgress:
-        return "Em andamento";
-      case ThemeStatus.completed:
-        return "Aguardando sincronização";
-    }
-  }
-
-  Widget _getThemeActions() {
-    return Column(
-      children: [
-        const Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              splashRadius: 20,
-              icon: const Icon(Icons.play_arrow_sharp),
-              iconSize: 35,
-              color: Colors.green,
-              onPressed: onStart,
-            ),
-            IconButton(
-              splashRadius: 20,
-              icon: const Icon(Icons.sync),
-              color: Colors.green,
-              onPressed: onSync,
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

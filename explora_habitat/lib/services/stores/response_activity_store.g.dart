@@ -41,6 +41,22 @@ mixin _$ResponseActivityStore on _ResponseActivityStore, Store {
     });
   }
 
+  late final _$readOnlyAtom =
+      Atom(name: '_ResponseActivityStore.readOnly', context: context);
+
+  @override
+  bool get readOnly {
+    _$readOnlyAtom.reportRead();
+    return super.readOnly;
+  }
+
+  @override
+  set readOnly(bool value) {
+    _$readOnlyAtom.reportWrite(value, super.readOnly, () {
+      super.readOnly = value;
+    });
+  }
+
   late final _$loadingAtom =
       Atom(name: '_ResponseActivityStore.loading', context: context);
 
@@ -70,6 +86,7 @@ mixin _$ResponseActivityStore on _ResponseActivityStore, Store {
     return '''
 activity: ${activity},
 id: ${id},
+readOnly: ${readOnly},
 loading: ${loading}
     ''';
   }

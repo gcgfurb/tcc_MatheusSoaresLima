@@ -17,6 +17,10 @@ abstract class _ThemeStore with Store {
   @observable
   bool loading = false;
 
+  @observable
+  bool syncing = false;
+
+
   late final Box<ThemeExplora> myThemesBox;
 
   Future<void> initThemesBox(String userId) async {
@@ -26,32 +30,34 @@ abstract class _ThemeStore with Store {
     myThemesBox = await Hive.openBox<ThemeExplora>('themes_explora.$userId');
   }
 
-  void add(ThemeExplora theme) => myThemesBox.add(theme);
+  Future<void> add(ThemeExplora theme) async => await myThemesBox.add(theme);
 
-  void update(int index, ThemeExplora theme) => myThemesBox.put(index, theme);
+  Future<void> update(int index, ThemeExplora theme) async =>
+      await myThemesBox.put(index, theme);
 
-  void delete(int index) {
-    myThemesBox.delete(index);
-  }
+  Future<void> delete(int index) async => await myThemesBox.delete(index);
 
-  void copy(int index) {
+  Future<void> copy(int index) async {
     var theme = myThemesBox.get(index);
     var clonedTheme = theme!.clone();
     clonedTheme.title = "${clonedTheme.title} - Cópia";
-    add(clonedTheme);
+    await add(clonedTheme);
   }
 
+  @action
   Future<void> sync(int index) async {
+    syncing = true;
     var theme = myThemesBox.get(index);
     await ThemeRepository().save(theme!);
-    update(index, theme);
+    await update(index, theme);
+    syncing = false;
   }
 
   Future<void> finish(int index) async {
     var theme = myThemesBox.get(index);
     theme!.status = ThemeStatus.completed;
-    await ThemeRepository().save(theme);
-    update(index, theme);
+    await ThemeRepository().updateStatus(theme.id!, theme.status);
+    await update(index, theme);
   }
 
   @action

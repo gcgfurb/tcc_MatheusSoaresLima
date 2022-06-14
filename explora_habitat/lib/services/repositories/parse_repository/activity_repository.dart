@@ -12,7 +12,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 class ActivityRepository {
   Future<void> save(Activity activity, String objectiveId) async {
     final activityObject = ParseObject(keyActivityTable);
-
+    activityObject.objectId = activity.id;
     activityObject.set<String>(keyActivityTitle, activity.title);
     activityObject.set<String>(keyActivityStatus, activity.status.value);
     activityObject.set<String>(

@@ -59,8 +59,11 @@ abstract class _LoginStore with Store {
 
     try {
       final user = await UserRepository().loginWithEmail(email!, password!);
+
       final userMapped = User.fromParse(user);
       GetIt.I<UserManagerStore>().setUser(userMapped);
+
+      _verifyRegistrations();
 
       GetIt.I.registerSingleton(ThemeStore());
       await GetIt.I<ThemeStore>().initThemesBox(userMapped.id!);
@@ -76,5 +79,17 @@ abstract class _LoginStore with Store {
       error = e.toString();
     }
     loading = false;
+  }
+
+  void _verifyRegistrations() {
+    if (GetIt.I.isRegistered(instance: ThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ThemeStore>());
+    }
+    if (GetIt.I.isRegistered(instance: SyncedThemesStore())) {
+      GetIt.I.unregister(instance: GetIt.I<SyncedThemesStore>());
+    }
+    if (GetIt.I.isRegistered(instance: ResponsesThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ResponsesThemeStore>());
+    }
   }
 }

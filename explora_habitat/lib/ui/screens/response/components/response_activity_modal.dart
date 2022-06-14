@@ -27,8 +27,7 @@ class ResponseActivityModal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 50,
-              padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
@@ -51,17 +50,19 @@ class ResponseActivityModal extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    children: const [
-                      TextLabel(
-                        'Recursos',
-                        color: Colors.teal,
-                      ),
-                      Divider(
-                        color: Colors.teal,
-                      ),
-                    ],
-                  ),
+                  activity.types.isEmpty
+                      ? Container()
+                      : Row(
+                          children: const [
+                            TextLabel(
+                              'Recursos',
+                              color: Colors.teal,
+                            ),
+                            Divider(
+                              color: Colors.teal,
+                            ),
+                          ],
+                        ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: ListView.builder(
@@ -72,18 +73,20 @@ class ResponseActivityModal extends StatelessWidget {
                           ActivityResources(activity.types[index]),
                     ),
                   ),
-                  Row(
-                    children: const [
-                      TextLabel(
-                        'Perguntas',
-                        color: Colors.teal,
-                      ),
-                      Divider(
-                        color: Colors.teal,
-                        thickness: 20,
-                      ),
-                    ],
-                  ),
+                  activity.customFields.isEmpty
+                      ? Container()
+                      : Row(
+                          children: const [
+                            TextLabel(
+                              'Perguntas',
+                              color: Colors.teal,
+                            ),
+                            Divider(
+                              color: Colors.teal,
+                              thickness: 20,
+                            ),
+                          ],
+                        ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: ListView.builder(
@@ -92,6 +95,7 @@ class ResponseActivityModal extends StatelessWidget {
                       shrinkWrap: true,
                       itemBuilder: (_, index) => CustomActivityField(
                         responseActivityStore.customFields[index],
+                        readOnly: responseActivityStore.readOnly,
                       ),
                     ),
                   ),
@@ -111,10 +115,13 @@ class ResponseActivityModal extends StatelessWidget {
                           color: Colors.green,
                           text: 'Confirmar',
                           loading: responseActivityStore.loading,
-                          onPressed: () async {
-                            await responseActivityStore.saveResponse();
-                            Navigator.pop(context);
-                          },
+                          onPressed: !responseActivityStore.readOnly
+                              ? () {
+                                  responseActivityStore
+                                      .saveResponse()
+                                      .then((value) => Navigator.pop(context));
+                                }
+                              : null,
                         ),
                       ),
                     ],

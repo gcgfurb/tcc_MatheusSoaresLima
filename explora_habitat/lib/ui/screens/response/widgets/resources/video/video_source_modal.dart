@@ -19,12 +19,12 @@ class VideoSourceModal extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextButton(
-              child: const Text('Câmera'),
               onPressed: getFromCamera,
+              child: const Text('Câmera'),
             ),
             TextButton(
-              child: const Text('Galeria'),
               onPressed: getFromGallery,
+              child: const Text('Galeria'),
             ),
           ],
         ),

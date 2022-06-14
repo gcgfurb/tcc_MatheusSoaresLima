@@ -10,14 +10,38 @@ import 'package:explora_habitat/ui/screens/theme/components/my_theme_card.dart';
 import 'package:explora_habitat/ui/widgets/custom_alert_dialog.dart';
 import 'package:explora_habitat/ui/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-class MyThemeScreen extends StatelessWidget {
+class MyThemeScreen extends StatefulWidget {
+  @override
+  State<MyThemeScreen> createState() => _MyThemeScreenState();
+}
+
+class _MyThemeScreenState extends State<MyThemeScreen> {
+  final ThemeStore themeStore = GetIt.I<ThemeStore>();
+
   @override
   Widget build(BuildContext context) {
-    final ThemeStore themeStore = GetIt.I<ThemeStore>();
+    void closeTheme(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Remover tema sincronizado',
+          body: const Text(
+            'Tem certeza que deseja remover este tema? Será necessário realizar uma nova sincronização para obter o tema novamente!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            themeStore.delete(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
+    }
 
     void openTheme(int index, bool readOnly) {
       var theme = themeStore.myThemesBox.get(index)!;
@@ -48,6 +72,7 @@ class MyThemeScreen extends StatelessWidget {
     void _syncThemes(BuildContext context) {
       showDialog<void>(
         context: context,
+        barrierDismissible: false,
         builder: (_) => CustomAlertDialog(
           title: 'Buscar temas sincronizados',
           body: const Text(
@@ -81,24 +106,6 @@ class MyThemeScreen extends StatelessWidget {
       );
     }
 
-    void closeTheme(int index) {
-      showDialog(
-        context: context,
-        builder: (context) => CustomAlertDialog(
-          title: 'Remover tema sincronizado',
-          body: const Text(
-            'Tem certeza que deseja remover este tema? Será necessário realizar uma nova sincronização para obter o tema novamente!',
-            style: TextStyle(fontSize: 18),
-          ),
-          onSave: () async {
-            themeStore.delete(index);
-            Navigator.pop(context);
-          },
-          onCancel: () => Navigator.pop(context),
-        ),
-      );
-    }
-
     void finishTheme(int index) {
       showDialog(
         context: context,
@@ -120,17 +127,20 @@ class MyThemeScreen extends StatelessWidget {
     void syncTheme(int index) async {
       await showDialog(
         context: context,
-        builder: (context) => CustomAlertDialog(
-          title: 'Sincronização de tema',
-          body: const Text(
-            'Tem certeza que deseja sincronizar este tema? Após sincronizado, o tema não poderá ser editado ou excluido!',
-            style: TextStyle(fontSize: 18),
+        barrierDismissible: false,
+        builder: (context) => Observer(
+          builder: (_) => CustomAlertDialog(
+            loading: themeStore.syncing,
+            title: 'Sincronização de tema',
+            body: const Text(
+              'Tem certeza que deseja sincronizar este tema? Após sincronizado, o tema não poderá ser editado ou excluido!',
+              style: TextStyle(fontSize: 18),
+            ),
+            onSave: () {
+              themeStore.sync(index).then((value) => Navigator.pop(context));
+            },
+            onCancel: () => Navigator.pop(context),
           ),
-          onSave: () {
-            themeStore.sync(index);
-            Navigator.pop(context);
-          },
-          onCancel: () => Navigator.pop(context),
         ),
       );
     }
@@ -168,6 +178,7 @@ class MyThemeScreen extends StatelessWidget {
             return Container();
           } else {
             return ListView.builder(
+              key: Key(box.length.toString()),
               itemCount: box.length,
               itemBuilder: (_, index) => Provider(
                 create: (_) => MyThemeStore(box.getAt(index)!),

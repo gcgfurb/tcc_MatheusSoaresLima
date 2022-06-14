@@ -9,8 +9,12 @@ import 'package:provider/provider.dart';
 
 class ResponseThemeCard extends StatelessWidget {
   final Function()? onOpenResponse;
+  final Function()? onClose;
 
-  ResponseThemeCard({required this.onOpenResponse});
+  ResponseThemeCard({
+    required this.onOpenResponse,
+    required this.onClose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class ResponseThemeCard extends StatelessWidget {
                 Text(
                   'Finalizado',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     color: Colors.green,
                     fontWeight: FontWeight.w600,
                   ),
@@ -77,9 +81,14 @@ class ResponseThemeCard extends StatelessWidget {
             IconButton(
               splashRadius: 20,
               icon: const Icon(Icons.question_answer),
-              iconSize: 30,
-              color: darkerGreen,
+              color: Colors.green,
               onPressed: onOpenResponse,
+            ),
+            IconButton(
+              splashRadius: 20,
+              icon: const Icon(Icons.close),
+              color: Colors.red,
+              onPressed: onClose,
             ),
           ],
         ),

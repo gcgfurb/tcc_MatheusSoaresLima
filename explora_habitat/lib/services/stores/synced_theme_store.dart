@@ -6,7 +6,6 @@ part 'synced_theme_store.g.dart';
 class SyncedThemeStore = _SyncedThemeStore with _$SyncedThemeStore;
 
 abstract class _SyncedThemeStore with Store {
-
   @observable
   ThemeExplora theme;
 
@@ -17,5 +16,4 @@ abstract class _SyncedThemeStore with Store {
   void toggleExpanded() => isExpanded = !isExpanded;
 
   _SyncedThemeStore(this.theme);
-
 }

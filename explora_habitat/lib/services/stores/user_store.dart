@@ -11,6 +11,7 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   Future<void> enter(User user) async {
+    _verifyRegistrations();
     GetIt.I.registerSingleton(ThemeStore());
     await GetIt.I<ThemeStore>().initThemesBox(user.id!);
 
@@ -19,5 +20,17 @@ abstract class _UserStore with Store {
 
     GetIt.I.registerSingleton(ResponsesThemeStore());
     await GetIt.I<ResponsesThemeStore>().initThemesBox(user.id!);
+  }
+
+  void _verifyRegistrations() {
+    if (GetIt.I.isRegistered(instance: ThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ThemeStore>());
+    }
+    if (GetIt.I.isRegistered(instance: SyncedThemesStore())) {
+      GetIt.I.unregister(instance: GetIt.I<SyncedThemesStore>());
+    }
+    if (GetIt.I.isRegistered(instance: ResponsesThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ResponsesThemeStore>());
+    }
   }
 }

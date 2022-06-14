@@ -119,6 +119,8 @@ abstract class _SignupStore with Store {
       final userMapped = User.fromParse(createdUser);
       GetIt.I<UserManagerStore>().setUser(userMapped);
 
+      _verifyRegistrations();
+
       GetIt.I.registerSingleton(ThemeStore());
       await GetIt.I<ThemeStore>().initThemesBox(userMapped.id!);
 
@@ -134,5 +136,17 @@ abstract class _SignupStore with Store {
     }
 
     loading = false;
+  }
+
+  void _verifyRegistrations() {
+    if (GetIt.I.isRegistered(instance: ThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ThemeStore>());
+    }
+    if (GetIt.I.isRegistered(instance: SyncedThemesStore())) {
+      GetIt.I.unregister(instance: GetIt.I<SyncedThemesStore>());
+    }
+    if (GetIt.I.isRegistered(instance: ResponsesThemeStore())) {
+      GetIt.I.unregister(instance: GetIt.I<ResponsesThemeStore>());
+    }
   }
 }

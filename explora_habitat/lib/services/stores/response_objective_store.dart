@@ -13,10 +13,20 @@ abstract class _ResponseObjectiveStore with Store {
   @observable
   Objective objective;
 
-  _ResponseObjectiveStore({required this.objective});
+  _ResponseObjectiveStore({
+    required this.objective,
+    this.readOnly = false,
+    this.completed = false,
+  });
 
   @observable
   int currentStep = 0;
+
+  @observable
+  bool readOnly;
+
+  @observable
+  bool completed;
 
   @action
   void setCurrentStep(int value) => currentStep = value;
@@ -29,17 +39,11 @@ abstract class _ResponseObjectiveStore with Store {
 
   @computed
   bool get isActivityCompleted {
-    return objective.activities[currentStep].status ==
-        ActivityStatus.completed;
+    return objective.activities[currentStep].status == ActivityStatus.completed;
   }
 
-
   @computed
-  bool get canInitAcitivity => !(objective
-              .activities[currentStep].status ==
-          ActivityStatus.completed ||
-      (currentStep > 0 &&
-          objective.keepOrder &&
-          objective.activities[currentStep - 1].status !=
-              ActivityStatus.completed));
+  bool get canInitAcitivity => !(currentStep > 0 &&
+      objective.keepOrder &&
+      objective.activities[currentStep - 1].status != ActivityStatus.completed);
 }

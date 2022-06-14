@@ -16,7 +16,6 @@ class ResponseRepository {
       ResponseActivity responseActivity, String activityId) async {
     final parseUser = await ParseUser.currentUser() as ParseUser;
 
-    print(responseActivity.images);
     final parseImages = await _saveFiles(responseActivity.images);
     final parseVideos = await _saveFiles(responseActivity.videos);
     final parseAudios = await _saveFiles(responseActivity.audios);
@@ -85,7 +84,6 @@ class ResponseRepository {
 
     ParseResponse response = await queryBuilder.query();
 
-    print(activityObject.objectId == "6eedkNBLIo");
     if (response.success) {
       List<ResponseActivity> responses = [];
       if (response.results != null) {
@@ -131,7 +129,7 @@ class ResponseRepository {
   Future<File> getFiles(String url, String imageName) async {
     var response = await http.get(Uri.parse(url));
     Directory documentDirectory = await getApplicationDocumentsDirectory();
-    File file = File("${documentDirectory.path}/images/$imageName");
+    File file = File("${documentDirectory.path}/$imageName");
     file.writeAsBytesSync(response.bodyBytes);
     return file;
   }
@@ -150,5 +148,23 @@ class ResponseRepository {
         required: field['required'],
       ),
     ));
+  }
+
+  Future<bool> isActivityAlreadyAnswered(String activityId) async {
+    final parseUser = await ParseUser.currentUser() as ParseUser;
+
+    final queryBuilder = QueryBuilder<ParseObject>(
+        ParseObject(keyResponseTable))
+      ..whereEqualTo(keyResponseUser, parseUser.toPointer())
+      ..whereEqualTo(keyResponseActivity,
+          (ParseObject(keyActivityTable)..objectId = activityId).toPointer());
+
+    ParseResponse response = await queryBuilder.query();
+
+    if (response.success) {
+      return response.results != null && response.results!.isNotEmpty;
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
   }
 }

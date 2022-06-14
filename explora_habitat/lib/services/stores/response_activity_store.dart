@@ -13,9 +13,10 @@ class ResponseActivityStore = _ResponseActivityStore
     with _$ResponseActivityStore;
 
 abstract class _ResponseActivityStore with Store {
-  _ResponseActivityStore(this.activity) {
+  _ResponseActivityStore(this.activity,
+      {this.readOnly = false, ResponseActivity? response}) {
     if (activity.responsesActivity.isNotEmpty) {
-      var clonedResponse = activity.responsesActivity.first.clone();
+      var clonedResponse = response ?? activity.responsesActivity.first.clone();
       id = clonedResponse.id;
       images = ObservableList.of(clonedResponse.images);
       videos = ObservableList.of(clonedResponse.videos);
@@ -33,6 +34,9 @@ abstract class _ResponseActivityStore with Store {
 
   @observable
   String? id;
+
+  @observable
+  bool readOnly;
 
   @observable
   bool loading = false;

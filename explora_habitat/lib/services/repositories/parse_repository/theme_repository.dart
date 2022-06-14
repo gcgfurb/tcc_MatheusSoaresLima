@@ -11,6 +11,7 @@ class ThemeRepository {
     final parseUser = await ParseUser.currentUser() as ParseUser;
 
     final themeObject = ParseObject(keyThemeTable);
+    themeObject.objectId = theme.id;
 
     final parseAcl = ParseACL(owner: parseUser);
     parseAcl.setPublicReadAccess(allowed: true);
@@ -33,6 +34,17 @@ class ThemeRepository {
     }
   }
 
+  Future<void> updateStatus(String id, ThemeStatus status) async {
+    final themeObject = ParseObject(keyThemeTable);
+    themeObject.objectId = id;
+    themeObject.set<String>(keyThemeStatus, status.value);
+
+    var response = await themeObject.save();
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code));
+    }
+  }
+
   Future<ThemeExplora> findById(String objectId) async {
     QueryBuilder<ParseObject> parseQuery =
         QueryBuilder<ParseObject>(ParseObject(keyThemeTable))
@@ -48,6 +60,11 @@ class ThemeRepository {
             await ObjectiveRepository().findAllByTheme(parseObject);
         ParseUser creator = parseObject.get<ParseUser>(keyThemeCreator)!;
         theme.creator = await UserRepository().findById(creator.objectId!);
+
+        if (theme.status == ThemeStatus.completed) {
+          return Future.error(
+              'O tema $objectId já foi finalizado pelo mediador!');
+        }
 
         return theme;
       } else {
@@ -111,8 +128,8 @@ class ThemeRepository {
         List<ThemeExplora> themes = [];
         for (var parseObject in response.results!) {
           ThemeExplora theme = mapParseToTheme(parseObject);
-          theme.objectives =
-              await ObjectiveRepository().findAllByTheme(parseObject, complete: true);
+          theme.objectives = await ObjectiveRepository()
+              .findAllByTheme(parseObject, complete: true);
           ParseUser creator = parseObject.get<ParseUser>(keyThemeCreator)!;
           theme.creator = await UserRepository().findById(creator.objectId!);
 

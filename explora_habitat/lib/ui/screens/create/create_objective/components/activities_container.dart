@@ -5,6 +5,7 @@ import 'package:explora_habitat/services/stores/activity_store.dart';
 import 'package:explora_habitat/services/stores/create_activity_store.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/components/create_activity_modal.dart';
 import 'package:explora_habitat/ui/screens/create/create_objective/widgets/custom_reorderable_list_view.dart';
+import 'package:explora_habitat/ui/widgets/empty_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,8 @@ class ActivitiesContainer extends StatelessWidget {
                 : Column(
                     children: [
                       createActivityStore.activities.isEmpty
-                          ? const EmptyActivitiesContainer()
+                          ? EmptyContainer(
+                              'Você não adicionou atividades a este objetivo')
                           : CustomReorderableListView(
                               readOnly: readOnly,
                             ),
@@ -125,34 +127,5 @@ class ActivitiesContainer extends StatelessWidget {
       createActivityStore.activities.add(activity);
       objective.activities = createActivityStore.activities;
     }
-  }
-}
-
-class EmptyActivitiesContainer extends StatelessWidget {
-  const EmptyActivitiesContainer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      width: 200,
-      height: 100,
-      child: Center(
-        child: Column(
-          children: const [
-            Icon(
-              Icons.not_interested_outlined,
-              color: Colors.teal,
-              size: 40,
-            ),
-            Text(
-              'Você não adicionou atividades a este objetivo',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.teal, fontSize: 15),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

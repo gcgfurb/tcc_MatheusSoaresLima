@@ -44,38 +44,42 @@ class ImagesField extends StatelessWidget {
                   : 5,
               itemBuilder: (_, index) {
                 if (index == responseActivityStore.images.length) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (Platform.isAndroid) {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (_) => ImageSourceModal(onImageSelected),
-                          );
-                        } else {
-                          showCupertinoModalPopup(
-                            context: context,
-                            builder: (_) => ImageSourceModal(onImageSelected),
-                          );
-                        }
-                      },
-                      child: CircleAvatar(
-                        radius: 44,
-                        backgroundColor: Colors.grey[300],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.camera_alt,
-                              size: 40,
-                              color: Colors.white,
+                  return responseActivityStore.readOnly
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (Platform.isAndroid) {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) =>
+                                      ImageSourceModal(onImageSelected),
+                                );
+                              } else {
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (_) =>
+                                      ImageSourceModal(onImageSelected),
+                                );
+                              }
+                            },
+                            child: CircleAvatar(
+                              radius: 44,
+                              backgroundColor: Colors.grey[300],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    size: 40,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                          ),
+                        );
                 } else {
                   return Padding(
                     padding:
@@ -85,6 +89,7 @@ class ImagesField extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (_) => ImageDialog(
+                            readOnly: responseActivityStore.readOnly,
                             image: File(responseActivityStore.images[index]),
                             onDelete: () =>
                                 responseActivityStore.images.removeAt(index),

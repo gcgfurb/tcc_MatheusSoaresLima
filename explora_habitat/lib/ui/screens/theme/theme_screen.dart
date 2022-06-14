@@ -26,16 +26,38 @@ class ThemeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final SyncedThemesStore syncedThemesStore = GetIt.I<SyncedThemesStore>();
 
-    void startTheme(int key, BuildContext context) {
+    void startTheme(int key, bool readOnly) {
       var theme = syncedThemesStore.syncedThemeBox.get(key)!;
       var clonedTheme = theme.clone(cloneResponse: true);
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => Provider(
-            create: (_) => ResponseThemeStore(theme: clonedTheme, key: key),
+            create: (_) => ResponseThemeStore(
+              theme: clonedTheme,
+              key: key,
+              readOnly: readOnly,
+            ),
             child: ResponseThemeScreen(),
           ),
+        ),
+      );
+    }
+
+    void closeTheme(int key) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Remover tema sincronizado',
+          body: const Text(
+            'Tem certeza que deseja remover este tema? Respostas não sincronizadas serão descartadas!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            syncedThemesStore.delete(key);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
         ),
       );
     }
@@ -43,7 +65,9 @@ class ThemeScreen extends StatelessWidget {
     void syncTheme(int key) async {
       await showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => CustomAlertDialog(
+          loading: syncedThemesStore.loading,
           title: 'Sincronizar repostas',
           body: const Text(
             'Tem certeza que deseja sincronizar as respostas deste tema? Após sincronizadas não poderão ser alteradas!',
@@ -79,12 +103,16 @@ class ThemeScreen extends StatelessWidget {
             return Container();
           } else {
             return ListView.builder(
+              key: Key(box.length.toString()),
+              shrinkWrap: true,
               itemCount: box.length,
               itemBuilder: (_, index) => Provider(
                 create: (_) => SyncedThemeStore(box.getAt(index)!),
                 child: SyncedThemeCard(
-                  onStart: () => startTheme(box.keyAt(index)!, context),
+                  onStart: () => startTheme(box.keyAt(index)!, false),
                   onSync: () => syncTheme(box.keyAt(index)!),
+                  onReadOnly: () => startTheme(box.keyAt(index)!, true),
+                  onClose: () => closeTheme(box.keyAt(index)!),
                 ),
               ),
             );

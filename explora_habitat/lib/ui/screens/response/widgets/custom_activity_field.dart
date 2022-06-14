@@ -9,21 +9,22 @@ import 'package:flutter/material.dart';
 
 class CustomActivityField extends StatelessWidget {
   final CustomField customField;
+  final bool readOnly;
 
-  CustomActivityField(this.customField);
+  CustomActivityField(this.customField, {this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
     if (FieldType.text == customField.type) {
-      return CustomFieldText(customField);
+      return CustomFieldText(customField, readOnly: readOnly);
     } else if (FieldType.date == customField.type) {
-      return CustomFieldDate(customField);
+      return CustomFieldDate(customField, readOnly: readOnly);
     } else if (FieldType.time == customField.type) {
-      return CustomFieldTime(customField);
+      return CustomFieldTime(customField, readOnly: readOnly);
     } else if (FieldType.decimal == customField.type) {
-      return CustomFieldDecimal(customField);
+      return CustomFieldDecimal(customField, readOnly: readOnly);
     } else {
-      return CustomFieldNumber(customField);
+      return CustomFieldNumber(customField, readOnly: readOnly);
     }
   }
 }

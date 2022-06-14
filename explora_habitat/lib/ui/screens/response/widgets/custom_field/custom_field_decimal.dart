@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 
 class CustomFieldDecimal extends StatelessWidget {
   final CustomField customField;
+  final bool readOnly;
 
-  const CustomFieldDecimal(this.customField);
+  CustomFieldDecimal(this.customField, {this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class CustomFieldDecimal extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         CentavosInputFormatter(),
       ],
+      enabled: !readOnly,
       onChanged: (value) => customField.value = value,
       initialValue: customField.value,
     );

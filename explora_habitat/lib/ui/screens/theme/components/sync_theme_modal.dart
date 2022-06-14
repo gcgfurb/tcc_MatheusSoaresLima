@@ -9,6 +9,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 class SyncThemeModal extends StatelessWidget {
   SyncThemeStore syncThemeStore = SyncThemeStore();
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +63,7 @@ class SyncThemeModal extends StatelessWidget {
                         inputType: TextInputType.text,
                         onChanged: syncThemeStore.setCode,
                         enabled: !syncThemeStore.loading,
+                        controller: textEditingController,
                       ),
                     ),
                   ),
@@ -70,14 +72,16 @@ class SyncThemeModal extends StatelessWidget {
                         ? () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => MobileScanner(
+                                builder: (context) => MobileScanner(
                                     allowDuplicates: false,
                                     onDetect: (barcode, args) {
                                       if (barcode.rawValue == null) {
                                         debugPrint('Failed to scan Barcode');
                                       } else {
                                         final String code = barcode.rawValue!;
-                                        debugPrint('Barcode found! $code');
+                                        syncThemeStore.setCode(code);
+                                        textEditingController.value = TextEditingValue(text: code);
+                                        Navigator.pop(context);
                                       }
                                     }),
                               ),

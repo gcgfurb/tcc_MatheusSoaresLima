@@ -35,16 +35,38 @@ class ResponsesThemeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void openResponse(int key) {
       var theme = responsesThemeStore.completedThemesBox.get(key)!;
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => Provider(
-            create: (_) => ResponseThemeStore(theme: theme, key: key),
+            create: (_) => ResponseThemeStore(
+              theme: theme,
+              key: key,
+              readOnly: true,
+              completed: true,
+            ),
             child: ResponseThemeScreen(),
           ),
+        ),
+      );
+    }
+
+    void closeTheme(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Remover tema sincronizado',
+          body: const Text(
+            'Tem certeza que deseja remover este tema? Será necessário realizar uma nova sincronização para obter o tema novamente!',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            responsesThemeStore.delete(index);
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
         ),
       );
     }
@@ -74,12 +96,14 @@ class ResponsesThemeScreen extends StatelessWidget {
             return Container();
           } else {
             return ListView.builder(
+              key: Key(box.length.toString()),
               itemCount: box.length,
               itemBuilder: (_, index) => Provider(
                 create: (_) => ResponseThemeStore(
                     theme: box.getAt(index)!, key: box.keyAt(index)!),
                 child: ResponseThemeCard(
                   onOpenResponse: () => openResponse(box.keyAt(index)!),
+                  onClose: () => closeTheme(box.keyAt(index)!),
                 ),
               ),
             );

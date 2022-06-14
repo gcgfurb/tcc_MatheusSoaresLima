@@ -1,3 +1,4 @@
+import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/helpers/geolocator_manager.dart';
 import 'package:explora_habitat/services/stores/response_theme_store.dart';
 import 'package:explora_habitat/ui/widgets/custom_alert_dialog.dart';
@@ -25,20 +26,50 @@ class CustomGoogleMapState extends State<CustomGoogleMap> {
       mapController = controller;
     }
 
-    List<Marker> markers = responseThemeStore.responses
-        .map(
-          (response) => Marker(
-            markerId: const MarkerId("1"),
-            position: LatLng(
-              response.latitude!,
-              response.longitude!,
-            ),
-            onTap: () => showDialog(
-              context: context,
-              builder: (_) => CustomAlertDialog(
-                title: "Teste",
-                body: const Text("Teste"),
-                onCancel: () => Navigator.pop(context),
+    List<Marker> markers = responseThemeStore.theme.objectives
+        .expand(
+          (objective) => objective.activities.expand(
+            (activity) => activity.responsesActivity.map(
+              (response) => Marker(
+                markerId: const MarkerId("1"),
+                position: LatLng(
+                  response.latitude!,
+                  response.longitude!,
+                ),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (_) => CustomAlertDialog(
+                    info: true,
+                    title: "Resposta",
+                    body: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Card(
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.person_pin,
+                              color: darkerGreen,
+                              size: 35,
+                            ),
+                            title: Text(response.user!.name),
+                            subtitle: const Text("Clubista"),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "Objetivo: ${objective.title}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "Atividade: ${activity.title}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    onCancel: () => Navigator.pop(context),
+                  ),
+                ),
               ),
             ),
           ),

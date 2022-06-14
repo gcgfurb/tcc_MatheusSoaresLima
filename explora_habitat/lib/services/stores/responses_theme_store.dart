@@ -38,4 +38,6 @@ abstract class _ResponsesThemeStore with Store {
     completedThemesBox.addAll(themes);
     loading = false;
   }
+
+  void delete(int key) => completedThemesBox.delete(key);
 }

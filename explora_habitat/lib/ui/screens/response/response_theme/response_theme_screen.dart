@@ -21,13 +21,15 @@ class ResponseThemeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(
-              onPressed: () {
-                responseThemeStore.saveResponse();
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.save),
-            ),
+            responseThemeStore.readOnly
+                ? Container()
+                : IconButton(
+                    onPressed: () {
+                      responseThemeStore.saveResponse();
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.save),
+                  ),
           ],
           title: const Text('Resposta'),
           centerTitle: true,
@@ -51,6 +53,8 @@ class ResponseThemeScreen extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (_, index) => Provider(
                       create: (_) => ResponseObjectiveStore(
+                        readOnly: responseThemeStore.readOnly,
+                        completed: responseThemeStore.completed,
                         objective: responseThemeStore.theme.objectives[index],
                       ),
                       child: ResponseObjectiveComponent(),

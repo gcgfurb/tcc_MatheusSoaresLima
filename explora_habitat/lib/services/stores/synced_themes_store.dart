@@ -17,7 +17,9 @@ abstract class _SyncedThemesStore with Store {
 
   void add(ThemeExplora theme) => syncedThemeBox.add(theme);
 
-  void update(int key, ThemeExplora theme) => syncedThemeBox.put(key, theme);
+  void delete(int key) => syncedThemeBox.delete(key);
+
+  Future<void> update(int key, ThemeExplora theme) async => await syncedThemeBox.put(key, theme);
 
   Future<void> initThemesBox(String userId) async {
     await Permission.storage.request().isGranted;
@@ -26,7 +28,12 @@ abstract class _SyncedThemesStore with Store {
     syncedThemeBox = await Hive.openBox<ThemeExplora>('synced_themes.$userId');
   }
 
+  @observable
+  bool loading = false;
+
+  @action
   Future<void> sync(int key) async {
+    loading = true;
     var theme = syncedThemeBox.get(key);
     var activities =
         theme!.objectives.expand((objective) => objective.activities);
@@ -35,6 +42,7 @@ abstract class _SyncedThemesStore with Store {
       await ResponseRepository()
           .save(activity.responsesActivity.first, activity.id!);
     }
-    update(key, theme);
+    await update(key, theme);
+    loading = false;
   }
 }

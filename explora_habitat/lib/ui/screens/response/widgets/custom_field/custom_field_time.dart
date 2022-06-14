@@ -7,8 +7,9 @@ import 'package:intl/intl.dart';
 class CustomFieldTime extends StatelessWidget {
   final CustomField customField;
   final TextEditingController _textEditingController = TextEditingController();
+  final bool readOnly;
 
-  CustomFieldTime(this.customField);
+  CustomFieldTime(this.customField, {this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,39 +30,42 @@ class CustomFieldTime extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.timer_outlined),
           color: darkGreen,
-          onPressed: () async {
-            var time = await showTimePicker(
-              confirmText: 'CONFIRMAR',
-              cancelText: 'CANCELAR',
-              context: context,
-              initialTime: initialValue,
-              builder: (context, child) {
-                return Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: const ColorScheme.light(
-                      primary: Colors.lightGreen, // header background color
-                      onPrimary: Colors.white, // header text color
-                      onSurface: Colors.black, // body text color
-                    ),
-                    textButtonTheme: TextButtonThemeData(
-                      style: TextButton.styleFrom(
-                        primary: darkGreen, // button text color
-                      ),
-                    ),
-                  ),
-                  child: child!,
-                );
-              },
-            );
-            if (time != null) {
-              customField.value = getTime(time);
-              final now = DateTime.now();
-              final dt = DateTime(
-                  now.year, now.month, now.day, time.hour, time.minute);
-              _textEditingController.value =
-                  TextEditingValue(text: DateFormat("HH:mm").format(dt));
-            }
-          },
+          onPressed: readOnly
+              ? null
+              : () async {
+                  var time = await showTimePicker(
+                    confirmText: 'CONFIRMAR',
+                    cancelText: 'CANCELAR',
+                    context: context,
+                    initialTime: initialValue,
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary:
+                                Colors.lightGreen, // header background color
+                            onPrimary: Colors.white, // header text color
+                            onSurface: Colors.black, // body text color
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: darkGreen, // button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (time != null) {
+                    customField.value = getTime(time);
+                    final now = DateTime.now();
+                    final dt = DateTime(
+                        now.year, now.month, now.day, time.hour, time.minute);
+                    _textEditingController.value =
+                        TextEditingValue(text: DateFormat("HH:mm").format(dt));
+                  }
+                },
         ),
       ],
     );
