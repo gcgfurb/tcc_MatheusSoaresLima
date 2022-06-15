@@ -25,17 +25,17 @@ class CustomFieldSelector extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Observer(
-            builder: (_) => Checkbox(
-              value: customFieldStore.required,
-              onChanged: !readOnly
-                  ? (value) {
-                      customFieldStore.toggleRequired();
-                      customField!.required = customFieldStore.required;
-                    }
-                  : null,
-            ),
-          ),
+          // Observer(
+          //   builder: (_) => Checkbox(
+          //     value: customFieldStore.required,
+          //     onChanged: !readOnly
+          //         ? (value) {
+          //             customFieldStore.toggleRequired();
+          //             customField!.required = customFieldStore.required;
+          //           }
+          //         : null,
+          //   ),
+          // ),
           CustomDropdownButtonFormField(
             customFieldStore,
             readOnly: readOnly,
@@ -46,6 +46,12 @@ class CustomFieldSelector extends StatelessWidget {
               initialValue: customFieldStore.customField!.title,
               onChanged: customFieldStore.setTitle,
               enabled: !readOnly,
+              minLines: 1,
+              maxLines: 5,
+              maxLength: 100,
+              decoration: const InputDecoration(
+                counterText: "",
+              ),
             ),
           ),
           const SizedBox(width: 10),

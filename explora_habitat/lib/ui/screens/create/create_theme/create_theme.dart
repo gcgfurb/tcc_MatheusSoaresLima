@@ -53,6 +53,7 @@ class CreateThemeScreen extends StatelessWidget {
                               errorText: createThemeStore.descriptionError,
                               inputType: TextInputType.text,
                               onChanged: createThemeStore.setDescription,
+                              maxLength: 200,
                             ),
                           ),
                         ],

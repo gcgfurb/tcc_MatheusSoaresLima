@@ -9,6 +9,7 @@ import 'package:explora_habitat/ui/screens/theme/components/synced_theme_card.da
 import 'package:explora_habitat/ui/widgets/custom_alert_dialog.dart';
 import 'package:explora_habitat/ui/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -66,18 +67,21 @@ class ThemeScreen extends StatelessWidget {
       await showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => CustomAlertDialog(
-          loading: syncedThemesStore.loading,
-          title: 'Sincronizar repostas',
-          body: const Text(
-            'Tem certeza que deseja sincronizar as respostas deste tema? Após sincronizadas não poderão ser alteradas!',
-            style: TextStyle(fontSize: 18),
+        builder: (context) => Observer(
+          builder: (_) => CustomAlertDialog(
+            loading: syncedThemesStore.loading,
+            title: 'Sincronizar repostas',
+            body: const Text(
+              'Tem certeza que deseja sincronizar as respostas deste tema? Após sincronizadas não poderão ser alteradas!',
+              style: TextStyle(fontSize: 18),
+            ),
+            onSave: () {
+              syncedThemesStore
+                  .sync(key)
+                  .then((value) => Navigator.pop(context));
+            },
+            onCancel: () => Navigator.pop(context),
           ),
-          onSave: () {
-            syncedThemesStore.sync(key);
-            Navigator.pop(context);
-          },
-          onCancel: () => Navigator.pop(context),
         ),
       );
     }

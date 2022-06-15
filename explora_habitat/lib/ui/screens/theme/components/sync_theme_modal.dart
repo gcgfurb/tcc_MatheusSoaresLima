@@ -64,6 +64,7 @@ class SyncThemeModal extends StatelessWidget {
                         onChanged: syncThemeStore.setCode,
                         enabled: !syncThemeStore.loading,
                         controller: textEditingController,
+                        counterText: "",
                       ),
                     ),
                   ),

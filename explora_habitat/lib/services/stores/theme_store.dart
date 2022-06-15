@@ -45,11 +45,11 @@ abstract class _ThemeStore with Store {
   }
 
   @action
-  Future<void> sync(int index) async {
+  Future<void> sync(int key) async {
     syncing = true;
-    var theme = myThemesBox.get(index);
+    var theme = myThemesBox.get(key);
     await ThemeRepository().save(theme!);
-    await update(index, theme);
+    await update(key, theme);
     syncing = false;
   }
 

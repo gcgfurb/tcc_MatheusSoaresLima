@@ -39,8 +39,11 @@ abstract class _SyncedThemesStore with Store {
         theme!.objectives.expand((objective) => objective.activities);
 
     for (Activity activity in activities) {
-      await ResponseRepository()
-          .save(activity.responsesActivity.first, activity.id!);
+      await Future.delayed(const Duration(seconds: 3));
+      if(activity.responsesActivity.isNotEmpty) {
+        await ResponseRepository()
+            .save(activity.responsesActivity.first, activity.id!);
+      }
     }
     await update(key, theme);
     loading = false;

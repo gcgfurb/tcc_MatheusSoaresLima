@@ -14,6 +14,8 @@ class CustomFormField extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
   final Widget? sufixIcon;
+  final int maxLength;
+  final String? counterText;
 
   CustomFormField({
     this.labelText,
@@ -27,6 +29,8 @@ class CustomFormField extends StatelessWidget {
     this.enabled = true,
     this.inputFormatters,
     this.sufixIcon,
+    this.maxLength = 50,
+    this.counterText,
   });
 
   @override
@@ -42,7 +46,11 @@ class CustomFormField extends StatelessWidget {
         obscureText: obscure,
         inputFormatters: inputFormatters,
         style: TextStyle(color: textColor),
+        minLines: 1,
+        maxLines: 5,
+        maxLength: maxLength,
         decoration: InputDecoration(
+          counterText: counterText,
           suffixIcon: sufixIcon,
           labelText: labelText,
           labelStyle: kLabelStyle.copyWith(color: textColor),
