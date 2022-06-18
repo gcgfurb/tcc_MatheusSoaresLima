@@ -25,6 +25,22 @@ mixin _$SyncedThemesStore on _SyncedThemesStore, Store {
     });
   }
 
+  late final _$syncingAtom =
+      Atom(name: '_SyncedThemesStore.syncing', context: context);
+
+  @override
+  bool get syncing {
+    _$syncingAtom.reportRead();
+    return super.syncing;
+  }
+
+  @override
+  set syncing(bool value) {
+    _$syncingAtom.reportWrite(value, super.syncing, () {
+      super.syncing = value;
+    });
+  }
+
   late final _$syncAsyncAction =
       AsyncAction('_SyncedThemesStore.sync', context: context);
 
@@ -36,7 +52,8 @@ mixin _$SyncedThemesStore on _SyncedThemesStore, Store {
   @override
   String toString() {
     return '''
-loading: ${loading}
+loading: ${loading},
+syncing: ${syncing}
     ''';
   }
 }

@@ -89,6 +89,14 @@ mixin _$ResponseThemeStore on _ResponseThemeStore, Store {
     });
   }
 
+  late final _$saveResponseAsyncAction =
+      AsyncAction('_ResponseThemeStore.saveResponse', context: context);
+
+  @override
+  Future<void> saveResponse() {
+    return _$saveResponseAsyncAction.run(() => super.saveResponse());
+  }
+
   late final _$_ResponseThemeStoreActionController =
       ActionController(name: '_ResponseThemeStore', context: context);
 
@@ -98,17 +106,6 @@ mixin _$ResponseThemeStore on _ResponseThemeStore, Store {
         name: '_ResponseThemeStore.toggleExpanded');
     try {
       return super.toggleExpanded();
-    } finally {
-      _$_ResponseThemeStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void saveResponse() {
-    final _$actionInfo = _$_ResponseThemeStoreActionController.startAction(
-        name: '_ResponseThemeStore.saveResponse');
-    try {
-      return super.saveResponse();
     } finally {
       _$_ResponseThemeStoreActionController.endAction(_$actionInfo);
     }

@@ -49,6 +49,7 @@ abstract class _SyncThemeStore with Store {
     if (!isOnBox) {
       try {
         var themeSynced = await ThemeRepository().findById(codeValid);
+        themeSynced.isResponsesPending = true;
         await _validateActivity(themeSynced);
         syncedThemeStore.add(themeSynced);
       } catch (e) {

@@ -14,7 +14,14 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-class ThemeScreen extends StatelessWidget {
+class ThemeScreen extends StatefulWidget {
+  @override
+  State<ThemeScreen> createState() => _ThemeScreenState();
+}
+
+class _ThemeScreenState extends State<ThemeScreen> {
+  final SyncedThemesStore syncedThemesStore = GetIt.I<SyncedThemesStore>();
+
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
       context: context,
@@ -25,8 +32,6 @@ class ThemeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SyncedThemesStore syncedThemesStore = GetIt.I<SyncedThemesStore>();
-
     void startTheme(int key, bool readOnly) {
       var theme = syncedThemesStore.syncedThemeBox.get(key)!;
       var clonedTheme = theme.clone(cloneResponse: true);
@@ -64,12 +69,12 @@ class ThemeScreen extends StatelessWidget {
     }
 
     void syncTheme(int key) async {
-      await showDialog(
+      showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => Observer(
           builder: (_) => CustomAlertDialog(
-            loading: syncedThemesStore.loading,
+            loading: syncedThemesStore.syncing,
             title: 'Sincronizar repostas',
             body: const Text(
               'Tem certeza que deseja sincronizar as respostas deste tema? Após sincronizadas não poderão ser alteradas!',
@@ -85,7 +90,6 @@ class ThemeScreen extends StatelessWidget {
         ),
       );
     }
-
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
@@ -103,12 +107,15 @@ class ThemeScreen extends StatelessWidget {
       body: ValueListenableBuilder(
         valueListenable: syncedThemesStore.syncedThemeBox.listenable(),
         builder: (context, Box<ThemeExplora> box, widget) {
-          if (box.isEmpty) {
+          if (syncedThemesStore.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (box.isEmpty) {
             return Container();
           } else {
             return ListView.builder(
               key: Key(box.length.toString()),
-              shrinkWrap: true,
               itemCount: box.length,
               itemBuilder: (_, index) => Provider(
                 create: (_) => SyncedThemeStore(box.getAt(index)!),

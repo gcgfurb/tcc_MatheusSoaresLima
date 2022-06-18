@@ -20,7 +20,6 @@ abstract class _ThemeStore with Store {
   @observable
   bool syncing = false;
 
-
   late final Box<ThemeExplora> myThemesBox;
 
   Future<void> initThemesBox(String userId) async {
@@ -32,8 +31,8 @@ abstract class _ThemeStore with Store {
 
   Future<void> add(ThemeExplora theme) async => await myThemesBox.add(theme);
 
-  Future<void> update(int index, ThemeExplora theme) async =>
-      await myThemesBox.put(index, theme);
+  Future<void> update(int key, ThemeExplora theme) async =>
+      await myThemesBox.put(key, theme);
 
   Future<void> delete(int index) async => await myThemesBox.delete(index);
 
@@ -53,11 +52,14 @@ abstract class _ThemeStore with Store {
     syncing = false;
   }
 
+  @action
   Future<void> finish(int index) async {
+    syncing = true;
     var theme = myThemesBox.get(index);
     theme!.status = ThemeStatus.completed;
     await ThemeRepository().updateStatus(theme.id!, theme.status);
     await update(index, theme);
+    syncing = false;
   }
 
   @action

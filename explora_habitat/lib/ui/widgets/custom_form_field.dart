@@ -47,7 +47,7 @@ class CustomFormField extends StatelessWidget {
         inputFormatters: inputFormatters,
         style: TextStyle(color: textColor),
         minLines: 1,
-        maxLines: 5,
+        maxLines: obscure ? 1 : 5,
         maxLength: maxLength,
         decoration: InputDecoration(
           counterText: counterText,

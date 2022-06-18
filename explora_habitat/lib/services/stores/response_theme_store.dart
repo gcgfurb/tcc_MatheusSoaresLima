@@ -1,6 +1,5 @@
+import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/enum/theme_status.dart';
-import 'package:explora_habitat/services/models/activity.dart';
-import 'package:explora_habitat/services/models/response_activity.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/stores/synced_themes_store.dart';
 import 'package:get_it/get_it.dart';
@@ -30,9 +29,14 @@ abstract class _ResponseThemeStore with Store {
   void toggleExpanded() => isExpanded = !isExpanded;
 
   @action
-  void saveResponse() {
+  Future<void> saveResponse() async {
     theme.status = ThemeStatus.inProgress;
-    GetIt.I<SyncedThemesStore>().update(key, theme);
+    theme.isResponsesPending = theme.objectives.any((objective) =>
+        objective.activities.any((activity) =>
+            activity.responsesActivity.isEmpty ||
+            activity.responsesActivity.any((response) =>
+                response.status == ResponseActivityStatus.pending)));
+    await GetIt.I<SyncedThemesStore>().update(key, theme);
   }
 
   _ResponseThemeStore({

@@ -49,6 +49,14 @@ mixin _$ThemeStore on _ThemeStore, Store {
     return _$syncAsyncAction.run(() => super.sync(key));
   }
 
+  late final _$finishAsyncAction =
+      AsyncAction('_ThemeStore.finish', context: context);
+
+  @override
+  Future<void> finish(int index) {
+    return _$finishAsyncAction.run(() => super.finish(index));
+  }
+
   late final _$syncThemesAsyncAction =
       AsyncAction('_ThemeStore.syncThemes', context: context);
 

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:explora_habitat/helpers/geolocator_manager.dart';
 import 'package:explora_habitat/services/enum/activity_status.dart';
+import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/models/response_activity.dart';
@@ -58,6 +59,7 @@ abstract class _ResponseActivityStore with Store {
     responseActivity.audios = audios;
     responseActivity.drawings = audios;
     responseActivity.customFields = customFields;
+    responseActivity.status = ResponseActivityStatus.completed;
 
     var position = await GeolocatorManager().getCurrentPosition();
 

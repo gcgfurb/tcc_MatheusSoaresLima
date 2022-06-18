@@ -15,12 +15,13 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  final PageController pageController = PageController();
+  late final PageController pageController;
   final PageStore pageStore = GetIt.I<PageStore>();
 
   @override
   void initState() {
     super.initState();
+    pageController = PageController(initialPage: pageStore.page);
     reaction(
       (_) => pageStore.page,
       (int page) => pageController.jumpToPage(page),

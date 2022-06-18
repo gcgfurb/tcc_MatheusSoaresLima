@@ -109,17 +109,21 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
     void finishTheme(int index) {
       showDialog(
         context: context,
-        builder: (context) => CustomAlertDialog(
-          title: 'Finalizar tema',
-          body: const Text(
-            'Tem certeza que deseja finalizar o envio de respostas para este tema? Após finalizado nenhum clubista poderá realizar o envio!',
-            style: TextStyle(fontSize: 18),
+        barrierDismissible: false,
+        builder: (context) => Observer(
+          builder: (_) => CustomAlertDialog(
+            loading: themeStore.syncing,
+            title: 'Finalizar tema',
+            body: const Text(
+              'Tem certeza que deseja finalizar o envio de respostas para este tema? Após finalizado nenhum clubista poderá realizar o envio!',
+              style: TextStyle(fontSize: 18),
+            ),
+            onSave: () async {
+              themeStore.finish(index);
+              Navigator.pop(context);
+            },
+            onCancel: () => Navigator.pop(context),
           ),
-          onSave: () async {
-            themeStore.finish(index);
-            Navigator.pop(context);
-          },
-          onCancel: () => Navigator.pop(context),
         ),
       );
     }

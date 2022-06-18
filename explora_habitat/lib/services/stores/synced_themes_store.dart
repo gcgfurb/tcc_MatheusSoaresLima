@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/response_repository.dart';
@@ -19,7 +20,8 @@ abstract class _SyncedThemesStore with Store {
 
   void delete(int key) => syncedThemeBox.delete(key);
 
-  Future<void> update(int key, ThemeExplora theme) async => await syncedThemeBox.put(key, theme);
+  Future<void> update(int key, ThemeExplora theme) async =>
+      await syncedThemeBox.put(key, theme);
 
   Future<void> initThemesBox(String userId) async {
     await Permission.storage.request().isGranted;
@@ -31,21 +33,22 @@ abstract class _SyncedThemesStore with Store {
   @observable
   bool loading = false;
 
+  @observable
+  bool syncing = false;
+
   @action
   Future<void> sync(int key) async {
-    loading = true;
+    syncing = true;
     var theme = syncedThemeBox.get(key);
     var activities =
         theme!.objectives.expand((objective) => objective.activities);
 
     for (Activity activity in activities) {
-      await Future.delayed(const Duration(seconds: 3));
-      if(activity.responsesActivity.isNotEmpty) {
-        await ResponseRepository()
-            .save(activity.responsesActivity.first, activity.id!);
-      }
+      await ResponseRepository()
+          .save(activity.responsesActivity.first, activity.id!);
     }
+    theme.isResponsesSynced = true;
     await update(key, theme);
-    loading = false;
+    syncing = false;
   }
 }

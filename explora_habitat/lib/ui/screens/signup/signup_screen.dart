@@ -70,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorText: signupStore.nameError,
                               inputType: TextInputType.text,
                               onChanged: signupStore.setName,
+                              counterText: "",
                             ),
                           ),
                           const SizedBox(
@@ -82,6 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorText: signupStore.emailError,
                               inputType: TextInputType.emailAddress,
                               onChanged: signupStore.setEmail,
+                              counterText: "",
                             ),
                           ),
                           const SizedBox(
@@ -95,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorText: signupStore.pass1Error,
                               inputType: TextInputType.text,
                               onChanged: signupStore.setPass1,
+                              counterText: "",
                             ),
                           ),
                           const SizedBox(
@@ -108,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorText: signupStore.pass2Error,
                               inputType: TextInputType.text,
                               onChanged: signupStore.setPass2,
+                              counterText: "",
                             ),
                           ),
                           Observer(
@@ -120,15 +124,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)),
                                 color: Colors.orange,
+                                textColor: Colors.white,
+                                elevation: 0,
+                                onPressed: signupStore.signUpPressed,
                                 child: signupStore.loading
                                     ? const CircularProgressIndicator(
                                         valueColor: AlwaysStoppedAnimation(
                                             Colors.white),
                                       )
                                     : const Text('Cadastrar'),
-                                textColor: Colors.white,
-                                elevation: 0,
-                                onPressed: signupStore.signUpPressed,
                               ),
                             ),
                           ),

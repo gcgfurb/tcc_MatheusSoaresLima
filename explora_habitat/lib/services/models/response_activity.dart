@@ -1,3 +1,4 @@
+import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:hive/hive.dart';
@@ -33,6 +34,9 @@ class ResponseActivity extends HiveObject {
 
   @HiveField(8)
   String? id;
+
+  @HiveField(9, defaultValue: ResponseActivityStatus.pending)
+  ResponseActivityStatus status = ResponseActivityStatus.pending;
 
   ResponseActivity clone() {
     ResponseActivity responseCloned = ResponseActivity();

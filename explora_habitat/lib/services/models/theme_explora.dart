@@ -27,6 +27,12 @@ class ThemeExplora extends HiveObject {
   @HiveField(5)
   ThemeStatus status;
 
+  @HiveField(6, defaultValue: false)
+  bool isResponsesSynced;
+
+  @HiveField(7, defaultValue: false)
+  bool isResponsesPending;
+
   ThemeExplora({
     this.id,
     this.creator,
@@ -34,17 +40,22 @@ class ThemeExplora extends HiveObject {
     required this.description,
     required this.objectives,
     this.status = ThemeStatus.pending,
+    this.isResponsesSynced = false,
+    this.isResponsesPending = false,
   });
 
   ThemeExplora clone({bool cloneResponse = false}) {
-    List<Objective> clonedObjectives =
-        objectives.map((objective) => objective.clone(cloneResponse: cloneResponse)).toList();
+    List<Objective> clonedObjectives = objectives
+        .map((objective) => objective.clone(cloneResponse: cloneResponse))
+        .toList();
 
     return ThemeExplora(
       title: title,
       description: description,
       objectives: clonedObjectives,
       creator: creator,
+      isResponsesSynced: isResponsesSynced,
+      isResponsesPending: isResponsesPending,
     );
   }
 }

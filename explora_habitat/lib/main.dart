@@ -2,6 +2,7 @@ import 'package:explora_habitat/constants/constants_colors.dart';
 import 'package:explora_habitat/services/enum/activity_status.dart';
 import 'package:explora_habitat/services/enum/activity_type.dart';
 import 'package:explora_habitat/services/enum/field_type.dart';
+import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/enum/theme_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
@@ -45,6 +46,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(ThemeExploraAdapter());
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(ActivityStatusAdapter());
+  Hive.registerAdapter(ResponseActivityStatusAdapter());
   Hive.registerAdapter(ActivityTypeAdapter());
   Hive.registerAdapter(FieldTypeAdapter());
   Hive.registerAdapter(ThemeStatusAdapter());

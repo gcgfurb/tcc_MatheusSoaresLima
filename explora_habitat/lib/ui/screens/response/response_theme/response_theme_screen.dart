@@ -1,8 +1,11 @@
 import 'package:explora_habitat/services/models/theme_explora.dart';
+import 'package:explora_habitat/services/stores/page_store.dart';
 import 'package:explora_habitat/services/stores/response_objective_store.dart';
 import 'package:explora_habitat/services/stores/response_theme_store.dart';
 import 'package:explora_habitat/ui/components/google_map/custom_google_map.dart';
+import 'package:explora_habitat/ui/screens/base/base_screen.dart';
 import 'package:explora_habitat/ui/screens/response/components/response_objective_component.dart';
+import 'package:explora_habitat/ui/screens/theme/theme_screen.dart';
 import 'package:explora_habitat/ui/widgets/card_theme_details.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,6 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class ResponseThemeScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final ResponseThemeStore responseThemeStore =
@@ -25,8 +27,14 @@ class ResponseThemeScreen extends StatelessWidget {
                 ? Container()
                 : IconButton(
                     onPressed: () {
-                      responseThemeStore.saveResponse();
-                      Navigator.pop(context);
+                      responseThemeStore.saveResponse().then((value) {
+                        GetIt.I<PageStore>().setPage(1);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BaseScreen(),
+                            ));
+                      });
                     },
                     icon: const Icon(Icons.save),
                   ),

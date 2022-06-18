@@ -25,13 +25,16 @@ class ResponseActivityAdapter extends TypeAdapter<ResponseActivity> {
       ..longitude = fields[5] as double?
       ..customFields = (fields[6] as List).cast<CustomField>()
       ..user = fields[7] as User?
-      ..id = fields[8] as String?;
+      ..id = fields[8] as String?
+      ..status = fields[9] == null
+          ? ResponseActivityStatus.pending
+          : fields[9] as ResponseActivityStatus;
   }
 
   @override
   void write(BinaryWriter writer, ResponseActivity obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.audios)
       ..writeByte(1)
@@ -49,7 +52,9 @@ class ResponseActivityAdapter extends TypeAdapter<ResponseActivity> {
       ..writeByte(7)
       ..write(obj.user)
       ..writeByte(8)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(9)
+      ..write(obj.status);
   }
 
   @override

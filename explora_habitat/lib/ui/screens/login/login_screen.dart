@@ -81,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             errorText: loginStore.emailError,
                             inputType: TextInputType.emailAddress,
                             onChanged: loginStore.setEmail,
+                            counterText: "",
                           ),
                         ),
                         Observer(
@@ -91,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             inputType: TextInputType.text,
                             onChanged: loginStore.setPassoword,
                             obscure: true,
+                            counterText: "",
                           ),
                         ),
                         const SizedBox(

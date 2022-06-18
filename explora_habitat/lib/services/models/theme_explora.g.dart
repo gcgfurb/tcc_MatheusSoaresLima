@@ -23,13 +23,15 @@ class ThemeExploraAdapter extends TypeAdapter<ThemeExplora> {
       description: fields[3] as String,
       objectives: (fields[4] as List).cast<Objective>(),
       status: fields[5] as ThemeStatus,
+      isResponsesSynced: fields[6] == null ? false : fields[6] as bool,
+      isResponsesPending: fields[7] == null ? false : fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, ThemeExplora obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class ThemeExploraAdapter extends TypeAdapter<ThemeExplora> {
       ..writeByte(4)
       ..write(obj.objectives)
       ..writeByte(5)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(6)
+      ..write(obj.isResponsesSynced)
+      ..writeByte(7)
+      ..write(obj.isResponsesPending);
   }
 
   @override
