@@ -6,6 +6,8 @@ import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/custom_field.dart';
 import 'package:explora_habitat/services/models/response_activity.dart';
+import 'package:explora_habitat/services/stores/user_manager_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'response_activity_store.g.dart';
@@ -60,6 +62,7 @@ abstract class _ResponseActivityStore with Store {
     responseActivity.drawings = audios;
     responseActivity.customFields = customFields;
     responseActivity.status = ResponseActivityStatus.completed;
+    responseActivity.user = GetIt.I<UserManagerStore>().user;
 
     var position = await GeolocatorManager().getCurrentPosition();
 

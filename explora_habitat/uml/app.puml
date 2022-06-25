@@ -1,0 +1,1941 @@
+@startuml
+set namespaceSeparator ::
+
+class "explora_habitat::helpers::geolocator_manager.dart::GeolocatorManager" {
+  +Future<Position> getCurrentPosition()
+}
+
+class "explora_habitat::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::main.dart::MyApp"
+
+class "explora_habitat::services::enum::activity_status.dart::ActivityStatus" {
+  +int index
+  {static} +List<ActivityStatus> values
+  {static} +ActivityStatus pending
+}
+
+"explora_habitat::services::enum::activity_status.dart::ActivityStatus" o-- "explora_habitat::services::enum::activity_status.dart::ActivityStatus"
+"dart::core::Enum" <|-- "explora_habitat::services::enum::activity_status.dart::ActivityStatus"
+
+class "explora_habitat::services::enum::activity_status.dart::ActivityStatusAdapter" {
+  +int typeId
+  +int hashCode
+  +ActivityStatus read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::enum::activity_status.dart::ActivityStatusAdapter"
+
+class "explora_habitat::services::enum::activity_type.dart::ActivityType" {
+  +int index
+  {static} +List<ActivityType> values
+  {static} +ActivityType audio
+}
+
+"explora_habitat::services::enum::activity_type.dart::ActivityType" o-- "explora_habitat::services::enum::activity_type.dart::ActivityType"
+"dart::core::Enum" <|-- "explora_habitat::services::enum::activity_type.dart::ActivityType"
+
+class "explora_habitat::services::enum::activity_type.dart::ActivityTypeAdapter" {
+  +int typeId
+  +int hashCode
+  +ActivityType read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::enum::activity_type.dart::ActivityTypeAdapter"
+
+class "explora_habitat::services::enum::field_type.dart::FieldType" {
+  +int index
+  {static} +List<FieldType> values
+  {static} +FieldType text
+}
+
+"explora_habitat::services::enum::field_type.dart::FieldType" o-- "explora_habitat::services::enum::field_type.dart::FieldType"
+"dart::core::Enum" <|-- "explora_habitat::services::enum::field_type.dart::FieldType"
+
+class "explora_habitat::services::enum::field_type.dart::FieldTypeAdapter" {
+  +int typeId
+  +int hashCode
+  +FieldType read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::enum::field_type.dart::FieldTypeAdapter"
+
+class "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatus" {
+  +int index
+  {static} +List<ResponseActivityStatus> values
+  {static} +ResponseActivityStatus pending
+}
+
+"explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatus" o-- "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatus"
+"dart::core::Enum" <|-- "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatus"
+
+class "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatusAdapter" {
+  +int typeId
+  +int hashCode
+  +ResponseActivityStatus read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatusAdapter"
+
+class "explora_habitat::services::enum::theme_status.dart::ThemeStatus" {
+  +int index
+  {static} +List<ThemeStatus> values
+  {static} +ThemeStatus pending
+}
+
+"explora_habitat::services::enum::theme_status.dart::ThemeStatus" o-- "explora_habitat::services::enum::theme_status.dart::ThemeStatus"
+"dart::core::Enum" <|-- "explora_habitat::services::enum::theme_status.dart::ThemeStatus"
+
+class "explora_habitat::services::enum::theme_status.dart::ThemeStatusAdapter" {
+  +int typeId
+  +int hashCode
+  +ThemeStatus read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::enum::theme_status.dart::ThemeStatusAdapter"
+
+class "explora_habitat::services::models::activity.dart::Activity" {
+  +String? id
+  +String title
+  +List<ActivityType> types
+  +List<CustomField> customFields
+  +ActivityStatus status
+  +List<ResponseActivity> responsesActivity
+  +Activity clone()
+  +Activity cloneWithResponse()
+}
+
+"explora_habitat::services::models::activity.dart::Activity" o-- "explora_habitat::services::enum::activity_status.dart::ActivityStatus"
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::activity.dart::Activity"
+
+class "explora_habitat::services::models::activity.dart::ActivityAdapter" {
+  +int typeId
+  +int hashCode
+  +Activity read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::activity.dart::ActivityAdapter"
+
+class "explora_habitat::services::models::custom_field.dart::CustomField" {
+  +String? title
+  +FieldType type
+  +dynamic value
+  +bool required
+  +Map<String, dynamic> toJson()
+}
+
+"explora_habitat::services::models::custom_field.dart::CustomField" o-- "explora_habitat::services::enum::field_type.dart::FieldType"
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::custom_field.dart::CustomField"
+
+class "explora_habitat::services::models::custom_field.dart::CustomFieldAdapter" {
+  +int typeId
+  +int hashCode
+  +CustomField read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::custom_field.dart::CustomFieldAdapter"
+
+class "explora_habitat::services::models::objective.dart::Objective" {
+  +String? id
+  +String title
+  +List<Activity> activities
+  +bool keepOrder
+  +Objective clone()
+}
+
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::objective.dart::Objective"
+
+class "explora_habitat::services::models::objective.dart::ObjectiveAdapter" {
+  +int typeId
+  +int hashCode
+  +Objective read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::objective.dart::ObjectiveAdapter"
+
+class "explora_habitat::services::models::response_activity.dart::ResponseActivity" {
+  +List<dynamic> audios
+  +List<dynamic> images
+  +List<dynamic> videos
+  +List<dynamic> drawings
+  +double? latitude
+  +double? longitude
+  +List<CustomField> customFields
+  +User? user
+  +String? id
+  +ResponseActivityStatus status
+  +ResponseActivity clone()
+}
+
+"explora_habitat::services::models::response_activity.dart::ResponseActivity" o-- "explora_habitat::services::models::user.dart::User"
+"explora_habitat::services::models::response_activity.dart::ResponseActivity" o-- "explora_habitat::services::enum::response_activity_status.dart::ResponseActivityStatus"
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::response_activity.dart::ResponseActivity"
+
+class "explora_habitat::services::models::response_activity.dart::ResponseActivityAdapter" {
+  +int typeId
+  +int hashCode
+  +ResponseActivity read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::response_activity.dart::ResponseActivityAdapter"
+
+class "explora_habitat::services::models::theme_explora.dart::ThemeExplora" {
+  +String? id
+  +User? creator
+  +String title
+  +String description
+  +List<Objective> objectives
+  +ThemeStatus status
+  +bool isResponsesSynced
+  +bool isResponsesPending
+  +ThemeExplora clone()
+}
+
+"explora_habitat::services::models::theme_explora.dart::ThemeExplora" o-- "explora_habitat::services::models::user.dart::User"
+"explora_habitat::services::models::theme_explora.dart::ThemeExplora" o-- "explora_habitat::services::enum::theme_status.dart::ThemeStatus"
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+
+class "explora_habitat::services::models::theme_explora.dart::ThemeExploraAdapter" {
+  +int typeId
+  +int hashCode
+  +ThemeExplora read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::theme_explora.dart::ThemeExploraAdapter"
+
+class "explora_habitat::services::models::user.dart::User" {
+  +String? id
+  +String name
+  +String email
+  +String password
+  +DateTime? createdAt
+  +DateTime? updatedAt
+}
+
+"hive::src::object::hive_object.dart::HiveObject" <|-- "explora_habitat::services::models::user.dart::User"
+
+class "explora_habitat::services::models::user.dart::UserAdapter" {
+  +int typeId
+  +int hashCode
+  +User read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "explora_habitat::services::models::user.dart::UserAdapter"
+
+class "explora_habitat::services::repositories::parse_repository::activity_repository.dart::ActivityRepository" {
+  +Future<void> save()
+  -String _getFieldJsonList()
+  -String _getTypesJsonList()
+  +Future<List<Activity>> findAllByObjective()
+  +Activity mapParseToActivity()
+  +List<CustomField> convertCustomField()
+  +List<ActivityType> convertTypes()
+}
+
+class "explora_habitat::services::repositories::parse_repository::objective_repository.dart::ObjectiveRepository" {
+  +Future<void> save()
+  +Future<List<Objective>> findAllByTheme()
+  +Objective mapParseToObjective()
+}
+
+class "explora_habitat::services::repositories::parse_repository::parse_errors.dart::ParseErrors" {
+  {static} -Map<int, String> _error
+  {static} +String getDescription()
+}
+
+class "explora_habitat::services::repositories::parse_repository::response_repository.dart::ResponseRepository" {
+  +Future<void> save()
+  -Future<List<ParseFile>> _saveFiles()
+  +Future<List<ResponseActivity>> findAllByActivity()
+  +ResponseActivity mapParseToResponseActivity()
+  +Future<File> getFiles()
+  -List<CustomField> _convertCustomField()
+  +Future<bool> isActivityAlreadyAnswered()
+}
+
+class "explora_habitat::services::repositories::parse_repository::theme_repository.dart::ThemeRepository" {
+  +Future<void> save()
+  +Future<void> updateStatus()
+  +Future<ThemeExplora> findById()
+  +Future<List<ThemeExplora>> findAllByCreator()
+  +ThemeExplora mapParseToTheme()
+  +Future<List<ThemeExplora>> findAllByCreatorAndStatusCompleted()
+}
+
+class "explora_habitat::services::repositories::parse_repository::user_repository.dart::UserRepository" {
+  +Future<ParseUser> signUp()
+  +Future<ParseUser> loginWithEmail()
+  +Future<ParseUser?> currentUser()
+  +Future<void> logout()
+  +User mapParseToUser()
+  +Future<User> findById()
+}
+
+class "explora_habitat::services::stores::activity_store.dart::ActivityStore" {
+}
+
+"explora_habitat::services::stores::activity_store.dart::_ActivityStore" <|-- "explora_habitat::services::stores::activity_store.dart::ActivityStore"
+"explora_habitat::services::stores::activity_store.dart::_$ActivityStore" <|-- "explora_habitat::services::stores::activity_store.dart::ActivityStore"
+
+abstract class "explora_habitat::services::stores::activity_store.dart::_ActivityStore" {
+  +Activity? activity
+  +bool editing
+  +String? title
+  +ObservableList<CustomField> customFields
+  +ObservableList<AcitivityTypeChip> types
+  +bool titleValid
+  +String? titleError
+  +bool activityContentValid
+  +bool activityValid
+  +void setActivity()
+  +void setTitle()
+  +void setCustomFieldTitle()
+  +void setCustomFieldTye()
+  +void selectAcitivyType()
+  +Activity createActivity()
+}
+
+"explora_habitat::services::stores::activity_store.dart::_ActivityStore" o-- "explora_habitat::services::models::activity.dart::Activity"
+"explora_habitat::services::stores::activity_store.dart::_ActivityStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<CustomField>"
+"explora_habitat::services::stores::activity_store.dart::_ActivityStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<AcitivityTypeChip>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::activity_store.dart::_ActivityStore"
+
+class "explora_habitat::services::stores::activity_store.dart::AcitivityTypeChip" {
+  +ActivityType activityType
+  +bool isSelected
+}
+
+"explora_habitat::services::stores::activity_store.dart::AcitivityTypeChip" o-- "explora_habitat::services::enum::activity_type.dart::ActivityType"
+
+abstract class "explora_habitat::services::stores::activity_store.dart::_$ActivityStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Computed<bool>? _$activityContentValidComputed
+  -Computed<bool>? _$activityValidComputed
+  -Atom _$activityAtom
+  -Atom _$editingAtom
+  -Atom _$titleAtom
+  -ActionController _$_ActivityStoreActionController
+  +bool titleValid
+  +bool activityContentValid
+  +bool activityValid
+  +Activity? activity
+  +bool editing
+  +String? title
+  +void setActivity()
+  +void setTitle()
+  +void setCustomFieldTitle()
+  +void setCustomFieldTye()
+  +void selectAcitivyType()
+  +String toString()
+}
+
+"explora_habitat::services::stores::activity_store.dart::_$ActivityStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::activity_store.dart::_$ActivityStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::activity_store.dart::_$ActivityStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::activity_store.dart::_$ActivityStore" o-- "explora_habitat::services::models::activity.dart::Activity"
+
+class "explora_habitat::services::stores::create_activity_store.dart::CreateActivityStore" {
+}
+
+"explora_habitat::services::stores::create_activity_store.dart::_CreateActivityStore" <|-- "explora_habitat::services::stores::create_activity_store.dart::CreateActivityStore"
+"explora_habitat::services::stores::create_activity_store.dart::_$CreateActivityStore" <|-- "explora_habitat::services::stores::create_activity_store.dart::CreateActivityStore"
+
+abstract class "explora_habitat::services::stores::create_activity_store.dart::_CreateActivityStore" {
+  +bool isExpanded
+  +bool keepOrder
+  +Objective objective
+  +ObservableList<Activity> activities
+  +void toggleExpanded()
+  +dynamic toggleKeepOrder()
+  +void reOrder()
+}
+
+"explora_habitat::services::stores::create_activity_store.dart::_CreateActivityStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+"explora_habitat::services::stores::create_activity_store.dart::_CreateActivityStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<Activity>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::create_activity_store.dart::_CreateActivityStore"
+
+abstract class "explora_habitat::services::stores::create_activity_store.dart::_$CreateActivityStore" {
+  -Atom _$isExpandedAtom
+  -Atom _$keepOrderAtom
+  -Atom _$objectiveAtom
+  -ActionController _$_CreateActivityStoreActionController
+  +bool isExpanded
+  +bool keepOrder
+  +Objective objective
+  +void toggleExpanded()
+  +dynamic toggleKeepOrder()
+  +void reOrder()
+  +String toString()
+}
+
+"explora_habitat::services::stores::create_activity_store.dart::_$CreateActivityStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::create_activity_store.dart::_$CreateActivityStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::create_activity_store.dart::_$CreateActivityStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+
+class "explora_habitat::services::stores::create_objective_store.dart::CreateObjectiveStore" {
+}
+
+"explora_habitat::services::stores::create_objective_store.dart::_CreateObjectiveStore" <|-- "explora_habitat::services::stores::create_objective_store.dart::CreateObjectiveStore"
+"explora_habitat::services::stores::create_objective_store.dart::_$CreateObjectiveStore" <|-- "explora_habitat::services::stores::create_objective_store.dart::CreateObjectiveStore"
+
+abstract class "explora_habitat::services::stores::create_objective_store.dart::_CreateObjectiveStore" {
+  +String? title
+  +ObservableList<Objective> objectives
+  +bool titleValid
+  +void setTitle()
+  +void setObjectives()
+  +void addNewItem()
+  +void removeItem()
+}
+
+"explora_habitat::services::stores::create_objective_store.dart::_CreateObjectiveStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<Objective>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::create_objective_store.dart::_CreateObjectiveStore"
+
+abstract class "explora_habitat::services::stores::create_objective_store.dart::_$CreateObjectiveStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Atom _$titleAtom
+  -ActionController _$_CreateObjectiveStoreActionController
+  +bool titleValid
+  +String? title
+  +void setTitle()
+  +void setObjectives()
+  +void addNewItem()
+  +void removeItem()
+  +String toString()
+}
+
+"explora_habitat::services::stores::create_objective_store.dart::_$CreateObjectiveStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::create_objective_store.dart::_$CreateObjectiveStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::create_objective_store.dart::_$CreateObjectiveStore" o-- "mobx::src::core.dart::ActionController"
+
+class "explora_habitat::services::stores::create_tema_store.dart::CreateThemeStore" {
+}
+
+"explora_habitat::services::stores::create_tema_store.dart::_CreateThemeStore" <|-- "explora_habitat::services::stores::create_tema_store.dart::CreateThemeStore"
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" <|-- "explora_habitat::services::stores::create_tema_store.dart::CreateThemeStore"
+
+abstract class "explora_habitat::services::stores::create_tema_store.dart::_CreateThemeStore" {
+  +String? title
+  +String? description
+  +ThemeExplora? theme
+  +int? index
+  +String? themeContentError
+  +bool titleValid
+  +String? titleError
+  +bool descriptionValid
+  +String? descriptionError
+  +bool themeValid
+  +void setTitle()
+  +void setDescription()
+  +void setObjectives()
+  +void setTheme()
+  +void editTheme()
+  +bool isThemeValid()
+  +void saveTheme()
+}
+
+"explora_habitat::services::stores::create_tema_store.dart::_CreateThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::create_tema_store.dart::_CreateThemeStore"
+
+abstract class "explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Computed<String?>? _$titleErrorComputed
+  -Computed<bool>? _$descriptionValidComputed
+  -Computed<String?>? _$descriptionErrorComputed
+  -Computed<bool>? _$themeValidComputed
+  -Atom _$titleAtom
+  -Atom _$descriptionAtom
+  -Atom _$themeAtom
+  -Atom _$indexAtom
+  -Atom _$themeContentErrorAtom
+  -ActionController _$_CreateThemeStoreActionController
+  +bool titleValid
+  +String? titleError
+  +bool descriptionValid
+  +String? descriptionError
+  +bool themeValid
+  +String? title
+  +String? description
+  +ThemeExplora? theme
+  +int? index
+  +String? themeContentError
+  +void setTitle()
+  +void setDescription()
+  +void setObjectives()
+  +void setTheme()
+  +void editTheme()
+  +bool isThemeValid()
+  +void saveTheme()
+  +String toString()
+}
+
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" o-- "mobx::src::core.dart::Computed<String>"
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::create_tema_store.dart::_$CreateThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+
+class "explora_habitat::services::stores::custom_activity_field_store.dart::CustomActivityFieldStore" {
+}
+
+"explora_habitat::services::stores::custom_activity_field_store.dart::_CustomActivityFieldStore" <|-- "explora_habitat::services::stores::custom_activity_field_store.dart::CustomActivityFieldStore"
+"explora_habitat::services::stores::custom_activity_field_store.dart::_$CustomActivityFieldStore" <|-- "explora_habitat::services::stores::custom_activity_field_store.dart::CustomActivityFieldStore"
+
+abstract class "explora_habitat::services::stores::custom_activity_field_store.dart::_CustomActivityFieldStore" {
+}
+
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::custom_activity_field_store.dart::_CustomActivityFieldStore"
+
+abstract class "explora_habitat::services::stores::custom_activity_field_store.dart::_$CustomActivityFieldStore" {
+  +String toString()
+}
+
+class "explora_habitat::services::stores::custom_field_store.dart::CustomFieldStore" {
+}
+
+"explora_habitat::services::stores::custom_field_store.dart::_CustomFieldStore" <|-- "explora_habitat::services::stores::custom_field_store.dart::CustomFieldStore"
+"explora_habitat::services::stores::custom_field_store.dart::_$CustomFieldStore" <|-- "explora_habitat::services::stores::custom_field_store.dart::CustomFieldStore"
+
+abstract class "explora_habitat::services::stores::custom_field_store.dart::_CustomFieldStore" {
+  +CustomField? customField
+  +bool required
+  +void setFieldType()
+  +void setTitle()
+  +void toggleRequired()
+}
+
+"explora_habitat::services::stores::custom_field_store.dart::_CustomFieldStore" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::custom_field_store.dart::_CustomFieldStore"
+
+abstract class "explora_habitat::services::stores::custom_field_store.dart::_$CustomFieldStore" {
+  -Atom _$customFieldAtom
+  -Atom _$requiredAtom
+  -ActionController _$_CustomFieldStoreActionController
+  +CustomField? customField
+  +bool required
+  +void setFieldType()
+  +void setTitle()
+  +void toggleRequired()
+  +String toString()
+}
+
+"explora_habitat::services::stores::custom_field_store.dart::_$CustomFieldStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::custom_field_store.dart::_$CustomFieldStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::custom_field_store.dart::_$CustomFieldStore" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+
+class "explora_habitat::services::stores::edit_objective_store.dart::EditObjectiveStore" {
+}
+
+"explora_habitat::services::stores::edit_objective_store.dart::_EditObjectiveStore" <|-- "explora_habitat::services::stores::edit_objective_store.dart::EditObjectiveStore"
+"explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" <|-- "explora_habitat::services::stores::edit_objective_store.dart::EditObjectiveStore"
+
+abstract class "explora_habitat::services::stores::edit_objective_store.dart::_EditObjectiveStore" {
+  +String title
+  +String oldTitle
+  +Objective objective
+  +bool titleValid
+  +String? titleError
+  +void setTitle()
+  +void updateTheme()
+  +void resetFields()
+}
+
+"explora_habitat::services::stores::edit_objective_store.dart::_EditObjectiveStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::edit_objective_store.dart::_EditObjectiveStore"
+
+abstract class "explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Computed<String?>? _$titleErrorComputed
+  -Atom _$titleAtom
+  -Atom _$oldTitleAtom
+  -ActionController _$_EditObjectiveStoreActionController
+  +bool titleValid
+  +String? titleError
+  +String title
+  +String oldTitle
+  +void setTitle()
+  +void updateTheme()
+  +void resetFields()
+  +String toString()
+}
+
+"explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" o-- "mobx::src::core.dart::Computed<String>"
+"explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::edit_objective_store.dart::_$EditObjectiveStore" o-- "mobx::src::core.dart::ActionController"
+
+class "explora_habitat::services::stores::edit_theme_store.dart::EditThemeStore" {
+}
+
+"explora_habitat::services::stores::edit_theme_store.dart::_EditThemeStore" <|-- "explora_habitat::services::stores::edit_theme_store.dart::EditThemeStore"
+"explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" <|-- "explora_habitat::services::stores::edit_theme_store.dart::EditThemeStore"
+
+abstract class "explora_habitat::services::stores::edit_theme_store.dart::_EditThemeStore" {
+  +String title
+  +String oldTitle
+  +String description
+  +String oldDescription
+  +ThemeExplora theme
+  +bool titleValid
+  +String? titleError
+  +bool descriptionValid
+  +String? descriptionError
+  +bool themeValid
+  +void setTitle()
+  +void setDescription()
+  +void updateTheme()
+  +void resetFields()
+}
+
+"explora_habitat::services::stores::edit_theme_store.dart::_EditThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::edit_theme_store.dart::_EditThemeStore"
+
+abstract class "explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Computed<String?>? _$titleErrorComputed
+  -Computed<bool>? _$descriptionValidComputed
+  -Computed<String?>? _$descriptionErrorComputed
+  -Computed<bool>? _$themeValidComputed
+  -Atom _$titleAtom
+  -Atom _$oldTitleAtom
+  -Atom _$descriptionAtom
+  -Atom _$oldDescriptionAtom
+  -ActionController _$_EditThemeStoreActionController
+  +bool titleValid
+  +String? titleError
+  +bool descriptionValid
+  +String? descriptionError
+  +bool themeValid
+  +String title
+  +String oldTitle
+  +String description
+  +String oldDescription
+  +void setTitle()
+  +void setDescription()
+  +void updateTheme()
+  +void resetFields()
+  +String toString()
+}
+
+"explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" o-- "mobx::src::core.dart::Computed<String>"
+"explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::edit_theme_store.dart::_$EditThemeStore" o-- "mobx::src::core.dart::ActionController"
+
+class "explora_habitat::services::stores::login_store.dart::LoginStore" {
+}
+
+"explora_habitat::services::stores::login_store.dart::_LoginStore" <|-- "explora_habitat::services::stores::login_store.dart::LoginStore"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" <|-- "explora_habitat::services::stores::login_store.dart::LoginStore"
+
+abstract class "explora_habitat::services::stores::login_store.dart::_LoginStore" {
+  +String? email
+  +String? password
+  +bool loading
+  +String? error
+  +bool loggedIn
+  +bool emailValid
+  +String? emailError
+  +bool passwordValid
+  +String? passwordError
+  +void Function()? loginPressed
+  +void setEmail()
+  +void setPassoword()
+  -Future<void> _login()
+  -void _verifyRegistrations()
+}
+
+"explora_habitat::services::stores::login_store.dart::_LoginStore" o-- "dart::ui::void Function()"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::login_store.dart::_LoginStore"
+
+abstract class "explora_habitat::services::stores::login_store.dart::_$LoginStore" {
+  -Computed<bool>? _$emailValidComputed
+  -Computed<bool>? _$passwordValidComputed
+  -Computed<void Function()?>? _$loginPressedComputed
+  -Atom _$emailAtom
+  -Atom _$passwordAtom
+  -Atom _$loadingAtom
+  -Atom _$errorAtom
+  -Atom _$loggedInAtom
+  -AsyncAction _$_loginAsyncAction
+  -ActionController _$_LoginStoreActionController
+  +bool emailValid
+  +bool passwordValid
+  +void Function()? loginPressed
+  +String? email
+  +String? password
+  +bool loading
+  +String? error
+  +bool loggedIn
+  -Future<void> _login()
+  +void setEmail()
+  +void setPassoword()
+  +String toString()
+}
+
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "mobx::src::core.dart::Computed<void Function()>"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "mobx::src::api::async.dart::AsyncAction"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::login_store.dart::_$LoginStore" o-- "dart::ui::void Function()"
+
+class "explora_habitat::services::stores::my_theme_store.dart::MyThemeStore" {
+}
+
+"explora_habitat::services::stores::my_theme_store.dart::_MyThemeStore" <|-- "explora_habitat::services::stores::my_theme_store.dart::MyThemeStore"
+"explora_habitat::services::stores::my_theme_store.dart::_$MyThemeStore" <|-- "explora_habitat::services::stores::my_theme_store.dart::MyThemeStore"
+
+abstract class "explora_habitat::services::stores::my_theme_store.dart::_MyThemeStore" {
+  +ThemeExplora theme
+  +bool isExpanded
+  +void toggleExpanded()
+}
+
+"explora_habitat::services::stores::my_theme_store.dart::_MyThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::my_theme_store.dart::_MyThemeStore"
+
+abstract class "explora_habitat::services::stores::my_theme_store.dart::_$MyThemeStore" {
+  -Atom _$themeAtom
+  -Atom _$isExpandedAtom
+  -ActionController _$_MyThemeStoreActionController
+  +ThemeExplora theme
+  +bool isExpanded
+  +void toggleExpanded()
+  +String toString()
+}
+
+"explora_habitat::services::stores::my_theme_store.dart::_$MyThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::my_theme_store.dart::_$MyThemeStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::my_theme_store.dart::_$MyThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+
+class "explora_habitat::services::stores::objective_store.dart::ObjectiveStore" {
+}
+
+"explora_habitat::services::stores::objective_store.dart::_ObjectiveStore" <|-- "explora_habitat::services::stores::objective_store.dart::ObjectiveStore"
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" <|-- "explora_habitat::services::stores::objective_store.dart::ObjectiveStore"
+
+abstract class "explora_habitat::services::stores::objective_store.dart::_ObjectiveStore" {
+  +Objective objective
+  +String title
+  +String oldTitle
+  +bool titleValid
+  +String? titleError
+  +void setTitle()
+  +void updateTheme()
+  +void resetFields()
+}
+
+"explora_habitat::services::stores::objective_store.dart::_ObjectiveStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::objective_store.dart::_ObjectiveStore"
+
+abstract class "explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" {
+  -Computed<bool>? _$titleValidComputed
+  -Computed<String?>? _$titleErrorComputed
+  -Atom _$objectiveAtom
+  -Atom _$titleAtom
+  -Atom _$oldTitleAtom
+  -ActionController _$_ObjectiveStoreActionController
+  +bool titleValid
+  +String? titleError
+  +Objective objective
+  +String title
+  +String oldTitle
+  +void setTitle()
+  +void updateTheme()
+  +void resetFields()
+  +String toString()
+}
+
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" o-- "mobx::src::core.dart::Computed<String>"
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::objective_store.dart::_$ObjectiveStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+
+class "explora_habitat::services::stores::page_store.dart::PageStore" {
+}
+
+"explora_habitat::services::stores::page_store.dart::_PageStore" <|-- "explora_habitat::services::stores::page_store.dart::PageStore"
+"explora_habitat::services::stores::page_store.dart::_$PageStore" <|-- "explora_habitat::services::stores::page_store.dart::PageStore"
+
+abstract class "explora_habitat::services::stores::page_store.dart::_PageStore" {
+  +int page
+  +void setPage()
+}
+
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::page_store.dart::_PageStore"
+
+abstract class "explora_habitat::services::stores::page_store.dart::_$PageStore" {
+  -Atom _$pageAtom
+  -ActionController _$_PageStoreActionController
+  +int page
+  +void setPage()
+  +String toString()
+}
+
+"explora_habitat::services::stores::page_store.dart::_$PageStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::page_store.dart::_$PageStore" o-- "mobx::src::core.dart::ActionController"
+
+class "explora_habitat::services::stores::responses_theme_store.dart::ResponsesThemeStore" {
+}
+
+"explora_habitat::services::stores::responses_theme_store.dart::_ResponsesThemeStore" <|-- "explora_habitat::services::stores::responses_theme_store.dart::ResponsesThemeStore"
+"explora_habitat::services::stores::responses_theme_store.dart::_$ResponsesThemeStore" <|-- "explora_habitat::services::stores::responses_theme_store.dart::ResponsesThemeStore"
+
+abstract class "explora_habitat::services::stores::responses_theme_store.dart::_ResponsesThemeStore" {
+  +bool loading
+  +Box<ThemeExplora> completedThemesBox
+  +Future<void> initThemesBox()
+  +Future<void> syncThemes()
+  +void delete()
+}
+
+"explora_habitat::services::stores::responses_theme_store.dart::_ResponsesThemeStore" o-- "hive::hive.dart::Box<ThemeExplora>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::responses_theme_store.dart::_ResponsesThemeStore"
+
+abstract class "explora_habitat::services::stores::responses_theme_store.dart::_$ResponsesThemeStore" {
+  -Atom _$loadingAtom
+  -AsyncAction _$syncThemesAsyncAction
+  +bool loading
+  +Future<void> syncThemes()
+  +String toString()
+}
+
+"explora_habitat::services::stores::responses_theme_store.dart::_$ResponsesThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::responses_theme_store.dart::_$ResponsesThemeStore" o-- "mobx::src::api::async.dart::AsyncAction"
+
+class "explora_habitat::services::stores::response_activity_store.dart::ResponseActivityStore" {
+}
+
+"explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore" <|-- "explora_habitat::services::stores::response_activity_store.dart::ResponseActivityStore"
+"explora_habitat::services::stores::response_activity_store.dart::_$ResponseActivityStore" <|-- "explora_habitat::services::stores::response_activity_store.dart::ResponseActivityStore"
+
+abstract class "explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore" {
+  +Activity activity
+  +String? id
+  +bool readOnly
+  +bool loading
+  +ObservableList<dynamic> images
+  +ObservableList<dynamic> videos
+  +ObservableList<dynamic> drawings
+  +ObservableList<dynamic> audios
+  +ObservableList<CustomField> customFields
+  +Future<void> saveResponse()
+}
+
+"explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore" o-- "explora_habitat::services::models::activity.dart::Activity"
+"explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<dynamic>"
+"explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore" o-- "mobx::src::api::observable_collections.dart::ObservableList<CustomField>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::response_activity_store.dart::_ResponseActivityStore"
+
+abstract class "explora_habitat::services::stores::response_activity_store.dart::_$ResponseActivityStore" {
+  -Atom _$activityAtom
+  -Atom _$idAtom
+  -Atom _$readOnlyAtom
+  -Atom _$loadingAtom
+  -AsyncAction _$saveResponseAsyncAction
+  +Activity activity
+  +String? id
+  +bool readOnly
+  +bool loading
+  +Future<void> saveResponse()
+  +String toString()
+}
+
+"explora_habitat::services::stores::response_activity_store.dart::_$ResponseActivityStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::response_activity_store.dart::_$ResponseActivityStore" o-- "mobx::src::api::async.dart::AsyncAction"
+"explora_habitat::services::stores::response_activity_store.dart::_$ResponseActivityStore" o-- "explora_habitat::services::models::activity.dart::Activity"
+
+class "explora_habitat::services::stores::response_objective_store.dart::ResponseObjectiveStore" {
+}
+
+"explora_habitat::services::stores::response_objective_store.dart::_ResponseObjectiveStore" <|-- "explora_habitat::services::stores::response_objective_store.dart::ResponseObjectiveStore"
+"explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" <|-- "explora_habitat::services::stores::response_objective_store.dart::ResponseObjectiveStore"
+
+abstract class "explora_habitat::services::stores::response_objective_store.dart::_ResponseObjectiveStore" {
+  +Objective objective
+  +int currentStep
+  +bool readOnly
+  +bool completed
+  +bool isExpanded
+  +bool isActivityCompleted
+  +bool canInitAcitivity
+  +void setCurrentStep()
+  +void toggleExpanded()
+}
+
+"explora_habitat::services::stores::response_objective_store.dart::_ResponseObjectiveStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::response_objective_store.dart::_ResponseObjectiveStore"
+
+abstract class "explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" {
+  -Computed<bool>? _$isActivityCompletedComputed
+  -Computed<bool>? _$canInitAcitivityComputed
+  -Atom _$objectiveAtom
+  -Atom _$currentStepAtom
+  -Atom _$readOnlyAtom
+  -Atom _$completedAtom
+  -Atom _$isExpandedAtom
+  -ActionController _$_ResponseObjectiveStoreActionController
+  +bool isActivityCompleted
+  +bool canInitAcitivity
+  +Objective objective
+  +int currentStep
+  +bool readOnly
+  +bool completed
+  +bool isExpanded
+  +void setCurrentStep()
+  +void toggleExpanded()
+  +String toString()
+}
+
+"explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::response_objective_store.dart::_$ResponseObjectiveStore" o-- "explora_habitat::services::models::objective.dart::Objective"
+
+class "explora_habitat::services::stores::response_theme_store.dart::ResponseThemeStore" {
+}
+
+"explora_habitat::services::stores::response_theme_store.dart::_ResponseThemeStore" <|-- "explora_habitat::services::stores::response_theme_store.dart::ResponseThemeStore"
+"explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" <|-- "explora_habitat::services::stores::response_theme_store.dart::ResponseThemeStore"
+
+abstract class "explora_habitat::services::stores::response_theme_store.dart::_ResponseThemeStore" {
+  +ThemeExplora theme
+  +int key
+  +bool readOnly
+  +bool completed
+  +bool isExpanded
+  +void toggleExpanded()
+  +Future<void> saveResponse()
+}
+
+"explora_habitat::services::stores::response_theme_store.dart::_ResponseThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::response_theme_store.dart::_ResponseThemeStore"
+
+abstract class "explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" {
+  -Atom _$themeAtom
+  -Atom _$keyAtom
+  -Atom _$readOnlyAtom
+  -Atom _$completedAtom
+  -Atom _$isExpandedAtom
+  -AsyncAction _$saveResponseAsyncAction
+  -ActionController _$_ResponseThemeStoreActionController
+  +ThemeExplora theme
+  +int key
+  +bool readOnly
+  +bool completed
+  +bool isExpanded
+  +Future<void> saveResponse()
+  +void toggleExpanded()
+  +String toString()
+}
+
+"explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" o-- "mobx::src::api::async.dart::AsyncAction"
+"explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::response_theme_store.dart::_$ResponseThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+
+class "explora_habitat::services::stores::signup_store.dart::SignupStore" {
+}
+
+"explora_habitat::services::stores::signup_store.dart::_SignupStore" <|-- "explora_habitat::services::stores::signup_store.dart::SignupStore"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" <|-- "explora_habitat::services::stores::signup_store.dart::SignupStore"
+
+abstract class "explora_habitat::services::stores::signup_store.dart::_SignupStore" {
+  +String? name
+  +String? email
+  +String? pass1
+  +String? pass2
+  +bool loading
+  +String? error
+  +bool loggedIn
+  +bool nameValid
+  +String? nameError
+  +bool emailValid
+  +String? emailError
+  +bool pass1Valid
+  +String? pass1Error
+  +bool pass2Valid
+  +String? pass2Error
+  +bool isFormValid
+  +void Function()? signUpPressed
+  +void setName()
+  +void setEmail()
+  +void setPass1()
+  +void setPass2()
+  -Future<void> _signUp()
+  -void _verifyRegistrations()
+}
+
+"explora_habitat::services::stores::signup_store.dart::_SignupStore" o-- "dart::ui::void Function()"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::signup_store.dart::_SignupStore"
+
+abstract class "explora_habitat::services::stores::signup_store.dart::_$SignupStore" {
+  -Computed<bool>? _$nameValidComputed
+  -Computed<bool>? _$emailValidComputed
+  -Computed<bool>? _$pass1ValidComputed
+  -Computed<bool>? _$pass2ValidComputed
+  -Computed<bool>? _$isFormValidComputed
+  -Computed<void Function()?>? _$signUpPressedComputed
+  -Atom _$nameAtom
+  -Atom _$emailAtom
+  -Atom _$pass1Atom
+  -Atom _$pass2Atom
+  -Atom _$loadingAtom
+  -Atom _$errorAtom
+  -Atom _$loggedInAtom
+  -AsyncAction _$_signUpAsyncAction
+  -ActionController _$_SignupStoreActionController
+  +bool nameValid
+  +bool emailValid
+  +bool pass1Valid
+  +bool pass2Valid
+  +bool isFormValid
+  +void Function()? signUpPressed
+  +String? name
+  +String? email
+  +String? pass1
+  +String? pass2
+  +bool loading
+  +String? error
+  +bool loggedIn
+  -Future<void> _signUp()
+  +void setName()
+  +void setEmail()
+  +void setPass1()
+  +void setPass2()
+  +String toString()
+}
+
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "mobx::src::core.dart::Computed<void Function()>"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "mobx::src::api::async.dart::AsyncAction"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::signup_store.dart::_$SignupStore" o-- "dart::ui::void Function()"
+
+class "explora_habitat::services::stores::synced_themes_store.dart::SyncedThemesStore" {
+}
+
+"explora_habitat::services::stores::synced_themes_store.dart::_SyncedThemesStore" <|-- "explora_habitat::services::stores::synced_themes_store.dart::SyncedThemesStore"
+"explora_habitat::services::stores::synced_themes_store.dart::_$SyncedThemesStore" <|-- "explora_habitat::services::stores::synced_themes_store.dart::SyncedThemesStore"
+
+abstract class "explora_habitat::services::stores::synced_themes_store.dart::_SyncedThemesStore" {
+  +Box<ThemeExplora> syncedThemeBox
+  +bool loading
+  +bool syncing
+  +void add()
+  +void delete()
+  +Future<void> update()
+  +Future<void> initThemesBox()
+  +Future<void> sync()
+}
+
+"explora_habitat::services::stores::synced_themes_store.dart::_SyncedThemesStore" o-- "hive::hive.dart::Box<ThemeExplora>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::synced_themes_store.dart::_SyncedThemesStore"
+
+abstract class "explora_habitat::services::stores::synced_themes_store.dart::_$SyncedThemesStore" {
+  -Atom _$loadingAtom
+  -Atom _$syncingAtom
+  -AsyncAction _$syncAsyncAction
+  +bool loading
+  +bool syncing
+  +Future<void> sync()
+  +String toString()
+}
+
+"explora_habitat::services::stores::synced_themes_store.dart::_$SyncedThemesStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::synced_themes_store.dart::_$SyncedThemesStore" o-- "mobx::src::api::async.dart::AsyncAction"
+
+class "explora_habitat::services::stores::synced_theme_store.dart::SyncedThemeStore" {
+}
+
+"explora_habitat::services::stores::synced_theme_store.dart::_SyncedThemeStore" <|-- "explora_habitat::services::stores::synced_theme_store.dart::SyncedThemeStore"
+"explora_habitat::services::stores::synced_theme_store.dart::_$SyncedThemeStore" <|-- "explora_habitat::services::stores::synced_theme_store.dart::SyncedThemeStore"
+
+abstract class "explora_habitat::services::stores::synced_theme_store.dart::_SyncedThemeStore" {
+  +ThemeExplora theme
+  +bool isExpanded
+  +void toggleExpanded()
+}
+
+"explora_habitat::services::stores::synced_theme_store.dart::_SyncedThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::synced_theme_store.dart::_SyncedThemeStore"
+
+abstract class "explora_habitat::services::stores::synced_theme_store.dart::_$SyncedThemeStore" {
+  -Atom _$themeAtom
+  -Atom _$isExpandedAtom
+  -ActionController _$_SyncedThemeStoreActionController
+  +ThemeExplora theme
+  +bool isExpanded
+  +void toggleExpanded()
+  +String toString()
+}
+
+"explora_habitat::services::stores::synced_theme_store.dart::_$SyncedThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::synced_theme_store.dart::_$SyncedThemeStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::synced_theme_store.dart::_$SyncedThemeStore" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+
+class "explora_habitat::services::stores::sync_theme_store.dart::SyncThemeStore" {
+}
+
+"explora_habitat::services::stores::sync_theme_store.dart::_SyncThemeStore" <|-- "explora_habitat::services::stores::sync_theme_store.dart::SyncThemeStore"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" <|-- "explora_habitat::services::stores::sync_theme_store.dart::SyncThemeStore"
+
+abstract class "explora_habitat::services::stores::sync_theme_store.dart::_SyncThemeStore" {
+  +bool loading
+  +String? code
+  +String? error
+  +String? syncError
+  +bool codeValid
+  +void Function()? syncTheme
+  +void setCode()
+  -Future<void> _sync()
+  -Future<void> _validateActivity()
+}
+
+"explora_habitat::services::stores::sync_theme_store.dart::_SyncThemeStore" o-- "dart::ui::void Function()"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::sync_theme_store.dart::_SyncThemeStore"
+
+abstract class "explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" {
+  -Computed<bool>? _$codeValidComputed
+  -Computed<void Function()?>? _$syncThemeComputed
+  -Atom _$loadingAtom
+  -Atom _$codeAtom
+  -Atom _$errorAtom
+  -Atom _$syncErrorAtom
+  -AsyncAction _$_syncAsyncAction
+  -ActionController _$_SyncThemeStoreActionController
+  +bool codeValid
+  +void Function()? syncTheme
+  +bool loading
+  +String? code
+  +String? error
+  +String? syncError
+  -Future<void> _sync()
+  +void setCode()
+  +String toString()
+}
+
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "mobx::src::core.dart::Computed<void Function()>"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "mobx::src::api::async.dart::AsyncAction"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::sync_theme_store.dart::_$SyncThemeStore" o-- "dart::ui::void Function()"
+
+class "explora_habitat::services::stores::theme_store.dart::ThemeStore" {
+}
+
+"explora_habitat::services::stores::theme_store.dart::_ThemeStore" <|-- "explora_habitat::services::stores::theme_store.dart::ThemeStore"
+"explora_habitat::services::stores::theme_store.dart::_$ThemeStore" <|-- "explora_habitat::services::stores::theme_store.dart::ThemeStore"
+
+abstract class "explora_habitat::services::stores::theme_store.dart::_ThemeStore" {
+  +bool loading
+  +bool syncing
+  +Box<ThemeExplora> myThemesBox
+  +Future<void> initThemesBox()
+  +Future<void> add()
+  +Future<void> update()
+  +Future<void> delete()
+  +Future<void> copy()
+  +Future<void> sync()
+  +Future<void> finish()
+  +Future<void> syncThemes()
+}
+
+"explora_habitat::services::stores::theme_store.dart::_ThemeStore" o-- "hive::hive.dart::Box<ThemeExplora>"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::theme_store.dart::_ThemeStore"
+
+abstract class "explora_habitat::services::stores::theme_store.dart::_$ThemeStore" {
+  -Atom _$loadingAtom
+  -Atom _$syncingAtom
+  -AsyncAction _$syncAsyncAction
+  -AsyncAction _$finishAsyncAction
+  -AsyncAction _$syncThemesAsyncAction
+  +bool loading
+  +bool syncing
+  +Future<void> sync()
+  +Future<void> finish()
+  +Future<void> syncThemes()
+  +String toString()
+}
+
+"explora_habitat::services::stores::theme_store.dart::_$ThemeStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::theme_store.dart::_$ThemeStore" o-- "mobx::src::api::async.dart::AsyncAction"
+
+class "explora_habitat::services::stores::user_manager_store.dart::UserManagerStore" {
+}
+
+"explora_habitat::services::stores::user_manager_store.dart::_UserManagerStore" <|-- "explora_habitat::services::stores::user_manager_store.dart::UserManagerStore"
+"explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" <|-- "explora_habitat::services::stores::user_manager_store.dart::UserManagerStore"
+
+abstract class "explora_habitat::services::stores::user_manager_store.dart::_UserManagerStore" {
+  +User? user
+  +bool isLoggedIn
+  +void setUser()
+  +Future<User?> getCurrentUser()
+  +Future<void> logout()
+  -void _unRegisterStores()
+}
+
+"explora_habitat::services::stores::user_manager_store.dart::_UserManagerStore" o-- "explora_habitat::services::models::user.dart::User"
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::user_manager_store.dart::_UserManagerStore"
+
+abstract class "explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" {
+  -Computed<bool>? _$isLoggedInComputed
+  -Atom _$userAtom
+  -ActionController _$_UserManagerStoreActionController
+  +bool isLoggedIn
+  +User? user
+  +void setUser()
+  +String toString()
+}
+
+"explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" o-- "mobx::src::core.dart::Computed<bool>"
+"explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" o-- "mobx::src::core.dart::Atom"
+"explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" o-- "mobx::src::core.dart::ActionController"
+"explora_habitat::services::stores::user_manager_store.dart::_$UserManagerStore" o-- "explora_habitat::services::models::user.dart::User"
+
+class "explora_habitat::services::stores::user_store.dart::UserStore" {
+}
+
+"explora_habitat::services::stores::user_store.dart::_UserStore" <|-- "explora_habitat::services::stores::user_store.dart::UserStore"
+"explora_habitat::services::stores::user_store.dart::_$UserStore" <|-- "explora_habitat::services::stores::user_store.dart::UserStore"
+
+abstract class "explora_habitat::services::stores::user_store.dart::_UserStore" {
+  +Future<void> enter()
+  -void _verifyRegistrations()
+}
+
+"mobx::src::api::store.dart::Store" <|-- "explora_habitat::services::stores::user_store.dart::_UserStore"
+
+abstract class "explora_habitat::services::stores::user_store.dart::_$UserStore" {
+  +String toString()
+}
+
+class "explora_habitat::ui::components::custom_drawer::custom_drawer.dart::CustomDrawer" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::components::custom_drawer::custom_drawer.dart::CustomDrawer"
+
+class "explora_habitat::ui::components::custom_drawer::custom_drawer_header.dart::CustomDrawerHeader" {
+  +UserManagerStore userManagerStore
+  +Widget build()
+}
+
+"explora_habitat::ui::components::custom_drawer::custom_drawer_header.dart::CustomDrawerHeader" o-- "explora_habitat::services::stores::user_manager_store.dart::UserManagerStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::components::custom_drawer::custom_drawer_header.dart::CustomDrawerHeader"
+
+class "explora_habitat::ui::components::custom_drawer::page_section.dart::PageSection" {
+  +PageStore pageStore
+  +Widget build()
+}
+
+"explora_habitat::ui::components::custom_drawer::page_section.dart::PageSection" o-- "explora_habitat::services::stores::page_store.dart::PageStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::components::custom_drawer::page_section.dart::PageSection"
+
+class "explora_habitat::ui::components::custom_drawer::page_tile.dart::PageTile" {
+  +String label
+  +IconData iconData
+  +void Function() onTap
+  +bool highlighted
+  +Widget build()
+}
+
+"explora_habitat::ui::components::custom_drawer::page_tile.dart::PageTile" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"explora_habitat::ui::components::custom_drawer::page_tile.dart::PageTile" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::components::custom_drawer::page_tile.dart::PageTile"
+
+class "explora_habitat::ui::components::google_map::custom_google_map.dart::CustomGoogleMap" {
+  +State<CustomGoogleMap> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::components::google_map::custom_google_map.dart::CustomGoogleMap"
+
+class "explora_habitat::ui::components::google_map::custom_google_map.dart::CustomGoogleMapState" {
+  +GoogleMapController mapController
+  +Widget build()
+}
+
+"explora_habitat::ui::components::google_map::custom_google_map.dart::CustomGoogleMapState" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::components::google_map::custom_google_map.dart::CustomGoogleMapState"
+
+class "explora_habitat::ui::components::qr_code_modal.dart::QrCodeModal" {
+  +String data
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::components::qr_code_modal.dart::QrCodeModal"
+
+class "explora_habitat::ui::screens::base::base_screen.dart::BaseScreen" {
+  +State<BaseScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::base::base_screen.dart::BaseScreen"
+
+class "explora_habitat::ui::screens::base::base_screen.dart::_BaseScreenState" {
+  +PageController pageController
+  +PageStore pageStore
+  +void initState()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::base::base_screen.dart::_BaseScreenState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"explora_habitat::ui::screens::base::base_screen.dart::_BaseScreenState" o-- "explora_habitat::services::stores::page_store.dart::PageStore"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::base::base_screen.dart::_BaseScreenState"
+
+class "explora_habitat::ui::screens::create::create_objective::components::activities_container.dart::ActivitiesContainer" {
+  +Objective objective
+  +bool readOnly
+  +Widget build()
+  -void _showAddActivityDialog()
+}
+
+"explora_habitat::ui::screens::create::create_objective::components::activities_container.dart::ActivitiesContainer" o-- "explora_habitat::services::models::objective.dart::Objective"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::components::activities_container.dart::ActivitiesContainer"
+
+class "explora_habitat::ui::screens::create::create_objective::components::create_activity_modal.dart::CreateActivityModal" {
+  +bool readOnly
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::components::create_activity_modal.dart::CreateActivityModal"
+
+class "explora_habitat::ui::screens::create::create_objective::components::create_objective_container.dart::CreateObjectiveContainer" {
+  +Objective objective
+  +dynamic Function()? onRemove
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_objective::components::create_objective_container.dart::CreateObjectiveContainer" o-- "explora_habitat::services::models::objective.dart::Objective"
+"explora_habitat::ui::screens::create::create_objective::components::create_objective_container.dart::CreateObjectiveContainer" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::components::create_objective_container.dart::CreateObjectiveContainer"
+
+class "explora_habitat::ui::screens::create::create_objective::create_objective_screen.dart::CreateObjetivoScreen" {
+  +CreateThemeStore createThemeStore
+  +bool readOnly
+  -TextEditingController _textEditingController
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_objective::create_objective_screen.dart::CreateObjetivoScreen" o-- "explora_habitat::services::stores::create_tema_store.dart::CreateThemeStore"
+"explora_habitat::ui::screens::create::create_objective::create_objective_screen.dart::CreateObjetivoScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::create_objective_screen.dart::CreateObjetivoScreen"
+
+class "explora_habitat::ui::screens::create::create_objective::widgets::activity_choice_chip.dart::ActivityChoiceChip" {
+  +bool readOnly
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::widgets::activity_choice_chip.dart::ActivityChoiceChip"
+
+class "explora_habitat::ui::screens::create::create_objective::widgets::custom_dropdown_button_form_field.dart::CustomDropdownButtonFormField" {
+  +CustomFieldStore customFieldStore
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_objective::widgets::custom_dropdown_button_form_field.dart::CustomDropdownButtonFormField" o-- "explora_habitat::services::stores::custom_field_store.dart::CustomFieldStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::widgets::custom_dropdown_button_form_field.dart::CustomDropdownButtonFormField"
+
+class "explora_habitat::ui::screens::create::create_objective::widgets::custom_field_selector.dart::CustomFieldSelector" {
+  +CustomField? customField
+  +dynamic Function()? onRemove
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_objective::widgets::custom_field_selector.dart::CustomFieldSelector" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"explora_habitat::ui::screens::create::create_objective::widgets::custom_field_selector.dart::CustomFieldSelector" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::widgets::custom_field_selector.dart::CustomFieldSelector"
+
+class "explora_habitat::ui::screens::create::create_objective::widgets::custom_list_view.dart::CustomListView" {
+  +bool readOnly
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::widgets::custom_list_view.dart::CustomListView"
+
+class "explora_habitat::ui::screens::create::create_objective::widgets::custom_reorderable_list_view.dart::CustomReorderableListView" {
+  +bool readOnly
+  +Widget build()
+  -void _showUpdateActivityDialog()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_objective::widgets::custom_reorderable_list_view.dart::CustomReorderableListView"
+
+class "explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton" {
+  +IconData icon
+  +double iconSize
+  +dynamic Function()? onPressed
+  +Color color
+  +Size? size
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton" o-- "null::dynamic Function()"
+"explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton" o-- "dart::ui::Color"
+"explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton" o-- "dart::ui::Size"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_theme::components::custom_elevated_button.dart::CustomElevatedButton"
+
+class "explora_habitat::ui::screens::create::create_theme::create_theme.dart::CreateThemeScreen" {
+  +CreateThemeStore createThemeStore
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::create::create_theme::create_theme.dart::CreateThemeScreen" o-- "explora_habitat::services::stores::create_tema_store.dart::CreateThemeStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::create::create_theme::create_theme.dart::CreateThemeScreen"
+
+class "explora_habitat::ui::screens::login::login_screen.dart::LoginScreen" {
+  +State<LoginScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::login::login_screen.dart::LoginScreen"
+
+class "explora_habitat::ui::screens::login::login_screen.dart::_LoginScreenState" {
+  +LoginStore loginStore
+  +void initState()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::login::login_screen.dart::_LoginScreenState" o-- "explora_habitat::services::stores::login_store.dart::LoginStore"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::login::login_screen.dart::_LoginScreenState"
+
+class "explora_habitat::ui::screens::response::components::responses_activity_list_view.dart::ResponseActivityListView" {
+  +Activity activity
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::components::responses_activity_list_view.dart::ResponseActivityListView" o-- "explora_habitat::services::models::activity.dart::Activity"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::components::responses_activity_list_view.dart::ResponseActivityListView"
+
+class "explora_habitat::ui::screens::response::components::response_activity_modal.dart::ResponseActivityModal" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::components::response_activity_modal.dart::ResponseActivityModal"
+
+class "explora_habitat::ui::screens::response::components::response_activity_stepper.dart::ResponseActivityStepper" {
+  +State<ResponseActivityStepper> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::response::components::response_activity_stepper.dart::ResponseActivityStepper"
+
+class "explora_habitat::ui::screens::response::components::response_activity_stepper.dart::_ResponseActivityStepperState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::response::components::response_activity_stepper.dart::_ResponseActivityStepperState"
+
+class "explora_habitat::ui::screens::response::components::response_objective_component.dart::ResponseObjectiveComponent" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::components::response_objective_component.dart::ResponseObjectiveComponent"
+
+class "explora_habitat::ui::screens::response::responses_theme::responses_theme_screen.dart::ResponsesThemeScreen" {
+  +ResponsesThemeStore responsesThemeStore
+  -void _syncResponses()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::responses_theme::responses_theme_screen.dart::ResponsesThemeScreen" o-- "explora_habitat::services::stores::responses_theme_store.dart::ResponsesThemeStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::responses_theme::responses_theme_screen.dart::ResponsesThemeScreen"
+
+class "explora_habitat::ui::screens::response::response_theme::response_theme_screen.dart::ResponseThemeScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::response_theme::response_theme_screen.dart::ResponseThemeScreen"
+
+class "explora_habitat::ui::screens::response::widgets::activity_resources.dart::ActivityResources" {
+  +ActivityType activityType
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::activity_resources.dart::ActivityResources" o-- "explora_habitat::services::enum::activity_type.dart::ActivityType"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::activity_resources.dart::ActivityResources"
+
+class "explora_habitat::ui::screens::response::widgets::custom_activity_field.dart::CustomActivityField" {
+  +CustomField customField
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_activity_field.dart::CustomActivityField" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_activity_field.dart::CustomActivityField"
+
+class "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_date.dart::CustomFieldDate" {
+  +CustomField customField
+  +bool readOnly
+  -TextEditingController _textEditingController
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_date.dart::CustomFieldDate" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_date.dart::CustomFieldDate" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_date.dart::CustomFieldDate"
+
+class "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_decimal.dart::CustomFieldDecimal" {
+  +CustomField customField
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_decimal.dart::CustomFieldDecimal" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_decimal.dart::CustomFieldDecimal"
+
+class "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_number.dart::CustomFieldNumber" {
+  +CustomField customField
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_number.dart::CustomFieldNumber" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_number.dart::CustomFieldNumber"
+
+class "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_text.dart::CustomFieldText" {
+  +CustomField customField
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_text.dart::CustomFieldText" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_text.dart::CustomFieldText"
+
+class "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_time.dart::CustomFieldTime" {
+  +CustomField customField
+  -TextEditingController _textEditingController
+  +bool readOnly
+  +Widget build()
+  +TimeOfDay getTime()
+}
+
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_time.dart::CustomFieldTime" o-- "explora_habitat::services::models::custom_field.dart::CustomField"
+"explora_habitat::ui::screens::response::widgets::custom_field::custom_field_time.dart::CustomFieldTime" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::custom_field::custom_field_time.dart::CustomFieldTime"
+
+class "explora_habitat::ui::screens::response::widgets::position_activity_details.dart::PositionAcitivityDetails" {
+  +Activity activity
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::position_activity_details.dart::PositionAcitivityDetails" o-- "explora_habitat::services::models::activity.dart::Activity"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::position_activity_details.dart::PositionAcitivityDetails"
+
+class "explora_habitat::ui::screens::response::widgets::resources::image::images_field.dart::ImagesField" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::image::images_field.dart::ImagesField"
+
+class "explora_habitat::ui::screens::response::widgets::resources::image::image_dialog.dart::ImageDialog" {
+  +dynamic image
+  +void Function() onDelete
+  +bool readOnly
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::resources::image::image_dialog.dart::ImageDialog" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::image::image_dialog.dart::ImageDialog"
+
+class "explora_habitat::ui::screens::response::widgets::resources::image::image_source_modal.dart::ImageSourceModal" {
+  +dynamic Function(CroppedFile?) onImageSelected
+  +Widget build()
+  +Future<void> getFromCamera()
+  +Future<void> getFromGallery()
+  +Future<void> imageSelected()
+}
+
+"explora_habitat::ui::screens::response::widgets::resources::image::image_source_modal.dart::ImageSourceModal" o-- "null::dynamic Function(CroppedFile)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::image::image_source_modal.dart::ImageSourceModal"
+
+class "explora_habitat::ui::screens::response::widgets::resources::video::videos_field.dart::VideosField" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::video::videos_field.dart::VideosField"
+
+class "explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::VideoDialog" {
+  +dynamic video
+  +void Function() onDelete
+  +bool readOnly
+  +State<VideoDialog> createState()
+}
+
+"explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::VideoDialog" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::VideoDialog"
+
+class "explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::_VideoDialogState" {
+  -VideoPlayerController _videoPlayerController
+  +bool startedPlaying
+  +Future<bool> started()
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::_VideoDialogState" o-- "video_player::video_player.dart::VideoPlayerController"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::response::widgets::resources::video::video_dialog.dart::_VideoDialogState"
+
+class "explora_habitat::ui::screens::response::widgets::resources::video::video_source_modal.dart::VideoSourceModal" {
+  +dynamic Function(File?) onVideoSelected
+  +Widget build()
+  +Future<void> getFromCamera()
+  +Future<void> getFromGallery()
+}
+
+"explora_habitat::ui::screens::response::widgets::resources::video::video_source_modal.dart::VideoSourceModal" o-- "null::dynamic Function(File)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::resources::video::video_source_modal.dart::VideoSourceModal"
+
+class "explora_habitat::ui::screens::response::widgets::response_theme_card.dart::ResponseThemeCard" {
+  +dynamic Function()? onOpenResponse
+  +dynamic Function()? onClose
+  +Widget build()
+  -Widget _getThemeActions()
+}
+
+"explora_habitat::ui::screens::response::widgets::response_theme_card.dart::ResponseThemeCard" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::response::widgets::response_theme_card.dart::ResponseThemeCard"
+
+class "explora_habitat::ui::screens::signup::components::field_title.dart::FieldTitle" {
+  +String title
+  +String subtitle
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::signup::components::field_title.dart::FieldTitle"
+
+class "explora_habitat::ui::screens::signup::signup_screen.dart::SignUpScreen" {
+  +State<SignUpScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::signup::signup_screen.dart::SignUpScreen"
+
+class "explora_habitat::ui::screens::signup::signup_screen.dart::_SignUpScreenState" {
+  +SignupStore signupStore
+  +void initState()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::signup::signup_screen.dart::_SignUpScreenState" o-- "explora_habitat::services::stores::signup_store.dart::SignupStore"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::signup::signup_screen.dart::_SignUpScreenState"
+
+class "explora_habitat::ui::screens::theme::components::expandable_fab.dart::ExpandableFab" {
+  +bool? initialOpen
+  +double distance
+  +List<Widget> children
+  +_ExpandableFabState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::theme::components::expandable_fab.dart::ExpandableFab"
+
+class "explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandableFabState" {
+  -AnimationController _controller
+  -Animation<double> _expandAnimation
+  -bool _open
+  +void initState()
+  +void dispose()
+  -void _toggle()
+  +Widget build()
+  -Widget _buildTapToCloseFab()
+  -List<Widget> _buildExpandingActionButtons()
+  -Widget _buildTapToOpenFab()
+}
+
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandableFabState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandableFabState" o-- "flutter::src::animation::animation.dart::Animation<double>"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandableFabState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandableFabState"
+
+class "explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandingActionButton" {
+  +double directionInDegrees
+  +double maxDistance
+  +Animation<double> progress
+  +Widget child
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandingActionButton" o-- "flutter::src::animation::animation.dart::Animation<double>"
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandingActionButton" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::components::expandable_fab.dart::_ExpandingActionButton"
+
+class "explora_habitat::ui::screens::theme::components::expandable_fab.dart::ActionButton" {
+  +void Function()? onPressed
+  +Widget icon
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::ActionButton" o-- "dart::ui::void Function()"
+"explora_habitat::ui::screens::theme::components::expandable_fab.dart::ActionButton" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::components::expandable_fab.dart::ActionButton"
+
+class "explora_habitat::ui::screens::theme::components::my_theme_card.dart::MyThemeCard" {
+  +dynamic Function()? onDelete
+  +dynamic Function()? onEdit
+  +dynamic Function()? onSync
+  +dynamic Function()? onCopy
+  +dynamic Function()? onQrCode
+  +dynamic Function()? onReadOnly
+  +dynamic Function()? onClose
+  +dynamic Function()? onFinish
+  +Widget build()
+  -Widget _getThemeActions()
+}
+
+"explora_habitat::ui::screens::theme::components::my_theme_card.dart::MyThemeCard" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::components::my_theme_card.dart::MyThemeCard"
+
+class "explora_habitat::ui::screens::theme::components::synced_theme_card.dart::SyncedThemeCard" {
+  +dynamic Function()? onStart
+  +dynamic Function()? onSync
+  +dynamic Function()? onReadOnly
+  +dynamic Function()? onClose
+  +Widget build()
+  -Widget _getThemeActions()
+}
+
+"explora_habitat::ui::screens::theme::components::synced_theme_card.dart::SyncedThemeCard" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::components::synced_theme_card.dart::SyncedThemeCard"
+
+class "explora_habitat::ui::screens::theme::components::sync_theme_modal.dart::SyncThemeModal" {
+  +SyncThemeStore syncThemeStore
+  +TextEditingController textEditingController
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::components::sync_theme_modal.dart::SyncThemeModal" o-- "explora_habitat::services::stores::sync_theme_store.dart::SyncThemeStore"
+"explora_habitat::ui::screens::theme::components::sync_theme_modal.dart::SyncThemeModal" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::components::sync_theme_modal.dart::SyncThemeModal"
+
+class "explora_habitat::ui::screens::theme::my_theme_screen.dart::MyThemeScreen" {
+  +State<MyThemeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::theme::my_theme_screen.dart::MyThemeScreen"
+
+class "explora_habitat::ui::screens::theme::my_theme_screen.dart::_MyThemeScreenState" {
+  +ThemeStore themeStore
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::my_theme_screen.dart::_MyThemeScreenState" o-- "explora_habitat::services::stores::theme_store.dart::ThemeStore"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::theme::my_theme_screen.dart::_MyThemeScreenState"
+
+class "explora_habitat::ui::screens::theme::theme_screen.dart::ThemeScreen" {
+  +State<ThemeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::theme::theme_screen.dart::ThemeScreen"
+
+class "explora_habitat::ui::screens::theme::theme_screen.dart::_ThemeScreenState" {
+  +SyncedThemesStore syncedThemesStore
+  -void _showAction()
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::theme_screen.dart::_ThemeScreenState" o-- "explora_habitat::services::stores::synced_themes_store.dart::SyncedThemesStore"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::theme::theme_screen.dart::_ThemeScreenState"
+
+class "explora_habitat::ui::screens::theme::widgets::theme_content_container.dart::ThemeContentContainer" {
+  +ThemeExplora theme
+  +Widget build()
+  -String _getObjectiveText()
+  -String _getActivityText()
+}
+
+"explora_habitat::ui::screens::theme::widgets::theme_content_container.dart::ThemeContentContainer" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::widgets::theme_content_container.dart::ThemeContentContainer"
+
+class "explora_habitat::ui::screens::theme::widgets::theme_details_tile.dart::ThemeDetailsTile" {
+  +ThemeExplora theme
+  +Widget actions
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::theme::widgets::theme_details_tile.dart::ThemeDetailsTile" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"explora_habitat::ui::screens::theme::widgets::theme_details_tile.dart::ThemeDetailsTile" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::screens::theme::widgets::theme_details_tile.dart::ThemeDetailsTile"
+
+class "explora_habitat::ui::screens::user::user_screen.dart::UserScreen" {
+  +State<UserScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "explora_habitat::ui::screens::user::user_screen.dart::UserScreen"
+
+class "explora_habitat::ui::screens::user::user_screen.dart::_UserScreenState" {
+  +UserStore userStore
+  +User currentUser
+  +Widget build()
+}
+
+"explora_habitat::ui::screens::user::user_screen.dart::_UserScreenState" o-- "explora_habitat::services::stores::user_store.dart::UserStore"
+"explora_habitat::ui::screens::user::user_screen.dart::_UserScreenState" o-- "explora_habitat::services::models::user.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "explora_habitat::ui::screens::user::user_screen.dart::_UserScreenState"
+
+class "explora_habitat::ui::widgets::access_button.dart::AccessButton" {
+  +dynamic Function()? onPressed
+  +String title
+  +bool loading
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::access_button.dart::AccessButton" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::access_button.dart::AccessButton"
+
+class "explora_habitat::ui::widgets::acitivity_container_details.dart::AcitivityContainerDetails" {
+  +Activity activity
+  +Widget build()
+  +String getActivityCustomFieldsText()
+}
+
+"explora_habitat::ui::widgets::acitivity_container_details.dart::AcitivityContainerDetails" o-- "explora_habitat::services::models::activity.dart::Activity"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::acitivity_container_details.dart::AcitivityContainerDetails"
+
+class "explora_habitat::ui::widgets::card_theme_details.dart::CardThemeDetails" {
+  +ThemeExplora theme
+  +bool editing
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::card_theme_details.dart::CardThemeDetails" o-- "explora_habitat::services::models::theme_explora.dart::ThemeExplora"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::card_theme_details.dart::CardThemeDetails"
+
+class "explora_habitat::ui::widgets::custom_alert_dialog.dart::CustomAlertDialog" {
+  +String title
+  +dynamic Function()? onSave
+  +dynamic Function()? onCancel
+  +Widget body
+  +bool info
+  +bool loading
+  +Widget build()
+  -List<Widget> _getActions()
+}
+
+"explora_habitat::ui::widgets::custom_alert_dialog.dart::CustomAlertDialog" o-- "null::dynamic Function()"
+"explora_habitat::ui::widgets::custom_alert_dialog.dart::CustomAlertDialog" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::custom_alert_dialog.dart::CustomAlertDialog"
+
+class "explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" {
+  +String? labelText
+  +String? errorText
+  +TextInputType inputType
+  +dynamic Function(String) onChanged
+  +bool obscure
+  +bool enabled
+  +Color textColor
+  +String? initialValue
+  +TextEditingController? controller
+  +List<TextInputFormatter>? inputFormatters
+  +Widget? sufixIcon
+  +int maxLength
+  +String? counterText
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" o-- "flutter::src::services::text_input.dart::TextInputType"
+"explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" o-- "null::dynamic Function(String)"
+"explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" o-- "dart::ui::Color"
+"explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::custom_form_field.dart::CustomFormField"
+
+class "explora_habitat::ui::widgets::custom_material_button.dart::CustomMaterialButtom" {
+  +Color color
+  +String text
+  +dynamic Function()? onPressed
+  +bool loading
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::custom_material_button.dart::CustomMaterialButtom" o-- "dart::ui::Color"
+"explora_habitat::ui::widgets::custom_material_button.dart::CustomMaterialButtom" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::custom_material_button.dart::CustomMaterialButtom"
+
+class "explora_habitat::ui::widgets::empty_container.dart::EmptyContainer" {
+  +String content
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::empty_container.dart::EmptyContainer"
+
+class "explora_habitat::ui::widgets::error_indicator.dart::ErrorIndicator" {
+  +String? message
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::error_indicator.dart::ErrorIndicator"
+
+class "explora_habitat::ui::widgets::list_tile_activity_details.dart::ListTileActivityDetails" {
+  +Activity activity
+  +dynamic Function()? onTap
+  +dynamic Function()? onDelete
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::list_tile_activity_details.dart::ListTileActivityDetails" o-- "explora_habitat::services::models::activity.dart::Activity"
+"explora_habitat::ui::widgets::list_tile_activity_details.dart::ListTileActivityDetails" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::list_tile_activity_details.dart::ListTileActivityDetails"
+
+class "explora_habitat::ui::widgets::logout_button.dart::LogoutButton" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::logout_button.dart::LogoutButton"
+
+class "explora_habitat::ui::widgets::text_label.dart::TextLabel" {
+  +String text
+  +Color color
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::text_label.dart::TextLabel" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::text_label.dart::TextLabel"
+
+class "explora_habitat::ui::widgets::update_objective_modal.dart::UpdateObjectiveModal" {
+  +ObjectiveStore objectiveStore
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::update_objective_modal.dart::UpdateObjectiveModal" o-- "explora_habitat::services::stores::objective_store.dart::ObjectiveStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::update_objective_modal.dart::UpdateObjectiveModal"
+
+class "explora_habitat::ui::widgets::update_theme_modal.dart::UpdateThemeModal" {
+  +EditThemeStore editThemeStore
+  +Widget build()
+}
+
+"explora_habitat::ui::widgets::update_theme_modal.dart::UpdateThemeModal" o-- "explora_habitat::services::stores::edit_theme_store.dart::EditThemeStore"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "explora_habitat::ui::widgets::update_theme_modal.dart::UpdateThemeModal"
+
+
+@enduml

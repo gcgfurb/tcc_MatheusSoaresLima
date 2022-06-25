@@ -61,6 +61,7 @@ class UpdateThemeModal extends StatelessWidget {
                       inputType: TextInputType.text,
                       onChanged: editThemeStore.setDescription,
                       initialValue: editThemeStore.description,
+                      maxLength: 200,
                     ),
                   ),
                 ],

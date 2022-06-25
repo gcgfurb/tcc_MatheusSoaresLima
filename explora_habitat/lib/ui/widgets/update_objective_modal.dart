@@ -31,7 +31,7 @@ class UpdateObjectiveModal extends StatelessWidget {
                 color: Colors.lightGreen,
               ),
               child: const Text(
-                'Editar Tema',
+                'Editar Objetivo',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

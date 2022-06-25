@@ -19,6 +19,10 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
+const String appId = 'H71NRAQl1vvE1OGcE0qMv2mfEmWdDkKxVnqKjnXB';
+const String serverUrl = 'https://parseapi.back4app.com/';
+const String clientKey = 'DfeQvBBYsaqYl5S7LwtVDtwwZ7vQifdLe8rUg1Us';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeParse();
@@ -29,9 +33,9 @@ void main() async {
 
 Future<void> initializeParse() async {
   await Parse().initialize(
-    'H71NRAQl1vvE1OGcE0qMv2mfEmWdDkKxVnqKjnXB',
-    'https://parseapi.back4app.com/',
-    clientKey: 'DfeQvBBYsaqYl5S7LwtVDtwwZ7vQifdLe8rUg1Us',
+    appId,
+    serverUrl,
+    clientKey: clientKey,
     autoSendSessionId: true,
     debug: true,
   );
