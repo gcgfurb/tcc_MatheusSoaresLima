@@ -28,6 +28,14 @@ abstract class _UserManagerStore with Store {
     return this.user;
   }
 
+  Future<User?> getLastUser() async {
+    var user = await UserRepository().lastUser();
+    if (user != null) {
+      setUser(User.fromParse(user));
+    }
+    return this.user;
+  }
+
   Future<void> logout() async {
     try {
       await UserRepository().logout();

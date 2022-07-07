@@ -57,16 +57,20 @@ class VideoSourceModal extends StatelessWidget {
   }
 
   Future<void> getFromCamera() async {
-    final pickedFile =
-        await ImagePicker().pickVideo(source: ImageSource.camera);
+    final pickedFile = await ImagePicker().pickVideo(
+      source: ImageSource.camera,
+      maxDuration: const Duration(seconds: 10),
+    );
     if (pickedFile != null) {
       onVideoSelected(File(pickedFile.path));
     }
   }
 
   Future<void> getFromGallery() async {
-    final pickedFile =
-        await ImagePicker().pickVideo(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+      maxDuration: const Duration(seconds: 10),
+    );
     if (pickedFile != null) {
       onVideoSelected(File(pickedFile.path));
     }

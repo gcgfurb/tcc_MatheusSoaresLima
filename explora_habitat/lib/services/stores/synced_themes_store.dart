@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:explora_habitat/helpers/connection_handler.dart';
 import 'package:explora_habitat/services/enum/response_activity_status.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
@@ -36,19 +37,27 @@ abstract class _SyncedThemesStore with Store {
   @observable
   bool syncing = false;
 
+  @observable
+  String? error;
+
   @action
   Future<void> sync(int key) async {
     syncing = true;
-    var theme = syncedThemeBox.get(key);
-    var activities =
-        theme!.objectives.expand((objective) => objective.activities);
+    error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      var theme = syncedThemeBox.get(key);
+      var activities =
+          theme!.objectives.expand((objective) => objective.activities);
 
-    for (Activity activity in activities) {
-      await ResponseRepository()
-          .save(activity.responsesActivity.first, activity.id!);
+      for (Activity activity in activities) {
+        await ResponseRepository()
+            .save(activity.responsesActivity.first, activity.id!);
+      }
+      theme.isResponsesSynced = true;
+      await update(key, theme);
+    } else {
+      error = "Sem conexão com a Internet";
     }
-    theme.isResponsesSynced = true;
-    await update(key, theme);
     syncing = false;
   }
 }

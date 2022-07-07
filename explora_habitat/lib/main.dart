@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: GetIt.I<UserManagerStore>().getCurrentUser(),
+      future: GetIt.I<UserManagerStore>().getLastUser(),
       builder: (_, value) => MaterialApp(
         title: 'ExploraHabitat',
         debugShowCheckedModeBanner: false,

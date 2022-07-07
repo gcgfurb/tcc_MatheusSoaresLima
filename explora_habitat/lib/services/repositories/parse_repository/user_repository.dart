@@ -51,6 +51,10 @@ class UserRepository {
     return null;
   }
 
+  Future<ParseUser?> lastUser() async {
+    return await ParseUser.currentUser();
+  }
+
   Future<void> logout() async {
     final ParseUser parseUser = await ParseUser.currentUser() as ParseUser;
     if (parseUser.sessionToken != null) {

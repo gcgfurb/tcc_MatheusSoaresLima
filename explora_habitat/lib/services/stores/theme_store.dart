@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:explora_habitat/helpers/connection_handler.dart';
 import 'package:explora_habitat/services/enum/theme_status.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/theme_repository.dart';
@@ -19,6 +20,9 @@ abstract class _ThemeStore with Store {
 
   @observable
   bool syncing = false;
+
+  @observable
+  String? error;
 
   late final Box<ThemeExplora> myThemesBox;
 
@@ -46,29 +50,56 @@ abstract class _ThemeStore with Store {
   @action
   Future<void> sync(int key) async {
     syncing = true;
-    var theme = myThemesBox.get(key);
-    await ThemeRepository().save(theme!);
-    await update(key, theme);
+    error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      try {
+        var theme = myThemesBox.get(key);
+        await ThemeRepository().save(theme!);
+        await update(key, theme);
+      } catch (e) {
+        error = e.toString();
+      }
+    } else {
+      error = "Sem conexão com a Internet";
+    }
     syncing = false;
   }
 
   @action
   Future<void> finish(int index) async {
     syncing = true;
-    var theme = myThemesBox.get(index);
-    theme!.status = ThemeStatus.completed;
-    await ThemeRepository().updateStatus(theme.id!, theme.status);
-    await update(index, theme);
+    error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      try {
+        var theme = myThemesBox.get(index);
+        theme!.status = ThemeStatus.completed;
+        await ThemeRepository().updateStatus(theme.id!, theme.status);
+        await update(index, theme);
+      } catch (e) {
+        error = e.toString();
+      }
+    } else {
+      error = "Sem conexão com a Internet";
+    }
     syncing = false;
   }
 
   @action
   Future<void> syncThemes() async {
     loading = true;
-    await myThemesBox.clear();
-    var currentUser = await UserRepository().currentUser();
-    var themes = await ThemeRepository().findAllByCreator(currentUser!);
-    myThemesBox.addAll(themes);
+    error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      try {
+        await myThemesBox.clear();
+        var currentUser = await UserRepository().currentUser();
+        var themes = await ThemeRepository().findAllByCreator(currentUser!);
+        myThemesBox.addAll(themes);
+      } catch (e) {
+        error = e.toString();
+      }
+    } else {
+      error = "Sem conexão com a Internet";
+    }
     loading = false;
   }
 }

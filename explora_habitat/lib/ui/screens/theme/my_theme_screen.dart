@@ -23,6 +23,19 @@ class MyThemeScreen extends StatefulWidget {
 class _MyThemeScreenState extends State<MyThemeScreen> {
   final ThemeStore themeStore = GetIt.I<ThemeStore>();
 
+  void checkError() {
+    if (themeStore.error != null) {
+      final snackBar = SnackBar(
+        content: Text(
+          themeStore.error!,
+          style: const TextStyle(fontSize: 18),
+          textAlign: TextAlign.center,
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     void closeTheme(int index) {
@@ -141,7 +154,10 @@ class _MyThemeScreenState extends State<MyThemeScreen> {
               style: TextStyle(fontSize: 18),
             ),
             onSave: () {
-              themeStore.sync(index).then((value) => Navigator.pop(context));
+              themeStore
+                  .sync(index)
+                  .then((value) => checkError())
+                  .then((value) => Navigator.pop(context));
             },
             onCancel: () => Navigator.pop(context),
           ),
