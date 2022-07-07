@@ -15,26 +15,39 @@ class ResponsesThemeScreen extends StatelessWidget {
   final ResponsesThemeStore responsesThemeStore =
       GetIt.I<ResponsesThemeStore>();
 
-  void _syncResponses(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => CustomAlertDialog(
-        title: 'Sincronizar respostas',
-        body: const Text(
-          'Deseja buscar os temas finalizados? Após realizado esta operação, irá retornar todos os temas criados por você e que foram finalizados',
-          style: TextStyle(fontSize: 18),
-        ),
-        onSave: () {
-          responsesThemeStore.syncThemes();
-          Navigator.pop(context);
-        },
-        onCancel: () => Navigator.pop(context),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    void checkError() {
+      if (responsesThemeStore.error != null) {
+        final snackBar = SnackBar(
+          content: Text(
+            responsesThemeStore.error!,
+            style: const TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
+
+    void _syncResponses() async {
+      await showDialog<void>(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Sincronizar respostas',
+          body: const Text(
+            'Deseja buscar os temas finalizados? Após realizado esta operação, irá retornar todos os temas criados por você e que foram finalizados',
+            style: TextStyle(fontSize: 18),
+          ),
+          onSave: () {
+            responsesThemeStore.syncThemes().then((value) => checkError());
+            Navigator.pop(context);
+          },
+          onCancel: () => Navigator.pop(context),
+        ),
+      );
+    }
+
     void openResponse(int key) {
       var theme = responsesThemeStore.completedThemesBox.get(key)!;
       Navigator.push(
@@ -81,7 +94,7 @@ class ResponsesThemeScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _syncResponses(context),
+        onPressed: () => _syncResponses(),
         backgroundColor: Colors.green,
         child: const Icon(Icons.sync),
       ),

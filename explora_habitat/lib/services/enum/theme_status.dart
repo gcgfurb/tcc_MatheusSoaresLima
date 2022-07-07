@@ -15,6 +15,7 @@ enum ThemeStatus {
 
   const ThemeStatus(this.value);
   final String value;
+
 }
 
 extension ThemeStatusExtension on ThemeStatus {

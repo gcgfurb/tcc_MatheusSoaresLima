@@ -12,4 +12,5 @@ enum ActivityStatus {
 
   const ActivityStatus(this.value);
   final String value;
+
 }

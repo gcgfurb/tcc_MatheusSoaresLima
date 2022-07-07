@@ -4,6 +4,7 @@ part 'field_type.g.dart';
 
 @HiveType(typeId: 9)
 enum FieldType {
+
   @HiveField(0)
   text('text', 'Texto'),
 
@@ -22,6 +23,7 @@ enum FieldType {
   const FieldType(this.value, this.description);
   final String value;
   final String description;
+
 }
 
 extension FieldTypeExtension on FieldType {

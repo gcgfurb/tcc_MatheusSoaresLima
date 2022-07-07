@@ -36,6 +36,10 @@ class UserRepository {
     }
   }
 
+  Future<ParseUser?> lastUser() async {
+    return await ParseUser.currentUser();
+  }
+
   Future<ParseUser?> currentUser() async {
     final ParseUser? parseUser = await ParseUser.currentUser();
 

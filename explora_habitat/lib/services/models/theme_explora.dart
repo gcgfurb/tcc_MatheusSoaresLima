@@ -1,5 +1,4 @@
 import 'package:explora_habitat/services/models/objective.dart';
-import 'package:explora_habitat/services/models/response_activity.dart';
 import 'package:explora_habitat/services/models/user.dart';
 import 'package:hive/hive.dart';
 

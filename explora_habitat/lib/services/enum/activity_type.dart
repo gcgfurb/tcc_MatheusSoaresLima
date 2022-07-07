@@ -21,6 +21,7 @@ enum ActivityType {
   const ActivityType(this.value, this.description);
   final String value;
   final String description;
+
 }
 
 extension ActivityTypeExtension on ActivityType {

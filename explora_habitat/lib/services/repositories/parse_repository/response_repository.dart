@@ -14,12 +14,19 @@ import 'package:path_provider/path_provider.dart';
 class ResponseRepository {
   Future<void> save(
       ResponseActivity responseActivity, String activityId) async {
-    final parseUser = await ParseUser.currentUser() as ParseUser;
+    final parseUser = await UserRepository().currentUser() as ParseUser;
 
-    final parseImages = await _saveFiles(responseActivity.images);
-    final parseVideos = await _saveFiles(responseActivity.videos);
-    final parseAudios = await _saveFiles(responseActivity.audios);
-    final parseDrawings = await _saveFiles(responseActivity.drawings);
+    List<ParseFile> parseImages = [];
+    List<ParseFile> parseVideos = [];
+    List<ParseFile> parseAudios = [];
+    List<ParseFile> parseDrawings = [];
+
+    await Future.wait([
+      _saveFiles(parseImages, responseActivity.images),
+      _saveFiles(parseVideos, responseActivity.videos),
+      _saveFiles(parseAudios, responseActivity.audios),
+      _saveFiles(parseDrawings, responseActivity.drawings)
+    ]);
 
     final responseObject = ParseObject(keyResponseTable);
 
@@ -54,14 +61,11 @@ class ResponseRepository {
     }
   }
 
-  Future<List<ParseFile>> _saveFiles(List files) async {
-    final parseFiles = <ParseFile>[];
-
+  Future<void> _saveFiles(parseFiles, List files) async {
     try {
       for (final filePath in files) {
         File file = File(filePath);
-        final ParseFile parseFile =
-            ParseFile(file, name: path.basename(file.path));
+        final ParseFile parseFile = ParseFile(file, name: path.basename(file.path));
         final response = await parseFile.save();
         if (!response.success) {
           return Future.error(
@@ -71,9 +75,8 @@ class ResponseRepository {
         parseFiles.add(parseFile);
       }
     } catch (e) {
-      Future.error('Falha ao salvar imagens');
+      Future.error('Failure');
     }
-    return parseFiles;
   }
 
   Future<List<ResponseActivity>> findAllByActivity(
@@ -151,7 +154,7 @@ class ResponseRepository {
   }
 
   Future<bool> isActivityAlreadyAnswered(String activityId) async {
-    final parseUser = await ParseUser.currentUser() as ParseUser;
+    final parseUser = await UserRepository().currentUser() as ParseUser;
 
     final queryBuilder = QueryBuilder<ParseObject>(
         ParseObject(keyResponseTable))

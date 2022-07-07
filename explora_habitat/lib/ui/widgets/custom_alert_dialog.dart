@@ -31,6 +31,7 @@ class CustomAlertDialog extends StatelessWidget {
   }
 
   List<Widget> _getActions() {
+    print(loading);
     return info
         ? [
             TextButton(

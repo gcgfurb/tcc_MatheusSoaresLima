@@ -1,3 +1,4 @@
+import 'package:explora_habitat/helpers/connection_handler.dart';
 import 'package:explora_habitat/services/models/activity.dart';
 import 'package:explora_habitat/services/models/objective.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
@@ -39,24 +40,27 @@ abstract class _SyncThemeStore with Store {
     loading = true;
     syncError = null;
     error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      var codeValid = code!.replaceAll(' ', '');
+      var syncedThemeStore = GetIt.I<SyncedThemesStore>();
 
-    var codeValid = code!.replaceAll(' ', '');
-    var syncedThemeStore = GetIt.I<SyncedThemesStore>();
-
-    bool isOnBox = syncedThemeStore.syncedThemeBox.isNotEmpty &&
-        syncedThemeStore.syncedThemeBox.values
-            .any((theme) => theme.id == codeValid);
-    if (!isOnBox) {
-      try {
-        var themeSynced = await ThemeRepository().findById(codeValid);
-        themeSynced.isResponsesPending = true;
-        await _validateActivity(themeSynced);
-        syncedThemeStore.add(themeSynced);
-      } catch (e) {
-        syncError = e.toString();
+      bool isOnBox = syncedThemeStore.syncedThemeBox.isNotEmpty &&
+          syncedThemeStore.syncedThemeBox.values
+              .any((theme) => theme.id == codeValid);
+      if (!isOnBox) {
+        try {
+          var themeSynced = await ThemeRepository().findById(codeValid);
+          themeSynced.isResponsesPending = true;
+          await _validateActivity(themeSynced);
+          syncedThemeStore.add(themeSynced);
+        } catch (e) {
+          syncError = e.toString();
+        }
+      } else {
+        error = 'Tema já está sincronizado';
       }
     } else {
-      error = 'Tema já está sincronizado';
+      syncError = 'Sem conexão com a Internet';
     }
     loading = false;
   }
@@ -64,8 +68,9 @@ abstract class _SyncThemeStore with Store {
   Future<void> _validateActivity(ThemeExplora theme) async {
     for (Objective objective in theme.objectives) {
       for (Activity activity in objective.activities) {
-        var response = await ResponseRepository().isActivityAlreadyAnswered(activity.id!);
-        if(response) {
+        var response =
+            await ResponseRepository().isActivityAlreadyAnswered(activity.id!);
+        if (response) {
           return Future.error('Este tema já foi respondido anteriormente');
         }
       }

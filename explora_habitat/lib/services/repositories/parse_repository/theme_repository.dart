@@ -8,7 +8,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class ThemeRepository {
   Future<void> save(ThemeExplora theme) async {
-    final parseUser = await ParseUser.currentUser() as ParseUser;
+    final parseUser = await UserRepository().currentUser() as ParseUser;
 
     final themeObject = ParseObject(keyThemeTable);
     themeObject.objectId = theme.id;

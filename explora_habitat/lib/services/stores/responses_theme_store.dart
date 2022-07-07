@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:explora_habitat/helpers/connection_handler.dart';
 import 'package:explora_habitat/services/enum/theme_status.dart';
 import 'package:explora_habitat/services/models/theme_explora.dart';
 import 'package:explora_habitat/services/repositories/parse_repository/user_repository.dart';
@@ -18,6 +19,9 @@ abstract class _ResponsesThemeStore with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String? error;
+
   late final Box<ThemeExplora> completedThemesBox;
 
   Future<void> initThemesBox(String userId) async {
@@ -31,11 +35,20 @@ abstract class _ResponsesThemeStore with Store {
   @action
   Future<void> syncThemes() async {
     loading = true;
-    await completedThemesBox.clear();
-    var currentUser = await UserRepository().currentUser();
-    var themes = await ThemeRepository()
-        .findAllByCreatorAndStatusCompleted(currentUser!);
-    completedThemesBox.addAll(themes);
+    error = null;
+    if (await ConnectionHandler.hasConnection()) {
+      try {
+        await completedThemesBox.clear();
+        var currentUser = await UserRepository().currentUser();
+        var themes = await ThemeRepository()
+            .findAllByCreatorAndStatusCompleted(currentUser!);
+        completedThemesBox.addAll(themes);
+      } catch (e) {
+        error = e.toString();
+      }
+    } else {
+      error = 'Sem conexão com a Internet';
+    }
     loading = false;
   }
 

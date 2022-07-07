@@ -37,7 +37,7 @@ abstract class _LoginStore with Store {
       password == null || passwordValid ? null : 'Senha inválida';
 
   @action
-  void setPassoword(String value) => password = value;
+  void setPassword(String value) => password = value;
 
   @computed
   VoidCallback? get loginPressed =>

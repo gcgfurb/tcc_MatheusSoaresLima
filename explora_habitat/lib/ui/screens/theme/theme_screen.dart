@@ -32,6 +32,19 @@ class _ThemeScreenState extends State<ThemeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void checkError() {
+      if (syncedThemesStore.error != null) {
+        final snackBar = SnackBar(
+          content: Text(
+            syncedThemesStore.error!,
+            style: const TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    }
+
     void startTheme(int key, bool readOnly) {
       var theme = syncedThemesStore.syncedThemeBox.get(key)!;
       var clonedTheme = theme.clone(cloneResponse: true);
@@ -69,7 +82,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
     }
 
     void syncTheme(int key) async {
-      showDialog(
+      await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => Observer(
@@ -89,7 +102,9 @@ class _ThemeScreenState extends State<ThemeScreen> {
           ),
         ),
       );
+      checkError();
     }
+
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(

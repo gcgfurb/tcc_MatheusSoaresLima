@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: 'Senha',
                             errorText: loginStore.passwordError,
                             inputType: TextInputType.text,
-                            onChanged: loginStore.setPassoword,
+                            onChanged: loginStore.setPassword,
                             obscure: true,
                             counterText: "",
                           ),

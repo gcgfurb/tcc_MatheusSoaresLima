@@ -12,4 +12,5 @@ enum ResponseActivityStatus {
 
   const ResponseActivityStatus(this.value);
   final String value;
+
 }
