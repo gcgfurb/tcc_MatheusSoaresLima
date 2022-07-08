@@ -93,3 +93,7 @@ Refinamentos
 - Exibir alerta ao excluir um objetivo com atividades cadastradas  
 - Permitir criar objetivo com ordem fixa das atividades  
 - Permitir reordenar as atividades  
+
+## 2022-07-07
+
+Material da defesa: [Anotações](tcc_MatheusSoaresLima_2022-07-07_banca_anotacoes.md "Anotações")  
