@@ -12,7 +12,7 @@ Ter uam seção com uma analise das contribuições das tecnologias.
 Escrever a sugestão não precisar salvar em BD na nuvem mas manter o salvamento no Google Drive.  
 O resultado, ter no Apêndice, alguns techos de falas.  
 
-Ver anotações no artigo: [Mauricio](tcc_MatheusSoaresLima_2022-07-07_banca_Mauricio.pdf "Mauricio).  
+Ver anotações no artigo: [Mauricio](tcc_MatheusSoaresLima_2022-07-07_banca_Mauricio.pdf "Mauricio").  
 
 ## Luciana
 
