@@ -94,6 +94,6 @@ Refinamentos
 - Permitir criar objetivo com ordem fixa das atividades  
 - Permitir reordenar as atividades  
 
-## 2022-07-07
+## 2022-07-07 DEFESA
 
 Material da defesa: [Anotações](tcc_MatheusSoaresLima_2022-07-07_banca_anotacoes.md "Anotações")  
