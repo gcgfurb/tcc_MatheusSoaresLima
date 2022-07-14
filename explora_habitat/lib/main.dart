@@ -49,7 +49,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(ResponseActivityAdapter());
   Hive.registerAdapter(ThemeExploraAdapter());
   Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(ActivityStatusAdapter());
+  Hive.registerAdapter(ActivityStatusAdapter());''
   Hive.registerAdapter(ResponseActivityStatusAdapter());
   Hive.registerAdapter(ActivityTypeAdapter());
   Hive.registerAdapter(FieldTypeAdapter());
